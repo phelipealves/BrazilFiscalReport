@@ -118,119 +118,110 @@ CODE128_CHART = """
 106     2331112 Stop    Stop    Stop
 """.split()
 
-VALUES   = [int(value) for value in CODE128_CHART[0::5]]
-WEIGHTS  = dict(zip(VALUES, CODE128_CHART[1::5]))
+VALUES = [int(value) for value in CODE128_CHART[0::5]]
+WEIGHTS = dict(zip(VALUES, CODE128_CHART[1::5]))
 CODE128A = dict(zip(CODE128_CHART[2::5], VALUES))
 CODE128B = dict(zip(CODE128_CHART[3::5], VALUES))
 CODE128C = dict(zip(CODE128_CHART[4::5], VALUES))
 
 for charset in (CODE128A, CODE128B):
-    charset[' '] = charset.pop('space')
+    charset[" "] = charset.pop("space")
 
-class xFPDF(FPDF): 
 
-    def load_resource(self, reason, filename):
-        
+class xFPDF(FPDF):
+    def load_resource(self, reason, filename, urlopen):
         if reason == "image":
             if filename.startswith("http://") or filename.startswith("https://"):
+                # Vê ess alinha urlopen
                 f = IO(urlopen(filename).read())
             elif filename.startswith("base64"):
-                f = filename.split('base64,')[1]
+                f = filename.split("base64,")[1]
                 f = base64.b64decode(f)
                 f = IO(f)
             else:
                 f = open(filename, "rb")
             return f
         else:
-            self.error("Unknown resource loading reason \"%s\"" % reason)
+            self.error('Unknown resource loading reason "%s"' % reason)
 
     def code128_format(self, data):
-        
         """
         Generate an optimal barcode from ASCII text
         """
-        text     = str(data)
-        pos      = 0
-        length   = len(text)
-    
+        text = str(data)
+        pos = 0
+        length = len(text)
+
         # Start Code
         if text[:2].isdigit() and length > 1:
             charset = CODE128C
-            codes   = [charset['StartC']]
+            codes = [charset["StartC"]]
         else:
             charset = CODE128B
-            codes   = [charset['StartB']]
-    
+            codes = [charset["StartB"]]
+
         # Data
         while pos < length:
             if charset is CODE128C:
-                if text[pos:pos+2].isdigit() and length - pos > 1:
+                if text[pos : pos + 2].isdigit() and length - pos > 1:
                     # Encode Code C two characters at a time
-                    codes.append(int(text[pos:pos+2]))
+                    codes.append(int(text[pos : pos + 2]))
                     pos += 2
                 else:
                     # Switch to Code B
-                    codes.append(charset['CodeB'])
+                    codes.append(charset["CodeB"])
                     charset = CODE128B
-            elif text[pos:pos+4].isdigit() and length - pos >= 4:
+            elif text[pos : pos + 4].isdigit() and length - pos >= 4:
                 # Switch to Code C
-                codes.append(charset['CodeC'])
+                codes.append(charset["CodeC"])
                 charset = CODE128C
             else:
                 # Encode Code B one character at a time
                 codes.append(charset[text[pos]])
                 pos += 1
-    
+
         # Checksum
         checksum = 0
         for weight, code in enumerate(codes):
             checksum += max(weight, 1) * code
         codes.append(checksum % 103)
-    
+
         # Stop Code
-        codes.append(charset['Stop'])
+        codes.append(charset["Stop"])
         return codes
 
     def code128(self, text, x, y, height=10, thickness=3, quiet_zone=True):
-        
-        if not text[-1] == CODE128B['Stop']:
+        if not text[-1] == CODE128B["Stop"]:
             text = self.code128_format(text)
-    
+
         barcode_widths = []
         for code in text:
             for weight in WEIGHTS[code]:
                 barcode_widths.append(int(weight) * thickness)
-        '''
+        """
         width = sum(barcode_widths)
         #x = 0
         if quiet_zone:
             width += 20 * thickness
             x = 10 * thickness
-        '''                                                                             
+        """
         draw_bar = True
         for width in barcode_widths:
-            if draw_bar:                
-                
-                #[(x1, y1), (x2, y2)] 
-                #draw.rectangle(((x, 0), (x + width - 1, height)), fill=0)
-                
-                self.rect(x, y, width, height, 'F')
-                
+            if draw_bar:
+                # [(x1, y1), (x2, y2)]
+                # draw.rectangle(((x, 0), (x + width - 1, height)), fill=0)
+
+                self.rect(x, y, width, height, "F")
+
             draw_bar = not draw_bar
-            x += width                                                                    
+            x += width
 
-
-    def long_field(self, text='', limit=0): 
+    def long_field(self, text="", limit=0):
         # Take care of long field
         if text is None:
-            return ''
-            
+            return ""
+
         while self.get_string_width(text) > limit:
-
             # text = text[:-2] + u'\u2026'
-            text = '%s...' % text[:-4].rstrip()
+            text = "%s..." % text[:-4].rstrip()
         return text
-
-
-
-
