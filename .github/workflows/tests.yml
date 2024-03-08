@@ -14,10 +14,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {name: Python 3.7, python: 3.7, os: ubuntu}
-          - {name: Python 3.8, python: 3.8, os: ubuntu}
-          - {name: Python 3.9, python: 3.9-dev, os: ubuntu}
-          - {name: Python 3.10, python: 3.10.0-beta - 3.10, os: ubuntu}
+          - {name: "Python 3.9", python: "3.9-dev", os: "ubuntu"}
+          - {name: "Python 3.10", python: "3.10-dev", os: "ubuntu"}
+          - {name: "Python 3.11", python: "3.11-dev", os: "ubuntu"}
+          - {name: "Python 3.12", python: "3.12-dev", os: "ubuntu"}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python }}
@@ -26,9 +26,12 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip setuptools fpdf2
+          python -m pip install --upgrade pip setuptools fpdf2 pytest  pytest-cov
       - name: Test
         run: |
-          python3 -m unittest test/test_brazil_fiscal_report.py
+          pytest --cov=./brazilfiscalreport --cov-report=xml --cov-branch --doctest-glob="docs/*.md" test/test_brazil_fiscal_report.py
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: Engenere/BrazilFiscalReport
