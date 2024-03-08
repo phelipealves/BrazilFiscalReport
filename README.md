@@ -24,7 +24,7 @@ Roadmap
 ## Usage examples
 
 
-```
+```python
 from pdf_docs import Danfe, DaCCe
 
 # DANFE
@@ -33,7 +33,7 @@ from pdf_docs import Danfe, DaCCe
 
 xmls = [open( "xml_nfe.xml", "r", encoding="utf8").read()]
 pdf = Danfe(xmls=xmls, image=None, cfg_layout='ICMS_ST', receipt_pos='top')
-pdf.output('danfe.pdf', 'F')
+pdf.output('danfe.pdf')
 
 # DaCCe
 emitente = {'nome': 'COMPANY ME-EPP',
@@ -47,7 +47,7 @@ emitente = {'nome': 'COMPANY ME-EPP',
 
 xmls = [open( "xml_cce.xml", "r", encoding="utf8").read(),]
 pdf_cce = DaCCe(xmls=xmls, emitente=emitente, image=None)
-pdf_cce.output('cce.pdf', 'F')
+pdf_cce.output('cce.pdf')
 
 
 ```
