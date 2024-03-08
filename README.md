@@ -1,22 +1,22 @@
-nfe_utils
--
-Biblioteca para gerar pdf da DANFE (retrato e paisagem), DACCe a partir de xml's.
+# PyFiscalReport
 
-Dependências:
+Library to generate DANFE PDFs (portrait and landscape), DACCe from xml's.
+
+Dependencies:
 
 - FPDF2
 (pip install fpdf2)
 
 Roadmap
 -
-- Testes unitários
-- Implementar DACTe
-- Documentação
+- Unitary tests
+- Implement DACTe
+- Documentation
 
 
 
-Exemplos de uso
--
+## Usage examples
+
 
 ```
 from pdf_docs import Danfe, DaCCe
@@ -45,3 +45,24 @@ pdf_cce.output('cce.pdf', 'F')
 
 
 ```
+## Running Tests
+
+### Cloning the repository
+
+```
+git clone https://github.com/Engenere/PyFiscalReport.git
+```
+### Install the lib locally
+```
+pip install -e file:///path/to/your/package#egg=package_name
+```
+### Run the tests
+```
+python3 -m unittest test/test_PyFiscalReport.py
+```
+
+## Credits
+
+This is a fork of the nfe_utils project
+(https://github.com/edsonbernar/nfe_utils),
+originally created by Edson Bernardino (https://github.com/edsonbernar).
