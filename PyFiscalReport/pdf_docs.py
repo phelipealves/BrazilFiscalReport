@@ -160,8 +160,6 @@ cells = [
         kwargs["width"],
         3,
         get_tag_text(node=kwargs["node_item"], url=url, tag="cProd"),
-        0,
-        0,
         "L",
     ),
     lambda **kwargs: kwargs["report"].desc_item(
@@ -171,8 +169,6 @@ cells = [
         kwargs["width"],
         3,
         get_tag_text(node=kwargs["node_item"], url=url, tag="NCM"),
-        0,
-        0,
         "C",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -186,24 +182,18 @@ cells = [
                 or get_tag_text(node=kwargs["node_icms"], url=url, tag="CSOSN")
             ),
         ),
-        0,
-        0,
         "C",
     ),
     lambda **kwargs: kwargs["report"].cell(
         kwargs["width"],
         3,
         get_tag_text(node=kwargs["node_item"], url=url, tag="CFOP"),
-        0,
-        0,
         "C",
     ),
     lambda **kwargs: kwargs["report"].cell(
         kwargs["width"],
         3,
         get_tag_text(node=kwargs["node_item"], url=url, tag="uCom"),
-        0,
-        0,
         "C",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -212,8 +202,6 @@ cells = [
         format_number(
             get_tag_text(node=kwargs["node_item"], url=url, tag="qCom"), precision=4
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -222,8 +210,6 @@ cells = [
         format_number(
             get_tag_text(node=kwargs["node_item"], url=url, tag="vUnCom"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -232,8 +218,6 @@ cells = [
         format_number(
             get_tag_text(node=kwargs["node_item"], url=url, tag="vProd"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -242,8 +226,6 @@ cells = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vBC"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
 ]
@@ -256,8 +238,6 @@ cells_0 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vICMS"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -266,8 +246,6 @@ cells_0 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="pICMS"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
 ]
@@ -280,8 +258,6 @@ cells_1 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vBCST"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -290,8 +266,6 @@ cells_1 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vICMSST"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -300,8 +274,6 @@ cells_1 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vICMS"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -310,8 +282,6 @@ cells_1 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="pICMS"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
 ]
@@ -324,8 +294,6 @@ cells_2 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vICMS"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -334,8 +302,6 @@ cells_2 = [
         format_number(
             get_tag_text(node=kwargs["node_ipi"], url=url, tag="vIPI"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -344,8 +310,6 @@ cells_2 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="pICMS"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -354,8 +318,6 @@ cells_2 = [
         format_number(
             get_tag_text(node=kwargs["node_ipi"], url=url, tag="pIPI"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
 ]
@@ -368,8 +330,6 @@ cells_3 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vBCST"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -378,8 +338,6 @@ cells_3 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vICMSST"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -388,8 +346,6 @@ cells_3 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="vICMS"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -398,8 +354,6 @@ cells_3 = [
         format_number(
             get_tag_text(node=kwargs["node_ipi"], url=url, tag="vIPI"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -408,8 +362,6 @@ cells_3 = [
         format_number(
             get_tag_text(node=kwargs["node_icms"], url=url, tag="pICMS"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
     lambda **kwargs: kwargs["report"].cell(
@@ -418,8 +370,6 @@ cells_3 = [
         format_number(
             get_tag_text(node=kwargs["node_ipi"], url=url, tag="pIPI"), precision=2
         ),
-        0,
-        0,
         "R",
     ),
 ]
@@ -557,14 +507,19 @@ class Danfe(xFPDF):
                     list_ = self.multi_cell(
                         w=col_w,
                         h=3,
-                        txt=get_tag_text(node=el_prod, url=url, tag="xProd"),
-                        split_only=True,
+                        text=get_tag_text(node=el_prod, url=url, tag="xProd"),
+                        dry_run=True,
+                        output="LINES",
                     )
 
                     if inf_add is not None:
                         list_.extend(
                             self.multi_cell(
-                                w=col_w, h=3, txt=inf_add.text, split_only=True
+                                w=col_w,
+                                h=3,
+                                text=inf_add.text,
+                                dry_run=True,
+                                output="LINES",
                             )
                         )
 
@@ -572,7 +527,6 @@ class Danfe(xFPDF):
 
                     # Nr linhas necessárias p/ descrição item
                     lin_itens = len(list_)
-
                     if (paginator[n_pg][2] + lin_itens) > paginator[n_pg][3]:
                         paginator.append([0, 0, 0, nr_lin_pg])
                         n_pg += 1
@@ -601,7 +555,7 @@ class Danfe(xFPDF):
                 get_tag_text(node=self.dest, url=url, tag="UF"),
             )
 
-            self.recibo_txt = (
+            self.recibo_text = (
                 "RECEBEMOS DE %s OS PRODUTOS/SERVIÇOS "
                 "CONSTANTES DA NOTA FISCAL INDICADA "
                 "ABAIXO. EMISSÃO: %s VALOR TOTAL: %s "
@@ -675,17 +629,17 @@ class Danfe(xFPDF):
         self.set_font("Times", "", 5)
         self.set_xy(x=10, y=lin)
         self.multi_cell(
-            w=150, h=3, txt=self.recibo_txt, border=0, align="L", fill=False
+            w=150, h=3, text=self.recibo_text, border=0, align="L", fill=False
         )
 
-        self.text(x=11, y=lin + 10.5, txt="DATA DE RECEBIMENTO")
-        self.text(x=55, y=lin + 10.5, txt="IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR")
-        self.text(x=178, y=lin + 2, txt="NF-e")
+        self.text(x=11, y=lin + 10.5, text="DATA DE RECEBIMENTO")
+        self.text(x=55, y=lin + 10.5, text="IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR")
+        self.text(x=178, y=lin + 2, text="NF-e")
 
         self.set_font("Times", "B", 8)
         nf = "{0:011,}".format(int(self.nr_nota)).replace(",", ".")
-        self.text(x=163, y=lin + 8, txt="Nº %s" % nf)
-        self.text(x=163, y=lin + 13, txt="SÉRIE %s" % self.serie_nf)
+        self.text(x=163, y=lin + 8, text="Nº %s" % nf)
+        self.text(x=163, y=lin + 13, text="SÉRIE %s" % self.serie_nf)
 
     def emit_p(self):
         self.rect(x=10, y=self.lin_emit, w=190, h=45, style="")
@@ -703,7 +657,7 @@ class Danfe(xFPDF):
         self.set_font("Times", "B", 10)
         self.set_xy(x=26, y=self.lin_emit + 2)
         text = get_tag_text(node=self.emit, url=url, tag="xNome")
-        self.multi_cell(w=70, h=5, txt=text, border=0, align="C", fill=False)
+        self.multi_cell(w=70, h=5, text=text, border=0, align="C", fill=False)
 
         self.set_font("Times", "B", 7)
         self.set_xy(x=11, y=self.lin_emit + 19)
@@ -717,35 +671,35 @@ class Danfe(xFPDF):
             get_tag_text(node=self.emit, url=url, tag="fone"),
         )
 
-        self.multi_cell(w=83, h=4, txt=end, border=0, align="C", fill=False)
+        self.multi_cell(w=83, h=4, text=end, border=0, align="C", fill=False)
 
         self.set_font("Times", "B", 12)
-        self.text(x=102, y=self.lin_emit + 5, txt="DANFE")
+        self.text(x=102, y=self.lin_emit + 5, text="DANFE")
 
         self.set_font("Times", "", 7)
-        self.text(x=96, y=self.lin_emit + 9, txt="Documento Auxiliar da")
-        self.text(x=96, y=self.lin_emit + 12, txt="Nota Fiscal Eletrônica")
-        self.text(x=96, y=self.lin_emit + 16, txt="0 - Entrada")
-        self.text(x=96, y=self.lin_emit + 19, txt="1 - Saída")
+        self.text(x=96, y=self.lin_emit + 9, text="Documento Auxiliar da")
+        self.text(x=96, y=self.lin_emit + 12, text="Nota Fiscal Eletrônica")
+        self.text(x=96, y=self.lin_emit + 16, text="0 - Entrada")
+        self.text(x=96, y=self.lin_emit + 19, text="1 - Saída")
         self.rect(x=10, y=self.lin_emit, w=190, h=45, style="")
 
         self.rect(x=114, y=self.lin_emit + 14, w=8, h=6, style="")
 
         self.set_font("Times", "B", 10)
-        self.text(x=117, y=self.lin_emit + 18, txt=self.tp_nf)
+        self.text(x=117, y=self.lin_emit + 18, text=self.tp_nf)
 
         self.set_font("Times", "B", 8)
         nf = "{0:011,}".format(int(self.nr_nota)).replace(",", ".")
-        self.text(x=96, y=self.lin_emit + 24, txt="Nº %s" % nf)
-        self.text(x=96, y=self.lin_emit + 27, txt="SÉRIE %s" % self.serie_nf)
+        self.text(x=96, y=self.lin_emit + 24, text="Nº %s" % nf)
+        self.text(x=96, y=self.lin_emit + 27, text="SÉRIE %s" % self.serie_nf)
         self.text(
             x=100,
             y=self.lin_emit + 30,
-            txt="Página %s de %s" % (self.current_page, self.nr_pages),
+            text="Página %s de %s" % (self.current_page, self.nr_pages),
         )
 
         self.set_font("Times", "", 5)
-        self.text(x=124, y=self.lin_emit + 2.5, txt="CONTROLE DO FISCO")
+        self.text(x=124, y=self.lin_emit + 2.5, text="CONTROLE DO FISCO")
 
         self.code128(
             self.key_nfe,
@@ -757,9 +711,9 @@ class Danfe(xFPDF):
         )
 
         self.rect(x=124, y=self.lin_emit + 15, w=75, h=6, style="")
-        self.text(x=125, y=self.lin_emit + 17, txt="CHAVE DE ACESSO")
+        self.text(x=125, y=self.lin_emit + 17, text="CHAVE DE ACESSO")
         self.set_font("Times", "B", 7)
-        self.text(x=131, y=self.lin_emit + 20, txt=" ".join(chunks(self.key_nfe, 4)))
+        self.text(x=131, y=self.lin_emit + 20, text=" ".join(chunks(self.key_nfe, 4)))
 
         self.set_font("Times", "", 8)
         self.set_xy(x=124, y=self.lin_emit + 23)
@@ -768,47 +722,48 @@ class Danfe(xFPDF):
             "www.nfe.fazenda.gov.br/portal ou no site da "
             "Sefaz autorizadora"
         )
-        self.multi_cell(w=75, h=3, txt=text, border=0, align="L", fill=False)
+        self.multi_cell(w=75, h=3, text=text, border=0, align="L", fill=False)
 
         self.set_font("Times", "", 5)
-        self.text(x=11, y=self.lin_emit + 33.1, txt="NATUREZA DA OPERAÇÃO")
-        self.text(x=11, y=self.lin_emit + 40, txt="INSCRIÇÃO ESTADUAL")
-        self.text(x=71, y=self.lin_emit + 40, txt="INSCRIÇÃO ESTADUAL DO SUBST. TRIB")
-        self.text(x=111, y=self.lin_emit + 40, txt="CNPJ")
+        self.text(x=11, y=self.lin_emit + 33.1, text="NATUREZA DA OPERAÇÃO")
+        self.text(x=11, y=self.lin_emit + 40, text="INSCRIÇÃO ESTADUAL")
+        self.text(x=71, y=self.lin_emit + 40, text="INSCRIÇÃO ESTADUAL DO SUBST. TRIB")
+        self.text(x=111, y=self.lin_emit + 40, text="CNPJ")
 
-        self.text(x=124, y=self.lin_emit + 33.1, txt="PROTOCOLO DE AUTORIZAÇÃO DE USO")
+        self.text(x=124, y=self.lin_emit + 33.1, text="PROTOCOLO DE AUTORIZAÇÃO DE USO")
 
         self.set_font("Times", "", 8)
         text = get_tag_text(node=self.ide, url=url, tag="natOp")
-        self.text(x=11, y=self.lin_emit + 37, txt=self.long_field(text=text, limit=112))
+        self.text(
+            x=11, y=self.lin_emit + 37, text=self.long_field(text=text, limit=112)
+        )
 
         self.text(
             x=11,
             y=self.lin_emit + 44,
-            txt=get_tag_text(node=self.emit, url=url, tag="IE"),
+            text=get_tag_text(node=self.emit, url=url, tag="IE"),
         )
 
         text = get_tag_text(node=self.emit, url=url, tag="CNPJ")
-        self.text(x=111, y=self.lin_emit + 44, txt=format_cpf_cnpj(text))
+        self.text(x=111, y=self.lin_emit + 44, text=format_cpf_cnpj(text))
 
         self.set_font("Times", "B", 7)
         self.set_xy(x=123, y=self.lin_emit + 34)
-        self.cell(77, 5, self.prot_uso, 0, 0, "C")
+        self.cell(77, 5, self.prot_uso, "C")
 
         # Homologação
         if get_tag_text(node=self.ide, url=url, tag="tpAmb") == "2":
             self.set_text_color(r=145, g=145, b=145)
-            self.rotate(90, x=197, y=70)
-            self.set_font("Times", "B", 40)
-            self.set_xy(x=33, y=10)
-            self.text(x=34, y=20.5, txt="SEM VALOR FISCAL")
-            self.rotate(0, x=197, y=70)
+            with self.rotation(90, x=197, y=70):
+                self.set_font("Times", "B", 40)
+                self.set_xy(x=33, y=10)
+                self.text(x=34, y=20.5, text="SEM VALOR FISCAL")
             self.set_text_color(r=0, g=0, b=0)
 
     def dest_p(self):
         lin = self.lin_emit + 49
         self.set_font("Times", "B", 7)
-        self.text(x=11, y=lin - 1, txt="DESTINATÁRIO/REMETENTE")
+        self.text(x=11, y=lin - 1, text="DESTINATÁRIO/REMETENTE")
         self.rect(x=10, y=lin, w=190, h=20, style="")
 
         self.line(10, lin + 6.66, 200, lin + 6.66)
@@ -821,74 +776,74 @@ class Danfe(xFPDF):
         self.line(107, lin + 13.32, 107, lin + 20)
 
         self.set_font("Times", "", 5)
-        self.text(x=11, y=lin + 2, txt="NOME/RAZÃO SOCIAL")
-        self.text(x=124, y=lin + 2, txt="CNPJ/CPF")
-        self.text(x=170, y=lin + 2, txt="DATA DA EMISSÃO")
+        self.text(x=11, y=lin + 2, text="NOME/RAZÃO SOCIAL")
+        self.text(x=124, y=lin + 2, text="CNPJ/CPF")
+        self.text(x=170, y=lin + 2, text="DATA DA EMISSÃO")
 
-        self.text(x=11, y=lin + 8.66, txt="ENDEREÇO")
-        self.text(x=98, y=lin + 8.66, txt="BAIRRO/DISTRITO")
-        self.text(x=143, y=lin + 8.66, txt="CEP")
-        self.text(x=170, y=lin + 8.66, txt="DATA DA ENTRADA/SAÍDA")
+        self.text(x=11, y=lin + 8.66, text="ENDEREÇO")
+        self.text(x=98, y=lin + 8.66, text="BAIRRO/DISTRITO")
+        self.text(x=143, y=lin + 8.66, text="CEP")
+        self.text(x=170, y=lin + 8.66, text="DATA DA ENTRADA/SAÍDA")
 
-        self.text(x=11, y=lin + 15.32, txt="MUNICÍPIO")
-        self.text(x=61, y=lin + 15.32, txt="FONE/FAX")
-        self.text(x=98, y=lin + 15.32, txt="UF")
-        self.text(x=108, y=lin + 15.32, txt="INSCRIÇÃO ESTADUAL")
-        self.text(x=170, y=lin + 15.32, txt="HORA DE ENTRADA/SAÍDA")
+        self.text(x=11, y=lin + 15.32, text="MUNICÍPIO")
+        self.text(x=61, y=lin + 15.32, text="FONE/FAX")
+        self.text(x=98, y=lin + 15.32, text="UF")
+        self.text(x=108, y=lin + 15.32, text="INSCRIÇÃO ESTADUAL")
+        self.text(x=170, y=lin + 15.32, text="HORA DE ENTRADA/SAÍDA")
 
         self.set_font("Times", "", 8)
 
         # Homologação
         if get_tag_text(node=self.ide, url=url, tag="tpAmb") == "1":
-            txt = get_tag_text(node=self.dest, url=url, tag="xNome")
+            text = get_tag_text(node=self.dest, url=url, tag="xNome")
         else:
-            txt = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
+            text = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
 
-        self.text(x=11, y=lin + 5.7, txt=self.long_field(text=txt, limit=110))
+        self.text(x=11, y=lin + 5.7, text=self.long_field(text=text, limit=110))
 
-        txt = get_tag_text(node=self.dest, url=url, tag="CNPJ")
-        if not txt:
-            txt = get_tag_text(node=self.dest, url=url, tag="CPF")
-        self.text(x=124, y=lin + 5.7, txt=format_cpf_cnpj(txt))
+        text = get_tag_text(node=self.dest, url=url, tag="CNPJ")
+        if not text:
+            text = get_tag_text(node=self.dest, url=url, tag="CPF")
+        self.text(x=124, y=lin + 5.7, text=format_cpf_cnpj(text))
 
         dt, h = getdateUTC(get_tag_text(node=self.ide, url=url, tag="dhEmi"))
-        self.text(x=170, y=lin + 5.7, txt=dt)
+        self.text(x=170, y=lin + 5.7, text=dt)
 
         end = "%s, %s" % (
             get_tag_text(node=self.dest, url=url, tag="xLgr"),
             get_tag_text(node=self.dest, url=url, tag="nro"),
         )
-        self.text(x=11, y=lin + 12.4, txt=self.long_field(text=end, limit=86))
+        self.text(x=11, y=lin + 12.4, text=self.long_field(text=end, limit=86))
 
-        txt = get_tag_text(node=self.dest, url=url, tag="xBairro")
-        self.text(x=98, y=lin + 12.4, txt=self.long_field(text=txt, limit=44))
+        text = get_tag_text(node=self.dest, url=url, tag="xBairro")
+        self.text(x=98, y=lin + 12.4, text=self.long_field(text=text, limit=44))
 
         self.text(
-            x=143, y=lin + 12.4, txt=get_tag_text(node=self.dest, url=url, tag="CEP")
+            x=143, y=lin + 12.4, text=get_tag_text(node=self.dest, url=url, tag="CEP")
         )
 
         dt, h = getdateUTC(get_tag_text(node=self.ide, url=url, tag="dhSaiEnt"))
-        self.text(x=170, y=lin + 12.4, txt=dt)
+        self.text(x=170, y=lin + 12.4, text=dt)
 
-        txt = get_tag_text(node=self.dest, url=url, tag="xMun")
-        self.text(x=11, y=lin + 19.1, txt=self.long_field(text=txt, limit=50))
+        text = get_tag_text(node=self.dest, url=url, tag="xMun")
+        self.text(x=11, y=lin + 19.1, text=self.long_field(text=text, limit=50))
 
         self.text(
-            x=61, y=lin + 19.1, txt=get_tag_text(node=self.dest, url=url, tag="fone")
+            x=61, y=lin + 19.1, text=get_tag_text(node=self.dest, url=url, tag="fone")
         )
 
         self.text(
-            x=98, y=lin + 19.1, txt=get_tag_text(node=self.dest, url=url, tag="UF")
+            x=98, y=lin + 19.1, text=get_tag_text(node=self.dest, url=url, tag="UF")
         )
 
         self.text(
-            x=108, y=lin + 19.1, txt=get_tag_text(node=self.dest, url=url, tag="IE")
+            x=108, y=lin + 19.1, text=get_tag_text(node=self.dest, url=url, tag="IE")
         )
 
     def fat_p(self):
         lin = self.lin_emit + 73
         self.set_font("Times", "B", 7)
-        self.text(x=11, y=lin - 1, txt="FATURA")
+        self.text(x=11, y=lin - 1, text="FATURA")
         self.rect(x=10, y=lin, w=190, h=13, style="")
         self.line(57.5, lin, 57.5, lin + 13)
         self.line(105, lin, 105, lin + 13)
@@ -905,7 +860,7 @@ class Danfe(xFPDF):
             self.text(
                 x=153.5,
                 y=lin + 5.7,
-                txt=get_tag_text(node=codvend, url=url, tag="xTexto"),
+                text=get_tag_text(node=codvend, url=url, tag="xTexto"),
             )
 
             vend = self.inf_adic.find(
@@ -913,23 +868,23 @@ class Danfe(xFPDF):
                 "obsCont[@xCampo='NomeVendedor']"
             )
 
-            txt = get_tag_text(node=vend, url=url, tag="xTexto")
-            self.text(x=153.5, y=lin + 12.24, txt=self.long_field(text=txt, limit=47))
+            text = get_tag_text(node=vend, url=url, tag="xTexto")
+            self.text(x=153.5, y=lin + 12.24, text=self.long_field(text=text, limit=47))
 
         self.set_font("Times", "", 5)
-        self.text(x=153.5, y=lin + 2, txt="CÓDIGO VENDEDOR")
-        self.text(x=153.5, y=lin + 8.5, txt="NOME VENDEDOR")
+        self.text(x=153.5, y=lin + 2, text="CÓDIGO VENDEDOR")
+        self.text(x=153.5, y=lin + 8.5, text="NOME VENDEDOR")
 
         self.set_xy(x=10, y=lin + 0.5)
-        self.cell(14.5, 2.5, "FATURA", 0, 0, "L")
-        self.cell(15, 2.5, "VENCIMENTO", 0, 0, "C")
-        self.cell(18, 2.5, "VALOR", 0, 0, "R")
-        self.cell(14.5, 2.5, "FATURA", 0, 0, "L")
-        self.cell(15, 2.5, "VENCIMENTO", 0, 0, "C")
-        self.cell(18, 2.5, "VALOR", 0, 0, "R")
-        self.cell(14.5, 2.5, "FATURA", 0, 0, "L")
-        self.cell(15, 2.5, "VENCIMENTO", 0, 0, "C")
-        self.cell(18, 2.5, "VALOR", 0, 0, "R")
+        self.cell(14.5, 2.5, "FATURA", "L")
+        self.cell(15, 2.5, "VENCIMENTO", "C")
+        self.cell(18, 2.5, "VALOR", "R")
+        self.cell(14.5, 2.5, "FATURA", "L")
+        self.cell(15, 2.5, "VENCIMENTO", "C")
+        self.cell(18, 2.5, "VALOR", "R")
+        self.cell(14.5, 2.5, "FATURA", "L")
+        self.cell(15, 2.5, "VENCIMENTO", "C")
+        self.cell(18, 2.5, "VALOR", "R")
 
         # Salta elemt 1 (tag fat) e considera os próximos 9 (tags dup)
         self.set_font("Times", "", 7)
@@ -944,9 +899,9 @@ class Danfe(xFPDF):
                 get_tag_text(node=dup, url=url, tag="vDup"), precision=2
             )
 
-            self.cell(14.5, 4, n_dup, 0, 0, "L")
-            self.cell(15, 4, dt, 0, 0, "C")
-            self.cell(18, 4, vlr, 0, 0, "R")
+            self.cell(14.5, 4, n_dup, "L")
+            self.cell(15, 4, dt, "C")
+            self.cell(18, 4, vlr, "R")
 
             if n_dup_ == 3:
                 col_ += 47.5
@@ -961,7 +916,7 @@ class Danfe(xFPDF):
     def impostos_p(self):
         lin = self.lin_emit + 90
         self.set_font("Times", "B", 7)
-        self.text(x=11, y=lin - 1, txt="CÁLCULO DO IMPOSTO")
+        self.text(x=11, y=lin - 1, text="CÁLCULO DO IMPOSTO")
         self.rect(x=10, y=lin, w=190, h=13, style="")
         self.line(10, lin + 6.5, 200, lin + 6.5)
         self.line(48, lin, 48, lin + 6.5)
@@ -976,19 +931,19 @@ class Danfe(xFPDF):
         self.line(130, lin + 6.5, 130, lin + 13)
 
         self.set_font("Times", "", 5)
-        self.text(x=11, y=lin + 2, txt="BASE DE CÁLCULO DO ICMS")
-        self.text(x=49, y=lin + 2, txt="VALOR DO ICMS")
-        self.text(x=87, y=lin + 2, txt="BASE DE CÁLCULO DO ICMS ST")
-        self.text(x=125, y=lin + 2, txt="VALOR DO ICMS ST")
-        self.text(x=163, y=lin + 2, txt="VALOR TOTAL DOS PRODUTOS")
+        self.text(x=11, y=lin + 2, text="BASE DE CÁLCULO DO ICMS")
+        self.text(x=49, y=lin + 2, text="VALOR DO ICMS")
+        self.text(x=87, y=lin + 2, text="BASE DE CÁLCULO DO ICMS ST")
+        self.text(x=125, y=lin + 2, text="VALOR DO ICMS ST")
+        self.text(x=163, y=lin + 2, text="VALOR TOTAL DOS PRODUTOS")
 
-        self.text(x=11, y=lin + 8.5, txt="VALOR DO FRETE")
-        self.text(x=33, y=lin + 8.5, txt="VALOR DO SEGURO")
-        self.text(x=55, y=lin + 8.5, txt="DESCONTO")
-        self.text(x=77, y=lin + 8.5, txt="OUTRAS DESP. ACESSÓRIAS")
-        self.text(x=104, y=lin + 8.5, txt="VALOR DO IPI")
-        self.text(x=131, y=lin + 8.5, txt="VALOR APROX. TRIBUTOS")
-        self.text(x=163, y=lin + 8.5, txt="VALOR TOTAL DA NOTA")
+        self.text(x=11, y=lin + 8.5, text="VALOR DO FRETE")
+        self.text(x=33, y=lin + 8.5, text="VALOR DO SEGURO")
+        self.text(x=55, y=lin + 8.5, text="DESCONTO")
+        self.text(x=77, y=lin + 8.5, text="OUTRAS DESP. ACESSÓRIAS")
+        self.text(x=104, y=lin + 8.5, text="VALOR DO IPI")
+        self.text(x=131, y=lin + 8.5, text="VALOR APROX. TRIBUTOS")
+        self.text(x=163, y=lin + 8.5, text="VALOR TOTAL DA NOTA")
 
         self.set_font("Times", "", 8)
         self.set_xy(x=11, y=lin + 2.7)
@@ -998,8 +953,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vBC"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1008,8 +961,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vICMS"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1018,8 +969,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vBCST"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1028,8 +977,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vST"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1038,8 +985,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vProd"), precision=2
             ),
-            0,
-            0,
             "R",
         )
 
@@ -1050,8 +995,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vFrete"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1060,8 +1003,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vSeg"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1070,8 +1011,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vDesc"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1080,8 +1019,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vOutro"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1090,8 +1027,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vIPI"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1100,8 +1035,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vTotTrib"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1110,15 +1043,13 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vNF"), precision=2
             ),
-            0,
-            0,
             "R",
         )
 
     def transp_p(self):
         lin = self.lin_emit + 107
         self.set_font("Times", "B", 7)
-        self.text(x=11, y=lin - 1, txt="TRANSPORTADOR/VOLUMES TRANSPORTADOS")
+        self.text(x=11, y=lin - 1, text="TRANSPORTADOR/VOLUMES TRANSPORTADOS")
         self.rect(x=10, y=lin, w=190, h=19, style="")
         self.line(10, lin + 6.33, 200, lin + 6.33)
         self.line(10, lin + 12.66, 200, lin + 12.66)
@@ -1135,69 +1066,71 @@ class Danfe(xFPDF):
         self.line(173, lin + 12.66, 173, lin + 19)
 
         self.set_font("Times", "", 5)
-        self.text(x=11, y=lin + 2, txt="RAZÃO SOCIAL")
-        self.text(x=81, y=lin + 2, txt="FRETE POR CONTA")
-        self.text(x=106, y=lin + 2, txt="CÓDIGO ANTT")
-        self.text(x=126, y=lin + 2, txt="PLACA DO VEÍCULO")
-        self.text(x=148, y=lin + 2, txt="UF")
-        self.text(x=157, y=lin + 2, txt="CNPJ/CPF")
-        self.text(x=11, y=lin + 8.33, txt="ENDEREÇO")
-        self.text(x=98, y=lin + 8.33, txt="MUNICÍPIO")
-        self.text(x=148, y=lin + 8.33, txt="UF")
-        self.text(x=157, y=lin + 8.33, txt="INSCRIÇÃO ESTADUAL")
+        self.text(x=11, y=lin + 2, text="RAZÃO SOCIAL")
+        self.text(x=81, y=lin + 2, text="FRETE POR CONTA")
+        self.text(x=106, y=lin + 2, text="CÓDIGO ANTT")
+        self.text(x=126, y=lin + 2, text="PLACA DO VEÍCULO")
+        self.text(x=148, y=lin + 2, text="UF")
+        self.text(x=157, y=lin + 2, text="CNPJ/CPF")
+        self.text(x=11, y=lin + 8.33, text="ENDEREÇO")
+        self.text(x=98, y=lin + 8.33, text="MUNICÍPIO")
+        self.text(x=148, y=lin + 8.33, text="UF")
+        self.text(x=157, y=lin + 8.33, text="INSCRIÇÃO ESTADUAL")
 
-        self.text(x=11, y=lin + 14.66, txt="QUANTIDADE")
-        self.text(x=37, y=lin + 14.66, txt="ESPÉCIE")
-        self.text(x=74, y=lin + 14.66, txt="MARCA")
-        self.text(x=112, y=lin + 14.66, txt="NUMERAÇÃO")
-        self.text(x=148, y=lin + 14.66, txt="PESO BRUTO")
-        self.text(x=174, y=lin + 14.66, txt="PESO LÍQUIDO")
+        self.text(x=11, y=lin + 14.66, text="QUANTIDADE")
+        self.text(x=37, y=lin + 14.66, text="ESPÉCIE")
+        self.text(x=74, y=lin + 14.66, text="MARCA")
+        self.text(x=112, y=lin + 14.66, text="NUMERAÇÃO")
+        self.text(x=148, y=lin + 14.66, text="PESO BRUTO")
+        self.text(x=174, y=lin + 14.66, text="PESO LÍQUIDO")
 
         self.set_font("Times", "", 8)
         text = get_tag_text(node=self.transp, url=url, tag="xNome")
-        self.text(x=11, y=lin + 5.7, txt=self.long_field(text=text, limit=69))
+        self.text(x=11, y=lin + 5.7, text=self.long_field(text=text, limit=69))
 
         self.text(
             x=81,
             y=lin + 5.7,
-            txt=tp_frete[get_tag_text(node=self.transp, url=url, tag="modFrete")],
+            text=tp_frete[get_tag_text(node=self.transp, url=url, tag="modFrete")],
         )
 
         text = get_tag_text(node=self.transp, url=url, tag="CNPJ")
-        self.text(x=158, y=lin + 5.7, txt=format_cpf_cnpj(text))
+        self.text(x=158, y=lin + 5.7, text=format_cpf_cnpj(text))
 
         text = get_tag_text(node=self.transp, url=url, tag="xEnder")
-        self.text(x=11, y=lin + 12.03, txt=self.long_field(text=text, limit=86))
+        self.text(x=11, y=lin + 12.03, text=self.long_field(text=text, limit=86))
 
         text = get_tag_text(node=self.transp, url=url, tag="xMun")
-        self.text(x=98, y=lin + 12.03, txt=self.long_field(text=text, limit=51))
+        self.text(x=98, y=lin + 12.03, text=self.long_field(text=text, limit=51))
 
         self.text(
-            x=148, y=lin + 12.03, txt=get_tag_text(node=self.transp, url=url, tag="UF")
+            x=148, y=lin + 12.03, text=get_tag_text(node=self.transp, url=url, tag="UF")
         )
 
         self.text(
-            x=157, y=lin + 12.03, txt=get_tag_text(node=self.transp, url=url, tag="IE")
+            x=157, y=lin + 12.03, text=get_tag_text(node=self.transp, url=url, tag="IE")
         )
 
         self.text(
-            x=11, y=lin + 18.36, txt=get_tag_text(node=self.transp, url=url, tag="qVol")
+            x=11,
+            y=lin + 18.36,
+            text=get_tag_text(node=self.transp, url=url, tag="qVol"),
         )
 
         self.text(
-            x=37, y=lin + 18.36, txt=get_tag_text(node=self.transp, url=url, tag="esp")
+            x=37, y=lin + 18.36, text=get_tag_text(node=self.transp, url=url, tag="esp")
         )
 
         self.text(
             x=74,
             y=lin + 18.36,
-            txt=get_tag_text(node=self.transp, url=url, tag="marca"),
+            text=get_tag_text(node=self.transp, url=url, tag="marca"),
         )
 
         self.text(
             x=112,
             y=lin + 18.36,
-            txt=get_tag_text(node=self.transp, url=url, tag="nVol"),
+            text=get_tag_text(node=self.transp, url=url, tag="nVol"),
         )
 
         self.set_xy(x=147, y=lin + 16)
@@ -1207,8 +1140,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.transp, url=url, tag="pesoB"), precision=3
             ),
-            0,
-            0,
             "R",
         )
 
@@ -1218,15 +1149,13 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.transp, url=url, tag="pesoL"), precision=3
             ),
-            0,
-            0,
             "R",
         )
 
     def produtos_p(self, paginator=None, list_desc=None):
         h_produtos = (paginator[2] * 3) + 6.5
         self.set_font("Times", "B", 7)
-        self.text(x=11, y=self.lin_prod - 1, txt="DADOS DO PRODUTO/SERVIÇO")
+        self.text(x=11, y=self.lin_prod - 1, text="DADOS DO PRODUTO/SERVIÇO")
         self.rect(x=10, y=self.lin_prod, w=190, h=h_produtos, style="")
 
         cols = self.cols_produtos[0]
@@ -1244,13 +1173,13 @@ class Danfe(xFPDF):
 
             lbl = captions[id].split("\n")
             if len(lbl) == 1:
-                self.cell(col, 4, captions[id], 0, 0, "C")
+                self.cell(col, 4, captions[id], "C")
             else:
                 current_col = self.get_x()
                 current_lin = self.get_y()
 
                 self.multi_cell(
-                    w=col, h=2, txt=captions[id], border=0, align="C", fill=False
+                    w=col, h=2, text=captions[id], border=0, align="C", fill=False
                 )
 
                 self.set_xy(current_col + col, current_lin)
@@ -1293,12 +1222,12 @@ class Danfe(xFPDF):
         col = self.get_x()
         lin = self.get_y()
 
-        self.cell(width, 3, list_desc[0], 0, 0, "L")
+        self.cell(width, 3, list_desc[0], "L")
         self.ln(3)
 
         for desc in list_desc[1:]:
             self.set_x(x=col)
-            self.cell(width, 3, desc, 0, 0, "L")
+            self.cell(width, 3, desc, "L")
             self.ln(3)
 
         self.set_xy(col + width, lin)
@@ -1306,10 +1235,10 @@ class Danfe(xFPDF):
     def adic_p(self):
         lin = self.lin_adic
         self.set_font("Times", "B", 7)
-        self.text(x=11, y=lin - 1, txt="DADOS ADICIONAIS")
+        self.text(x=11, y=lin - 1, text="DADOS ADICIONAIS")
         self.set_font("Times", "", 5)
-        self.text(x=11, y=lin + 2.5, txt="INFORMAÇÕES COMPLEMENTARES")
-        self.text(x=106, y=lin + 2.5, txt="RESERVADO AO FISCO")
+        self.text(x=11, y=lin + 2.5, text="INFORMAÇÕES COMPLEMENTARES")
+        self.text(x=106, y=lin + 2.5, text="RESERVADO AO FISCO")
         self.rect(x=10, y=lin, w=190, h=self.height_adic, style="")
         self.line(105, lin, 105, lin + 29)
 
@@ -1319,13 +1248,13 @@ class Danfe(xFPDF):
             obs = "%s %s" % (fisco, obs)
 
         if obs:
-            txt_width = 700
+            text_width = 700
             self.set_xy(x=11, y=lin + 3.5)
             self.set_font("Times", "", 6)
             self.multi_cell(
                 w=93,
                 h=3,
-                txt=self.long_field(text=obs, limit=txt_width),
+                text=self.long_field(text=obs, limit=text_width),
                 border=0,
                 align="L",
                 fill=False,
@@ -1345,16 +1274,16 @@ class Danfe(xFPDF):
         self.set_xy(x=33, y=10)
 
         self.multi_cell(
-            w=150, h=3, txt=self.recibo_txt, border=0, align="L", fill=False
+            w=150, h=3, text=self.recibo_text, border=0, align="L", fill=False
         )
-        self.text(x=34, y=20.5, txt="DATA DE RECEBIMENTO")
-        self.text(x=79, y=20.5, txt="IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR")
-        self.text(x=201, y=12, txt="NF-e")
+        self.text(x=34, y=20.5, text="DATA DE RECEBIMENTO")
+        self.text(x=79, y=20.5, text="IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR")
+        self.text(x=201, y=12, text="NF-e")
         self.set_font("Times", "B", 8)
 
         nf = "{0:011,}".format(int(self.nr_nota)).replace(",", ".")
-        self.text(x=186, y=18, txt="Nº %s" % nf)
-        self.text(x=186, y=23, txt="SÉRIE %s" % self.serie_nf)
+        self.text(x=186, y=18, text="Nº %s" % nf)
+        self.text(x=186, y=23, text="SÉRIE %s" % self.serie_nf)
 
         self.rotate(0, x=33, y=10)
 
@@ -1372,7 +1301,7 @@ class Danfe(xFPDF):
         self.set_font("Times", "B", 10)
         self.set_xy(x=55, y=self.lin_emit + 2)
         text = get_tag_text(node=self.emit, url=url, tag="xNome")
-        self.multi_cell(w=90, h=5, txt=text, border=0, align="C", fill=False)
+        self.multi_cell(w=90, h=5, text=text, border=0, align="C", fill=False)
 
         self.set_font("Times", "B", 7)
         self.set_xy(x=55, y=self.lin_emit + 15)
@@ -1386,33 +1315,33 @@ class Danfe(xFPDF):
             get_tag_text(node=self.emit, url=url, tag="fone"),
         )
 
-        self.multi_cell(w=90, h=4, txt=end, border=0, align="C", fill=False)
+        self.multi_cell(w=90, h=4, text=end, border=0, align="C", fill=False)
 
         self.set_font("Times", "B", 12)
-        self.text(x=158, y=self.lin_emit + 5, txt="DANFE")
+        self.text(x=158, y=self.lin_emit + 5, text="DANFE")
 
         self.set_font("Times", "", 7)
-        self.text(x=152, y=self.lin_emit + 9, txt="Documento Auxiliar da")
-        self.text(x=152, y=self.lin_emit + 12, txt="Nota Fiscal Eletrônica")
-        self.text(x=152, y=self.lin_emit + 16, txt="0 - Entrada")
-        self.text(x=152, y=self.lin_emit + 19, txt="1 - Saída")
+        self.text(x=152, y=self.lin_emit + 9, text="Documento Auxiliar da")
+        self.text(x=152, y=self.lin_emit + 12, text="Nota Fiscal Eletrônica")
+        self.text(x=152, y=self.lin_emit + 16, text="0 - Entrada")
+        self.text(x=152, y=self.lin_emit + 19, text="1 - Saída")
         self.rect(x=170, y=self.lin_emit + 14, w=8, h=6, style="")
 
         self.set_font("Times", "B", 10)
-        self.text(x=173, y=self.lin_emit + 18, txt=self.tp_nf)
+        self.text(x=173, y=self.lin_emit + 18, text=self.tp_nf)
 
         self.set_font("Times", "B", 8)
         nf = "{0:011,}".format(int(self.nr_nota)).replace(",", ".")
-        self.text(x=152, y=self.lin_emit + 24, txt="Nº %s" % nf)
-        self.text(x=152, y=self.lin_emit + 27, txt="SÉRIE %s" % self.serie_nf)
+        self.text(x=152, y=self.lin_emit + 24, text="Nº %s" % nf)
+        self.text(x=152, y=self.lin_emit + 27, text="SÉRIE %s" % self.serie_nf)
         self.text(
             x=156,
             y=self.lin_emit + 30,
-            txt="Página %s de %s" % (self.current_page, self.nr_pages),
+            text="Página %s de %s" % (self.current_page, self.nr_pages),
         )
 
         self.set_font("Times", "", 5)
-        self.text(x=185, y=self.lin_emit + 2.5, txt="CONTROLE DO FISCO")
+        self.text(x=185, y=self.lin_emit + 2.5, text="CONTROLE DO FISCO")
 
         self.code128(
             self.key_nfe,
@@ -1424,9 +1353,9 @@ class Danfe(xFPDF):
         )
 
         self.rect(x=185, y=self.lin_emit + 15, w=98, h=6, style="")
-        self.text(x=186, y=self.lin_emit + 17.2, txt="CHAVE DE ACESSO")
+        self.text(x=186, y=self.lin_emit + 17.2, text="CHAVE DE ACESSO")
         self.set_font("Times", "B", 7)
-        self.text(x=205, y=self.lin_emit + 20, txt=" ".join(chunks(self.key_nfe, 4)))
+        self.text(x=205, y=self.lin_emit + 20, text=" ".join(chunks(self.key_nfe, 4)))
 
         self.set_font("Times", "", 8)
         self.set_xy(x=185, y=self.lin_emit + 23)
@@ -1435,32 +1364,36 @@ class Danfe(xFPDF):
             "www.nfe.fazenda.gov.br/portal ou no site da "
             "Sefaz autorizadora"
         )
-        self.multi_cell(w=98, h=3, txt=text, border=0, align="L", fill=False)
+        self.multi_cell(w=98, h=3, text=text, border=0, align="L", fill=False)
 
         self.set_font("Times", "", 5)
-        self.text(x=37, y=self.lin_emit + 26.1, txt="NATUREZA DA OPERAÇÃO")
-        self.text(x=37, y=self.lin_emit + 33.2, txt="INSCRIÇÃO ESTADUAL")
-        self.text(x=87, y=self.lin_emit + 33.2, txt="INSCRIÇÃO ESTADUAL DO SUBST. TRIB")
-        self.text(x=147, y=self.lin_emit + 33.2, txt="CNPJ")
+        self.text(x=37, y=self.lin_emit + 26.1, text="NATUREZA DA OPERAÇÃO")
+        self.text(x=37, y=self.lin_emit + 33.2, text="INSCRIÇÃO ESTADUAL")
+        self.text(
+            x=87, y=self.lin_emit + 33.2, text="INSCRIÇÃO ESTADUAL DO SUBST. TRIB"
+        )
+        self.text(x=147, y=self.lin_emit + 33.2, text="CNPJ")
 
-        self.text(x=185, y=self.lin_emit + 33.1, txt="PROTOCOLO DE AUTORIZAÇÃO DE USO")
+        self.text(x=185, y=self.lin_emit + 33.1, text="PROTOCOLO DE AUTORIZAÇÃO DE USO")
 
         self.set_font("Times", "", 8)
         text = get_tag_text(node=self.ide, url=url, tag="natOp")
-        self.text(x=37, y=self.lin_emit + 30, txt=self.long_field(text=text, limit=112))
+        self.text(
+            x=37, y=self.lin_emit + 30, text=self.long_field(text=text, limit=112)
+        )
 
         self.text(
             x=37,
             y=self.lin_emit + 37.1,
-            txt=get_tag_text(node=self.emit, url=url, tag="IE"),
+            text=get_tag_text(node=self.emit, url=url, tag="IE"),
         )
 
         text = get_tag_text(node=self.emit, url=url, tag="CNPJ")
-        self.text(x=147, y=self.lin_emit + 37.1, txt=format_cpf_cnpj(text))
+        self.text(x=147, y=self.lin_emit + 37.1, text=format_cpf_cnpj(text))
 
         self.set_font("Times", "B", 7)
         self.set_xy(x=184, y=self.lin_emit + 34)
-        self.cell(100, 5, self.prot_uso, 0, 0, "C")
+        self.cell(100, 5, self.prot_uso, "C")
 
         # Homologação
         if get_tag_text(node=self.ide, url=url, tag="tpAmb") == "2":
@@ -1468,7 +1401,7 @@ class Danfe(xFPDF):
             self.rotate(90, x=204, y=14)
             self.set_font("Times", "B", 40)
             self.set_xy(x=33, y=10)
-            self.text(x=34, y=20.5, txt="SEM VALOR FISCAL")
+            self.text(x=34, y=20.5, text="SEM VALOR FISCAL")
             self.rotate(0, x=90, y=60)
             self.set_text_color(r=0, g=0, b=0)
 
@@ -1476,7 +1409,7 @@ class Danfe(xFPDF):
         lin = self.lin_emit + 42
 
         self.set_font("Times", "B", 7)
-        self.text(x=37, y=lin - 1, txt="DESTINATÁRIO/REMETENTE")
+        self.text(x=37, y=lin - 1, text="DESTINATÁRIO/REMETENTE")
         self.rect(x=36, y=lin, w=248, h=20, style="")
         self.line(36, self.lin_emit + 48.66, 284, self.lin_emit + 48.66)
         self.line(36, self.lin_emit + 55.32, 284, self.lin_emit + 55.32)
@@ -1490,74 +1423,74 @@ class Danfe(xFPDF):
         self.line(158, self.lin_emit + 55.33, 158, self.lin_emit + 62)
 
         self.set_font("Times", "", 5)
-        self.text(x=37, y=lin + 2, txt="NOME/RAZÃO SOCIAL")
-        self.text(x=185, y=lin + 2, txt="CNPJ/CPF")
-        self.text(x=243, y=lin + 2, txt="DATA DE EMISSÃO")
+        self.text(x=37, y=lin + 2, text="NOME/RAZÃO SOCIAL")
+        self.text(x=185, y=lin + 2, text="CNPJ/CPF")
+        self.text(x=243, y=lin + 2, text="DATA DE EMISSÃO")
 
-        self.text(x=37, y=lin + 8.66, txt="ENDEREÇO")
-        self.text(x=152, y=lin + 8.66, txt="BAIRRO/DISTRITO")
-        self.text(x=205, y=lin + 8.66, txt="CEP")
-        self.text(x=243, y=lin + 8.66, txt="DATA DE ENTRADA/SAÍDA")
+        self.text(x=37, y=lin + 8.66, text="ENDEREÇO")
+        self.text(x=152, y=lin + 8.66, text="BAIRRO/DISTRITO")
+        self.text(x=205, y=lin + 8.66, text="CEP")
+        self.text(x=243, y=lin + 8.66, text="DATA DE ENTRADA/SAÍDA")
 
-        self.text(x=37, y=lin + 15.32, txt="MUNICÍPIO")
-        self.text(x=97, y=lin + 15.32, txt="FONE/FAX")
-        self.text(x=142, y=lin + 15.32, txt="UF")
-        self.text(x=159, y=lin + 15.32, txt="INSCRIÇÃO ESTADUAL")
-        self.text(x=243, y=lin + 15.32, txt="HORA DE ENTRADA/SAÍDA")
+        self.text(x=37, y=lin + 15.32, text="MUNICÍPIO")
+        self.text(x=97, y=lin + 15.32, text="FONE/FAX")
+        self.text(x=142, y=lin + 15.32, text="UF")
+        self.text(x=159, y=lin + 15.32, text="INSCRIÇÃO ESTADUAL")
+        self.text(x=243, y=lin + 15.32, text="HORA DE ENTRADA/SAÍDA")
 
         self.set_font("Times", "", 8)
 
         # Homologação
         if get_tag_text(node=self.ide, url=url, tag="tpAmb") == "1":
-            txt = get_tag_text(node=self.dest, url=url, tag="xNome")
+            text = get_tag_text(node=self.dest, url=url, tag="xNome")
         else:
-            txt = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
+            text = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
 
-        self.text(x=37, y=lin + 5.7, txt=self.long_field(text=txt, limit=145))
+        self.text(x=37, y=lin + 5.7, text=self.long_field(text=text, limit=145))
 
-        txt = get_tag_text(node=self.dest, url=url, tag="CNPJ")
-        if not txt:
-            txt = get_tag_text(node=self.dest, url=url, tag="CPF")
-        self.text(x=185, y=lin + 5.7, txt=format_cpf_cnpj(txt))
+        text = get_tag_text(node=self.dest, url=url, tag="CNPJ")
+        if not text:
+            text = get_tag_text(node=self.dest, url=url, tag="CPF")
+        self.text(x=185, y=lin + 5.7, text=format_cpf_cnpj(text))
 
         dt, h = getdateUTC(get_tag_text(node=self.ide, url=url, tag="dhEmi"))
-        self.text(x=243, y=lin + 5.7, txt=dt)
+        self.text(x=243, y=lin + 5.7, text=dt)
 
         end = "%s, %s" % (
             get_tag_text(node=self.dest, url=url, tag="xLgr"),
             get_tag_text(node=self.dest, url=url, tag="nro"),
         )
-        self.text(x=37, y=lin + 12.4, txt=self.long_field(text=end, limit=86))
+        self.text(x=37, y=lin + 12.4, text=self.long_field(text=end, limit=86))
 
-        txt = get_tag_text(node=self.dest, url=url, tag="xBairro")
-        self.text(x=152, y=lin + 12.4, txt=self.long_field(text=txt, limit=50))
+        text = get_tag_text(node=self.dest, url=url, tag="xBairro")
+        self.text(x=152, y=lin + 12.4, text=self.long_field(text=text, limit=50))
 
         self.text(
-            x=205, y=lin + 12.4, txt=get_tag_text(node=self.dest, url=url, tag="CEP")
+            x=205, y=lin + 12.4, text=get_tag_text(node=self.dest, url=url, tag="CEP")
         )
 
         dt, h = getdateUTC(get_tag_text(node=self.ide, url=url, tag="dhSaiEnt"))
-        self.text(x=243, y=lin + 12.4, txt=dt)
+        self.text(x=243, y=lin + 12.4, text=dt)
 
-        txt = get_tag_text(node=self.dest, url=url, tag="xMun")
-        self.text(x=37, y=lin + 19.1, txt=self.long_field(text=txt, limit=50))
+        text = get_tag_text(node=self.dest, url=url, tag="xMun")
+        self.text(x=37, y=lin + 19.1, text=self.long_field(text=text, limit=50))
 
         self.text(
-            x=97, y=lin + 19.1, txt=get_tag_text(node=self.dest, url=url, tag="fone")
+            x=97, y=lin + 19.1, text=get_tag_text(node=self.dest, url=url, tag="fone")
         )
 
         self.text(
-            x=142, y=lin + 19.1, txt=get_tag_text(node=self.dest, url=url, tag="UF")
+            x=142, y=lin + 19.1, text=get_tag_text(node=self.dest, url=url, tag="UF")
         )
 
         self.text(
-            x=159, y=lin + 19.1, txt=get_tag_text(node=self.dest, url=url, tag="IE")
+            x=159, y=lin + 19.1, text=get_tag_text(node=self.dest, url=url, tag="IE")
         )
 
     def fat_l(self):
         lin = self.lin_emit + 66
         self.set_font("Times", "B", 7)
-        self.text(x=37, y=lin - 1, txt="FATURA")
+        self.text(x=37, y=lin - 1, text="FATURA")
         self.rect(x=36, y=lin, w=248, h=13, style="")
         self.line(98, self.lin_emit + 66, 98, self.lin_emit + 79)
         self.line(160, self.lin_emit + 66, 160, self.lin_emit + 79)
@@ -1574,7 +1507,7 @@ class Danfe(xFPDF):
             self.text(
                 x=223,
                 y=lin + 5.7,
-                txt=get_tag_text(node=codvend, url=url, tag="xTexto"),
+                text=get_tag_text(node=codvend, url=url, tag="xTexto"),
             )
 
             vend = self.inf_adic.find(
@@ -1582,23 +1515,23 @@ class Danfe(xFPDF):
                 "obsCont[@xCampo='NomeVendedor']"
             )
 
-            txt = get_tag_text(node=vend, url=url, tag="xTexto")
-            self.text(x=223, y=lin + 12.24, txt=self.long_field(text=txt, limit=60))
+            text = get_tag_text(node=vend, url=url, tag="xTexto")
+            self.text(x=223, y=lin + 12.24, text=self.long_field(text=text, limit=60))
 
         self.set_font("Times", "", 5)
-        self.text(x=223, y=lin + 2.3, txt="CÓDIGO VENDEDOR")
-        self.text(x=223, y=lin + 8.6, txt="NOME VENDEDOR")
+        self.text(x=223, y=lin + 2.3, text="CÓDIGO VENDEDOR")
+        self.text(x=223, y=lin + 8.6, text="NOME VENDEDOR")
 
         self.set_xy(x=36, y=lin + 0.5)
-        self.cell(19, 2.5, "FATURA", 0, 0, "L")
-        self.cell(22, 2.5, "VENCIMENTO", 0, 0, "C")
-        self.cell(21, 2.5, "VALOR", 0, 0, "R")
-        self.cell(19, 2.5, "FATURA", 0, 0, "L")
-        self.cell(22, 2.5, "VENCIMENTO", 0, 0, "C")
-        self.cell(21, 2.5, "VALOR", 0, 0, "R")
-        self.cell(19, 2.5, "FATURA", 0, 0, "L")
-        self.cell(22, 2.5, "VENCIMENTO", 0, 0, "C")
-        self.cell(21, 2.5, "VALOR", 0, 0, "R")
+        self.cell(19, 2.5, "FATURA", "L")
+        self.cell(22, 2.5, "VENCIMENTO", "C")
+        self.cell(21, 2.5, "VALOR", "R")
+        self.cell(19, 2.5, "FATURA", "L")
+        self.cell(22, 2.5, "VENCIMENTO", "C")
+        self.cell(21, 2.5, "VALOR", "R")
+        self.cell(19, 2.5, "FATURA", "L")
+        self.cell(22, 2.5, "VENCIMENTO", "C")
+        self.cell(21, 2.5, "VALOR", "R")
 
         # Salta elemt 1 (tag fat) e considera os próximos 9 (tags dup)
         self.set_font("Times", "", 7)
@@ -1613,9 +1546,9 @@ class Danfe(xFPDF):
                 get_tag_text(node=dup, url=url, tag="vDup"), precision=2
             )
 
-            self.cell(19, 4, n_dup, 0, 0, "L")
-            self.cell(22, 4, dt, 0, 0, "C")
-            self.cell(21, 4, vlr, 0, 0, "R")
+            self.cell(19, 4, n_dup, "L")
+            self.cell(22, 4, dt, "C")
+            self.cell(21, 4, vlr, "R")
 
             if n_dup_ == 3:
                 col_ += 62
@@ -1630,7 +1563,7 @@ class Danfe(xFPDF):
     def impostos_l(self):
         lin = self.lin_emit + 83
         self.set_font("Times", "B", 7)
-        self.text(x=37, y=92, txt="CÁLCULO DO IMPOSTO")
+        self.text(x=37, y=92, text="CÁLCULO DO IMPOSTO")
         self.rect(x=36, y=lin, w=248, h=13, style="")
         self.line(36, self.lin_emit + 89.5, 284, self.lin_emit + 89.5)
 
@@ -1646,19 +1579,19 @@ class Danfe(xFPDF):
         self.line(195, self.lin_emit + 89.5, 195, self.lin_emit + 96)
 
         self.set_font("Times", "", 5)
-        self.text(x=37, y=lin + 2, txt="BASE DE CÁLCULO DO ICMS")
-        self.text(x=87, y=lin + 2, txt="VALOR DO ICMS")
-        self.text(x=138, y=lin + 2, txt="BASE DE CÁLCULO DO ICMS ST")
-        self.text(x=188, y=lin + 2, txt="VALOR DO ICMS ST")
-        self.text(x=238, y=lin + 2, txt="VALOR TOTAL DOS PRODUTOS")
+        self.text(x=37, y=lin + 2, text="BASE DE CÁLCULO DO ICMS")
+        self.text(x=87, y=lin + 2, text="VALOR DO ICMS")
+        self.text(x=138, y=lin + 2, text="BASE DE CÁLCULO DO ICMS ST")
+        self.text(x=188, y=lin + 2, text="VALOR DO ICMS ST")
+        self.text(x=238, y=lin + 2, text="VALOR TOTAL DOS PRODUTOS")
 
-        self.text(x=37, y=lin + 8.5, txt="VALOR DO FRETE")
-        self.text(x=67, y=lin + 8.5, txt="VALOR DO SEGURO")
-        self.text(x=96, y=lin + 8.5, txt="DESCONTO")
-        self.text(x=126, y=lin + 8.5, txt="OUTRAS DESP. ACESSÓRIAS")
-        self.text(x=166, y=lin + 8.5, txt="VALOR DO IPI")
-        self.text(x=196, y=lin + 8.5, txt="VALOR APROX. TRIBUTOS")
-        self.text(x=238, y=lin + 8.5, txt="VALOR TOTAL DA NOTA")
+        self.text(x=37, y=lin + 8.5, text="VALOR DO FRETE")
+        self.text(x=67, y=lin + 8.5, text="VALOR DO SEGURO")
+        self.text(x=96, y=lin + 8.5, text="DESCONTO")
+        self.text(x=126, y=lin + 8.5, text="OUTRAS DESP. ACESSÓRIAS")
+        self.text(x=166, y=lin + 8.5, text="VALOR DO IPI")
+        self.text(x=196, y=lin + 8.5, text="VALOR APROX. TRIBUTOS")
+        self.text(x=238, y=lin + 8.5, text="VALOR TOTAL DA NOTA")
 
         self.set_font("Times", "", 8)
         self.set_xy(x=36, y=lin + 2.7)
@@ -1668,8 +1601,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vBC"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1678,8 +1609,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vICMS"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1688,8 +1617,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vBCST"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1698,8 +1625,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vST"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1708,8 +1633,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vProd"), precision=2
             ),
-            0,
-            0,
             "R",
         )
 
@@ -1720,8 +1643,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vFrete"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1730,8 +1651,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vSeg"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1740,8 +1659,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vDesc"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1750,8 +1667,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vOutro"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1760,8 +1675,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vIPI"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1770,8 +1683,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vTotTrib"), precision=2
             ),
-            0,
-            0,
             "R",
         )
         self.cell(
@@ -1780,15 +1691,13 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.totais, url=url, tag="vNF"), precision=2
             ),
-            0,
-            0,
             "R",
         )
 
     def transp_l(self):
         lin = self.lin_emit + 100
         self.set_font("Times", "B", 7)
-        self.text(x=37, y=lin - 1, txt="TRANSPORTADOR/VOLUMES TRANSPORTADOS")
+        self.text(x=37, y=lin - 1, text="TRANSPORTADOR/VOLUMES TRANSPORTADOS")
         self.rect(x=36, y=lin, w=248, h=20, style="")
         self.line(36, self.lin_emit + 106.66, 284, self.lin_emit + 106.66)
         self.line(36, self.lin_emit + 113.3, 284, self.lin_emit + 113.3)
@@ -1805,67 +1714,69 @@ class Danfe(xFPDF):
         self.line(248, self.lin_emit + 113.3, 248, self.lin_emit + 120)
 
         self.set_font("Times", "", 5)
-        self.text(x=37, y=lin + 2, txt="RAZÃO SOCIAL")
-        self.text(x=122, y=lin + 2, txt="FRETE POR CONTA")
-        self.text(x=147, y=lin + 2, txt="CÓDIGO ANTT")
-        self.text(x=184, y=lin + 2, txt="PLACA DO VEÍCULO")
-        self.text(x=215, y=lin + 2, txt="UF")
-        self.text(x=227, y=lin + 2, txt="CNPJ/CPF")
-        self.text(x=37, y=lin + 8.7, txt="ENDEREÇO")
-        self.text(x=147, y=lin + 8.7, txt="MUNICÍPIO")
-        self.text(x=215, y=lin + 8.7, txt="UF")
-        self.text(x=227, y=lin + 8.7, txt="INSCRIÇÃO ESTADUAL")
+        self.text(x=37, y=lin + 2, text="RAZÃO SOCIAL")
+        self.text(x=122, y=lin + 2, text="FRETE POR CONTA")
+        self.text(x=147, y=lin + 2, text="CÓDIGO ANTT")
+        self.text(x=184, y=lin + 2, text="PLACA DO VEÍCULO")
+        self.text(x=215, y=lin + 2, text="UF")
+        self.text(x=227, y=lin + 2, text="CNPJ/CPF")
+        self.text(x=37, y=lin + 8.7, text="ENDEREÇO")
+        self.text(x=147, y=lin + 8.7, text="MUNICÍPIO")
+        self.text(x=215, y=lin + 8.7, text="UF")
+        self.text(x=227, y=lin + 8.7, text="INSCRIÇÃO ESTADUAL")
 
-        self.text(x=37, y=lin + 15.4, txt="QUANTIDADE")
-        self.text(x=72, y=lin + 15.4, txt="ESPÉCIE")
-        self.text(x=122, y=lin + 15.4, txt="MARCA")
-        self.text(x=171, y=lin + 15.4, txt="NUMERAÇÃO")
-        self.text(x=215, y=lin + 15.4, txt="PESO BRUTO")
-        self.text(x=249, y=lin + 15.4, txt="PESO LÍQUIDO")
+        self.text(x=37, y=lin + 15.4, text="QUANTIDADE")
+        self.text(x=72, y=lin + 15.4, text="ESPÉCIE")
+        self.text(x=122, y=lin + 15.4, text="MARCA")
+        self.text(x=171, y=lin + 15.4, text="NUMERAÇÃO")
+        self.text(x=215, y=lin + 15.4, text="PESO BRUTO")
+        self.text(x=249, y=lin + 15.4, text="PESO LÍQUIDO")
 
         self.set_font("Times", "", 8)
         text = get_tag_text(node=self.transp, url=url, tag="xNome")
-        self.text(x=37, y=lin + 5.7, txt=self.long_field(text=text, limit=85))
+        self.text(x=37, y=lin + 5.7, text=self.long_field(text=text, limit=85))
 
         self.text(
             x=122,
             y=lin + 5.7,
-            txt=tp_frete[get_tag_text(node=self.transp, url=url, tag="modFrete")],
+            text=tp_frete[get_tag_text(node=self.transp, url=url, tag="modFrete")],
         )
 
         text = get_tag_text(node=self.transp, url=url, tag="CNPJ")
-        self.text(x=227, y=lin + 5.7, txt=format_cpf_cnpj(text))
+        self.text(x=227, y=lin + 5.7, text=format_cpf_cnpj(text))
 
         text = get_tag_text(node=self.transp, url=url, tag="xEnder")
-        self.text(x=37, y=lin + 12.5, txt=self.long_field(text=text, limit=110))
+        self.text(x=37, y=lin + 12.5, text=self.long_field(text=text, limit=110))
 
         text = get_tag_text(node=self.transp, url=url, tag="xMun")
-        self.text(x=147, y=lin + 12.5, txt=self.long_field(text=text, limit=51))
+        self.text(x=147, y=lin + 12.5, text=self.long_field(text=text, limit=51))
 
         self.text(
-            x=215, y=lin + 12.5, txt=get_tag_text(node=self.transp, url=url, tag="UF")
+            x=215, y=lin + 12.5, text=get_tag_text(node=self.transp, url=url, tag="UF")
         )
 
         self.text(
-            x=227, y=lin + 12.5, txt=get_tag_text(node=self.transp, url=url, tag="IE")
+            x=227, y=lin + 12.5, text=get_tag_text(node=self.transp, url=url, tag="IE")
         )
 
         self.text(
-            x=37, y=lin + 19.2, txt=get_tag_text(node=self.transp, url=url, tag="qVol")
+            x=37, y=lin + 19.2, text=get_tag_text(node=self.transp, url=url, tag="qVol")
         )
 
         self.text(
-            x=72, y=lin + 19.2, txt=get_tag_text(node=self.transp, url=url, tag="esp")
+            x=72, y=lin + 19.2, text=get_tag_text(node=self.transp, url=url, tag="esp")
         )
 
         self.text(
             x=122,
             y=lin + 19.2,
-            txt=get_tag_text(node=self.transp, url=url, tag="marca"),
+            text=get_tag_text(node=self.transp, url=url, tag="marca"),
         )
 
         self.text(
-            x=171, y=lin + 19.2, txt=get_tag_text(node=self.transp, url=url, tag="nVol")
+            x=171,
+            y=lin + 19.2,
+            text=get_tag_text(node=self.transp, url=url, tag="nVol"),
         )
 
         self.set_xy(x=214, y=lin + 16.7)
@@ -1875,8 +1786,6 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.transp, url=url, tag="pesoB"), precision=3
             ),
-            0,
-            0,
             "R",
         )
 
@@ -1886,15 +1795,13 @@ class Danfe(xFPDF):
             format_number(
                 get_tag_text(node=self.transp, url=url, tag="pesoL"), precision=3
             ),
-            0,
-            0,
             "R",
         )
 
     def produtos_l(self, paginator=None, list_desc=None):
         h_produtos = (paginator[2] * 3) + 6.5
         self.set_font("Times", "B", 7)
-        self.text(x=37, y=self.lin_prod - 1, txt="DADOS DO PRODUTO/SERVIÇO")
+        self.text(x=37, y=self.lin_prod - 1, text="DADOS DO PRODUTO/SERVIÇO")
         self.rect(x=36, y=self.lin_prod, w=248, h=h_produtos, style="")
 
         cols = self.cols_produtos[0]
@@ -1912,13 +1819,13 @@ class Danfe(xFPDF):
 
             lbl = captions[id].split("\n")
             if len(lbl) == 1:
-                self.cell(col, 4, captions[id], 0, 0, "C")
+                self.cell(col, 4, captions[id], "C")
             else:
                 current_col = self.get_x()
                 current_lin = self.get_y()
 
                 self.multi_cell(
-                    w=col, h=2, txt=captions[id], border=0, align="C", fill=False
+                    w=col, h=2, text=captions[id], border=0, align="C", fill=False
                 )
 
                 self.set_xy(current_col + col, current_lin)
@@ -1957,10 +1864,10 @@ class Danfe(xFPDF):
 
     def adic_l(self):
         self.set_font("Times", "B", 7)
-        self.text(x=37, y=166, txt="DADOS ADICIONAIS")
+        self.text(x=37, y=166, text="DADOS ADICIONAIS")
         self.set_font("Times", "", 5)
-        self.text(x=37, y=169.5, txt="INFORMAÇÕES COMPLEMENTARES")
-        self.text(x=161, y=169.5, txt="RESERVADO AO FISCO")
+        self.text(x=37, y=169.5, text="INFORMAÇÕES COMPLEMENTARES")
+        self.text(x=161, y=169.5, text="RESERVADO AO FISCO")
         self.rect(x=36, y=167, w=248, h=29, style="")
         self.line(160, 167, 160, 196)
 
@@ -1970,13 +1877,13 @@ class Danfe(xFPDF):
             obs = "%s %s" % (fisco, obs)
 
         if obs:
-            txt_width = 910
+            text_width = 910
             self.set_xy(x=36, y=171)
             self.set_font("Times", "", 6)
             self.multi_cell(
                 w=120,
                 h=3,
-                txt=self.long_field(text=obs, limit=txt_width),
+                text=self.long_field(text=obs, limit=text_width),
                 border=0,
                 align="L",
                 fill=False,
@@ -2014,10 +1921,10 @@ class DaCCe(xFPDF):
             self.rect(x=10, y=10, w=190, h=33, style="")
             self.line(90, 10, 90, 43)
 
-            txt = ""
+            text = ""
             if emitente:
                 emitente_nome = emitente["nome"]
-                txt = "%s\n%s\n%s - %s %s" % (
+                text = "%s\n%s\n%s - %s %s" % (
                     emitente["end"],
                     emitente["bairro"],
                     emitente["cidade"],
@@ -2038,25 +1945,25 @@ class DaCCe(xFPDF):
             self.set_xy(x=col_, y=16)
             self.set_font("Times", "B", 10)
             self.multi_cell(
-                w=w_, h=4, txt=emitente_nome, border=0, align="C", fill=False
+                w=w_, h=4, text=emitente_nome, border=0, align="C", fill=False
             )
             self.set_xy(x=11, y=col_end)
             self.set_font("Times", "", 8)
-            self.multi_cell(w=80, h=4, txt=txt, border=0, align="C", fill=False)
+            self.multi_cell(w=80, h=4, text=text, border=0, align="C", fill=False)
 
             self.set_font("Times", "B", 10)
-            self.text(x=118, y=16, txt="Representação Gráfica de CC-e")
+            self.text(x=118, y=16, text="Representação Gráfica de CC-e")
             self.set_font("Times", "I", 9)
-            self.text(x=123, y=20, txt="(Carta de Correção Eletrônica)")
+            self.text(x=123, y=20, text="(Carta de Correção Eletrônica)")
 
             self.set_font("Times", "", 8)
             self.text(
-                x=92, y=30, txt="ID do Evento: %s" % inf_event.attrib.get("Id")[2:]
+                x=92, y=30, text="ID do Evento: %s" % inf_event.attrib.get("Id")[2:]
             )
 
             dt, hr = getdateUTC(get_tag_text(node=inf_event, url=url, tag="dhEvento"))
 
-            self.text(x=92, y=35, txt="Criado em:  %s %s" % (dt, hr))
+            self.text(x=92, y=35, text="Criado em:  %s %s" % (dt, hr))
 
             dt, hr = getdateUTC(
                 get_tag_text(node=inf_ret_Event, url=url, tag="dhRegEvento")
@@ -2067,7 +1974,7 @@ class DaCCe(xFPDF):
             self.text(
                 x=92,
                 y=40,
-                txt="Prococolo: %s - "
+                text="Prococolo: %s - "
                 "Registrado na SEFAZ em: %s %s" % (n_prot, dt, hr),
             )
 
@@ -2076,7 +1983,7 @@ class DaCCe(xFPDF):
             self.line(10, 83, 200, 83)
 
             self.set_xy(x=11, y=48)
-            txt = (
+            text = (
                 "De acordo com as determinações legais vigentes, vimos por "
                 "meio desta comunicar-lhe que a Nota Fiscal, "
                 "abaixo referenciada, contêm irregularidades que estão "
@@ -2086,45 +1993,45 @@ class DaCCe(xFPDF):
             )
 
             self.set_font("Times", "", 8)
-            self.multi_cell(w=185, h=4, txt=txt, border=0, align="L", fill=False)
+            self.multi_cell(w=185, h=4, text=text, border=0, align="L", fill=False)
 
             key = get_tag_text(node=inf_event, url=url, tag="chNFe")
             self.code128(key, 124, 60, height=15, thickness=0.265, quiet_zone=True)
 
             self.set_font("Times", "", 7)
-            self.text(x=130, y=78, txt=" ".join(chunks(key, 4)))
+            self.text(x=130, y=78, text=" ".join(chunks(key, 4)))
 
             self.set_font("Times", "B", 9)
 
-            txt = "CNPJ Destinatário:  %s" % format_cpf_cnpj(
+            text = "CNPJ Destinatário:  %s" % format_cpf_cnpj(
                 get_tag_text(node=inf_ret_Event, url=url, tag="CNPJDest")
             )
-            self.text(x=12, y=71, txt=txt)
+            self.text(x=12, y=71, text=text)
 
-            txt = "Nota Fiscal: %s - Série: %s" % (
+            text = "Nota Fiscal: %s - Série: %s" % (
                 "{0:011,}".format(int(key[25:34])).replace(",", "."),
                 key[22:25],
             )
 
-            self.text(x=12, y=76, txt=txt)
+            self.text(x=12, y=76, text=text)
 
             self.set_xy(x=11, y=84)
-            txt = get_tag_text(node=det_event, url=url, tag="xCondUso")
+            text = get_tag_text(node=det_event, url=url, tag="xCondUso")
             self.set_font("Times", "I", 7)
-            self.multi_cell(w=185, h=3, txt=txt, border=0, align="L", fill=False)
+            self.multi_cell(w=185, h=3, text=text, border=0, align="L", fill=False)
 
             # Correções
             self.set_font("Times", "B", 9)
-            self.text(x=11, y=103, txt="CORREÇÕES A SEREM CONSIDERADAS")
+            self.text(x=11, y=103, text="CORREÇÕES A SEREM CONSIDERADAS")
 
             self.rect(x=10, y=104, w=190, h=170, style="")
 
             self.set_xy(x=11, y=106)
-            txt = get_tag_text(node=det_event, url=url, tag="xCorrecao")
-            self.multi_cell(w=185, h=4, txt=txt, border=0, align="L", fill=False)
+            text = get_tag_text(node=det_event, url=url, tag="xCorrecao")
+            self.multi_cell(w=185, h=4, text=text, border=0, align="L", fill=False)
 
             self.set_xy(x=11, y=265)
-            txt = (
+            text = (
                 "Este documento é uma representação gráfica da CC-e e "
                 "foi impresso apenas para sua informação e não possue validade "
                 "fiscal.\nA CC-e deve ser recebida e mantida em arquivo "
@@ -2133,4 +2040,4 @@ class DaCCe(xFPDF):
             )
 
             self.set_font("Times", "I", 8)
-            self.multi_cell(w=185, h=4, txt=txt, border=0, align="C", fill=False)
+            self.multi_cell(w=185, h=4, text=text, border=0, align="C", fill=False)
