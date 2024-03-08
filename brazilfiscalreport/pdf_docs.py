@@ -52,7 +52,7 @@ DACTe - Conhecimento de Transporte  TO DO
 
 import re
 import xml.etree.ElementTree as ET
-from PyFiscalReport.xfpdf import xFPDF
+from brazilfiscalreport.xfpdf import xFPDF
 
 
 def getdateUTC(date_utc):
@@ -613,9 +613,9 @@ class Danfe(xFPDF):
     def recibo_p(self):
         if self.receipt_pos == "top":
             lin = 10
-            self.dashed_line(
-                10, lin + 19, 200, lin + 19, dash_length=0.5, space_length=1
-            )
+            self.set_line_width(0.5)
+            self.line(10, 10, 100, 10)
+            self.set_line_width(width=0.2)
         else:
             lin = self.lin_adic + self.height_adic + 2
             self.dashed_line(10, lin, 200, lin, dash_length=0.5, space_length=1)
