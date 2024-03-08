@@ -1,10 +1,10 @@
 import os
 import unittest
 
-from PyFiscalReport import pdf_docs
+from brazilfiscalreport import pdf_docs
 
 
-class TestPynfedance(unittest.TestCase):
+class TestBrazilFiscalReport(unittest.TestCase):
     def setUp(self):
         super().setUp()
 
