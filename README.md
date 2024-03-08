@@ -27,15 +27,20 @@ Roadmap
 ```python
 from pdf_docs import Danfe, DaCCe
 
-# DANFE
-# cfg_layout -> 3 posibilidades de layout das colunas dos itens no modo retrato: 'ICMS_ST', 'ICMS_ST', 'ICMS_IPI'
-# receipt_pos -> impressão do recibo de entrega no topo da DANFE ('top') ou no rodapé ('bottom')
-
+# Emissão da DANFE
+# Configuração de Layout do DANFE
+# A opção 'cfg_layout' define o layout das colunas dos itens no DANFE em modo retrato. Existem três configurações possíveis:
+# 1. 'ICMS_ST'
+# 2. 'ICMS_ST'
+# 3. 'ICMS_IPI
+# A opção 'receipt_pos' controla a posição de impressão do recibo de entrega no DANFE:
+# - 'top': Recibo impresso no topo da página.
+# - 'bottom': Recibo impresso no rodapé da página.
 xmls = [open( "xml_nfe.xml", "r", encoding="utf8").read()]
 pdf = Danfe(xmls=xmls, image=None, cfg_layout='ICMS_ST', receipt_pos='top')
 pdf.output('danfe.pdf')
 
-# DaCCe
+# Emissão da DACCe
 emitente = {'nome': 'COMPANY ME-EPP',
             'end': 'AV TEST, 00',
             'bairro' : 'TEST',
@@ -43,8 +48,6 @@ emitente = {'nome': 'COMPANY ME-EPP',
             'cidade': 'SÃO PAULO',
             'uf': 'SP',
             'fone': '(11) 1234-5678'}
-
-
 xmls = [open( "xml_cce.xml", "r", encoding="utf8").read(),]
 pdf_cce = DaCCe(xmls=xmls, emitente=emitente, image=None)
 pdf_cce.output('cce.pdf')
