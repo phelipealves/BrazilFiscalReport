@@ -29,7 +29,7 @@ from pdf_docs import Danfe, DaCCe
 
 # Emissão da DANFE
 # Configuração de Layout do DANFE
-# A opção 'cfg_layout' define o layout das colunas dos itens no DANFE em modo retrato. 
+# A opção 'cfg_layout' define o layout das colunas dos itens no DANFE em modo retrato.
 # Existem três configurações possíveis:
 # 1. 'ICMS_ST'
 # 2. 'ICMS_ST'
