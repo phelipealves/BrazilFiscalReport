@@ -1,6 +1,12 @@
-# PyFiscalReport
+# BrazilFiscalReport
 
-Library to generate DANFE PDFs (portrait and landscape), DACCe from xml's.
+Python library for generating Brazilian auxiliary fiscal documents in PDF from XML documents.
+
+## Supported Documents
+
+DANFE - Documento Auxiliar da Nota Fiscal Eletrônica (NF-e)
+
+DACCe - Documento Auxiliar da Carta de Correção Eletrônica (CC-e )
 
 Dependencies:
 
