@@ -29,7 +29,7 @@ jobs:
           python -m pip install --upgrade pip setuptools fpdf2 pytest  pytest-cov
       - name: Test
         run: |
-          pytest --cov=./brazilfiscalreport --cov-report=xml --cov-branch --doctest-glob="docs/*.md" test/test_brazil_fiscal_report.py
+          pytest --cov=./brazilfiscalreport --cov-report=xml --cov-branch --doctest-glob="docs/*.md" tests/test_brazil_fiscal_report.py
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:

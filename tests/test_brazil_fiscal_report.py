@@ -1,8 +1,7 @@
 import os
 import unittest
 
-from brazilfiscalreport import pdf_docs
-from brazilfiscalreport import xfpdf
+from brazilfiscalreport import pdf_docs, xfpdf
 
 
 class TestBrazilFiscalReport(unittest.TestCase):
@@ -40,7 +39,7 @@ class TestBrazilFiscalReport(unittest.TestCase):
         current_dir = os.path.dirname(os.path.realpath(__file__))
 
         xml_file_path = os.path.join(current_dir, "data", "NFe_teste_1.xml")
-        with open(xml_file_path, "r", encoding="utf8") as f:
+        with open(xml_file_path, encoding="utf8") as f:
             xmls = [f.read()]
         pdf = pdf_docs.Danfe(
             xmls=xmls, image=None, cfg_layout="ICMS_ST", receipt_pos="top"
@@ -53,7 +52,7 @@ class TestBrazilFiscalReport(unittest.TestCase):
         current_dir = os.path.dirname(os.path.realpath(__file__))
 
         xml_file_path = os.path.join(current_dir, "data", "NFe_teste_3.xml")
-        with open(xml_file_path, "r", encoding="utf8") as f:
+        with open(xml_file_path, encoding="utf8") as f:
             xmls = [f.read()]
         pdf = pdf_docs.Danfe(
             xmls=xmls, image=None, cfg_layout="ICMS_ST", receipt_pos="top"
@@ -69,7 +68,7 @@ class TestBrazilFiscalReport(unittest.TestCase):
 
         xml_file_path = os.path.join(current_dir, "data", "NFe_teste_1.xml")
         logo_file_path = os.path.join(current_dir, "data", "Logo-Engenere.jpg")
-        with open(xml_file_path, "r", encoding="utf8") as f:
+        with open(xml_file_path, encoding="utf8") as f:
             xmls = [f.read()]
         pdf = pdf_docs.Danfe(
             xmls=xmls, image=logo_file_path, cfg_layout="ICMS_ST", receipt_pos="top"
@@ -82,7 +81,7 @@ class TestBrazilFiscalReport(unittest.TestCase):
         current_dir = os.path.dirname(os.path.realpath(__file__))
         xml_file_path = os.path.join(current_dir, "data", "NFe_teste_1.xml")
 
-        with open(xml_file_path, "r", encoding="utf8") as f:
+        with open(xml_file_path, encoding="utf8") as f:
             xmls = [f.read()]
         xmls_paisagem = [
             xml.replace("<tpImp>1</tpImp>", "<tpImp>2</tpImp>") for xml in xmls
@@ -111,7 +110,7 @@ class TestBrazilFiscalReport(unittest.TestCase):
             "uf": "SP",
             "fone": "(11) 1234-5678",
         }
-        with open(xml_file_path, "r", encoding="utf8") as f:
+        with open(xml_file_path, encoding="utf8") as f:
             xmls = [f.read()]
 
         pdf_cce = pdf_docs.DaCCe(xmls=xmls, emitente=emitente, image=logo_file_path)
