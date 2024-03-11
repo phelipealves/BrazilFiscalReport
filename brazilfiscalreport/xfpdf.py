@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
+import base64
+from io import BytesIO
 
 from fpdf import FPDF
-
-from io import BytesIO as IO
-
-import base64
-
 
 # Value Weights 128A    128B    128C
 CODE128_CHART = """
@@ -132,15 +128,16 @@ class xFPDF(FPDF):
     def load_resource(self, reason, filename, urlopen):
         if reason == "image":
             if filename.startswith("http://") or filename.startswith("https://"):
-                # Vê ess alinha urlopen
-                f = IO(urlopen(filename).read())
+                with BytesIO(urlopen(filename).read()) as f:
+                    return f
             elif filename.startswith("base64"):
-                f = filename.split("base64,")[1]
-                f = base64.b64decode(f)
-                f = IO(f)
+                data = filename.split("base64,")[1]
+                decoded_data = base64.b64decode(data)
+                with BytesIO(decoded_data) as f:
+                    return f
             else:
-                f = open(filename, "rb")
-            return f
+                with open(filename, "rb") as f:
+                    return f
         else:
             self.error('Unknown resource loading reason "%s"' % reason)
 
@@ -191,7 +188,7 @@ class xFPDF(FPDF):
         return codes
 
     def code128(self, text, x, y, height=10, thickness=3, quiet_zone=True):
-        if not text[-1] == CODE128B["Stop"]:
+        if text[-1] != CODE128B["Stop"]:
             text = self.code128_format(text)
 
         barcode_widths = []
