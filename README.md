@@ -74,7 +74,7 @@ pip install -e file:///path/to/your/package#egg=brazilfiscalreport
 ```
 ### Run the tests
 ```
-python3 -m unittest test/test_PyFiscalReport.py
+pytest tests/test_brazil_fiscal_report.py
 ```
 
 ## Credits
