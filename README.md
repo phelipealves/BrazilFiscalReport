@@ -1,6 +1,12 @@
-# BrazilFiscalReport
+# Brazil Fiscal Report
 
 Python library for generating Brazilian auxiliary fiscal documents in PDF from XML documents.
+
+[![image](https://github.com/engenere/BrazilFiscalReport/workflows/tests/badge.svg)](https://github.com/Engenere/BrazilFiscalReport/actions)
+[![image](https://codecov.io/gh/engenere/BrazilFiscalReport/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Engenere/BrazilFiscalReport)
+[![image](https://img.shields.io/github/languages/top/Engenere/brazilfiscalreport)](https://pypi.org/project/BrazilFiscalReport/)
+[![image](https://img.shields.io/pypi/v/brazilfiscalreport.svg)](https://pypi.org/project/BrazilFiscalReport/)
+[![image](https://img.shields.io/pypi/l/brazilfiscalreport)](https://github.com/Engenere/BrazilFiscalReport/blob/main/LICENSE)
 
 ## Supported Documents
 
@@ -8,14 +14,14 @@ DANFE - Documento Auxiliar da Nota Fiscal Eletrônica (NF-e)
 
 DACCe - Documento Auxiliar da Carta de Correção Eletrônica (CC-e )
 
-Dependencies:
+
+## Dependencies:
 
 - FPDF2
 (pip install fpdf2)
 
 Roadmap
 -
-- Unitary tests
 - Implement DACTe
 - Documentation
 
@@ -25,7 +31,7 @@ Roadmap
 
 
 ```python
-from pdf_docs import Danfe, DaCCe
+from brazilfiscalreport.pdf_docs import Danfe, DaCCe
 
 # Emissão da DANFE
 # Configuração de Layout do DANFE
@@ -60,11 +66,11 @@ pdf_cce.output('cce.pdf')
 ### Cloning the repository
 
 ```
-git clone https://github.com/Engenere/PyFiscalReport.git
+git clone https://github.com/Engenere/BrazilFiscalReport
 ```
-### Install the lib locally
+### Install lib
 ```
-pip install -e file:///path/to/your/package#egg=package_name
+pip install -e file:///path/to/your/package#egg=brazilfiscalreport
 ```
 ### Run the tests
 ```
