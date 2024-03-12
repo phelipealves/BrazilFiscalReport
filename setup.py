@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="BrazilFiscalReport",
-    version="0.0.1",
+    version="0.1.0",
     long_description="""
     Python library for generating Brazilian auxiliary
     fiscal documents in PDF from XML documents.
