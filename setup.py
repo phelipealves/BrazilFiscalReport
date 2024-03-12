@@ -8,6 +8,9 @@ setup(
     fiscal documents in PDF from XML documents.
     """,
     url="https://github.com/Engenere/BrazilFiscalReport",
-    author="Cristiano Mafra Junior",
+    author="Engenere",
+    keywords="brazil fiscal report",
+    packages=["brazilfiscalreport"],
     license="AGPL-3.0",
+    install_requires=["fpdf"],
 )
