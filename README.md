@@ -18,10 +18,13 @@ DACCe - Documento Auxiliar da Carta de Correção Eletrônica (CC-e )
 ## Dependencies:
 
 - FPDF2
-(pip install fpdf2)
 
-Roadmap
--
+## To install:
+```bash
+pip install brazilfiscalreport
+```
+
+## Roadmap
 - Implement DACTe
 - Documentation
 
