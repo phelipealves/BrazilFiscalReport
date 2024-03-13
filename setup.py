@@ -12,5 +12,5 @@ setup(
     keywords="brazil fiscal report",
     packages=["brazilfiscalreport"],
     license="AGPL-3.0",
-    install_requires=["fpdf"],
+    install_requires=["fpdf2"],
 )
