@@ -40,14 +40,14 @@ from brazilfiscalreport.pdf_docs import Danfe, DaCCe
 # Configuração de Layout do DANFE
 # A opção 'cfg_layout' define o layout das colunas dos itens no DANFE em modo retrato.
 # Existem três configurações possíveis:
-# 1. 'ICMS_ST'
+# 1. 'ICMS'
 # 2. 'ICMS_ST'
-# 3. 'ICMS_IPI
+# 3. 'ICMS_IPI' 
 # A opção 'receipt_pos' controla a posição de impressão do recibo de entrega no DANFE:
 # - 'top': Recibo impresso no topo da página.
 # - 'bottom': Recibo impresso no rodapé da página.
 xmls = [open( "xml_nfe.xml", "r", encoding="utf8").read()]
-pdf = Danfe(xmls=xmls, image=None, cfg_layout='ICMS_ST', receipt_pos='top')
+pdf = Danfe(xmls=xmls, image=None, cfg_layout='ICMS_IPI', receipt_pos='top')
 pdf.output('danfe.pdf')
 
 # Emissão da DACCe
