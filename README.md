@@ -42,7 +42,7 @@ from brazilfiscalreport.pdf_docs import Danfe, DaCCe
 # Existem três configurações possíveis:
 # 1. 'ICMS'
 # 2. 'ICMS_ST'
-# 3. 'ICMS_IPI' 
+# 3. 'ICMS_IPI'
 # A opção 'receipt_pos' controla a posição de impressão do recibo de entrega no DANFE:
 # - 'top': Recibo impresso no topo da página.
 # - 'bottom': Recibo impresso no rodapé da página.
