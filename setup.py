@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 setup(
     name="BrazilFiscalReport",
@@ -10,7 +10,7 @@ setup(
     url="https://github.com/Engenere/BrazilFiscalReport",
     author="Engenere",
     keywords="brazil fiscal report",
-    packages=["brazilfiscalreport"],
+    packages=find_packages(),
     license="AGPL-3.0",
-    install_requires=["fpdf2"],
+    install_requires=["fpdf2", "phonenumbers", "python-barcode"],
 )
