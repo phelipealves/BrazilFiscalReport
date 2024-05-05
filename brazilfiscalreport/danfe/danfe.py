@@ -73,6 +73,7 @@ class Danfe(xFPDF):
         self.det = root.findall(f"{URL}det")
         self.inf_adic = root.find(f"{URL}infAdic")
         self.issqn_tot = root.find(f"{URL}ISSQNtot")
+        self.crt = extract_text(self.emit, "CRT")
 
         self.total_receipt_height = 19  # TODO need compute
 
@@ -309,7 +310,12 @@ class Danfe(xFPDF):
 
             # merge 'origem' with 'CST' of ICMS.
             orig = extract_text(el_imp_ICMS, "orig")
-            cst = extract_text(el_imp_ICMS, "CST")
+            if self.crt == "1":
+                # Regime Simples Nacional
+                cst = extract_text(el_imp_ICMS, "CSOSN")
+            else:
+                # Regime Normal
+                cst = extract_text(el_imp_ICMS, "CST")
             o_cst = orig + cst
 
             product = ProductInfo(
@@ -1212,11 +1218,17 @@ class Danfe(xFPDF):
             description="DADOS DO PRODUTO / SERVIÇO",
             pdf=self,
         ).render()
+        cst_label = "CST"
+        cst_width = 6
+        if self.crt == "1":
+            # Regime Simples Nacional
+            cst_label = "CSOSN"
+            cst_width = 8
         colunas = [
             "CÓDIGO",
             "DESCRIÇÃO DOS PRODUTOS / SERVIÇOS",
             "NCM/SH",
-            "CST",
+            cst_label,
             "CFOP",
             "UN.",
             "QTD.",
@@ -1232,7 +1244,7 @@ class Danfe(xFPDF):
             "%IPI",
         ]
         monetary_fields_index = [6, 7, 8, 9, 10, 11, 12, 13]
-        col_widths = (15, None, 11, 6, 7, 6, 12, 13, 13, 13, 10, 10, 9, 8)
+        col_widths = (15, None, 11, cst_width, 7, 6, 12, 13, 13, 13, 10, 10, 9, 8)
         defined_width = sum(filter(None, col_widths))
         none_width = self.edw - defined_width
         fixed_col_widths = tuple(w if w is not None else none_width for w in col_widths)
