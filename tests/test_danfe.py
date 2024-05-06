@@ -38,6 +38,16 @@ def test_danfe_default(tmp_path, load_danfe):
     assert_pdf_equal(danfe, pdf_path, tmp_path)
 
 
+def test_danfe_sn(tmp_path, load_danfe):
+    """
+    Tests the creation of a DANFE for an Electronic Invoice (NF-e) issued by a company
+    opting for the Simples Nacional regime.
+    """
+    danfe = load_danfe("nfe_test_sn.xml")
+    pdf_path = get_pdf_output_path("danfe", "danfe_sn")
+    assert_pdf_equal(danfe, pdf_path, tmp_path)
+
+
 def test_danfe_minimal(tmp_path, load_danfe):
     minimal_config = DanfeConfig(
         margins=Margins(top=8, right=8, bottom=8, left=8),
