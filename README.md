@@ -127,6 +127,7 @@ Here is a breakdown of all the configuration options available in ``DanfeConfig`
         config.tax_configuration = TaxConfiguration.WITHOUT_IPI
         ```
    - **Default**: ``STANDARD_ICMS_IPI``
+   - **WARNING: This feature is not yet implemented.**
 
 6. **Invoice Display**
    - **Type**: ``InvoiceDisplay`` (Enum)
