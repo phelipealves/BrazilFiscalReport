@@ -72,7 +72,7 @@ class DanfeBasicField(Element):
         self._content_lines = pdf.multi_cell(
             w=self.w,
             h=DEFAULT_HEIGHT_FONT_CONTENT,
-            text=self.content,
+            text=self.content or "",
             align=align,
             output=MethodReturnValue.LINES,
         )
