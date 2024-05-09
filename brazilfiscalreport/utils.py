@@ -14,6 +14,8 @@ def get_tag_text(node=None, url="", tag=None):
 
 
 def format_phone(phone):
+    if not phone:
+        return ""
     try:
         phone_number = phonenumbers.parse(phone, "BR")
         if phonenumbers.region_code_for_number(phone_number) == "BR":
@@ -24,10 +26,10 @@ def format_phone(phone):
             formatted_number = phonenumbers.format_number(
                 phone_number, PhoneNumberFormat.INTERNATIONAL
             )
-        return formatted_number
     except Exception as e:
         warnings.warn(f"An error occurred: {e}", UserWarning, stacklevel=2)
         formatted_number = phone
+    return formatted_number
 
 
 def format_cep(cep):
