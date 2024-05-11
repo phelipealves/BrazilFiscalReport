@@ -20,6 +20,8 @@ This library is currently in the beta stage of development. While it has many of
 ## Dependencies:
 
 - [FPDF2](https://github.com/py-pdf/fpdf2) - PDF creation library for Python
+- phonenumbers
+- python-barcode
 
 ## To install:
 
