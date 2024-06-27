@@ -121,3 +121,13 @@ def test_danfe_duplicatas_only(tmp_path, load_danfe):
     danfe = load_danfe("nfe_overload.xml", config=config)
     pdf_path = get_pdf_output_path("danfe", "danfe_duplicatas_only")
     assert_pdf_equal(danfe, pdf_path, tmp_path)
+
+
+def test_danfe_pis_config(tmp_path, load_danfe):
+    config = DanfeConfig(
+        margins=Margins(top=2, right=2, bottom=2, left=2),
+        display_pis_cofins=True,
+    )
+    danfe = load_danfe("nfe_test_1.xml", config=config)
+    pdf_path = get_pdf_output_path("danfe", "danfe_pis_confins")
+    assert_pdf_equal(danfe, pdf_path, tmp_path)

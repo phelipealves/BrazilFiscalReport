@@ -150,6 +150,16 @@ Here is a breakdown of all the configuration options available in ``DanfeConfig`
        config.font_type = FontType.COURIER
         ```
    - **Default**: ``TIMES``
+
+8. **Display PIS COFINS**
+   - **Type**: ``Bool``
+   - **Values**: ``True``, ``False``
+   - **Description**: Displays PIS and COFINS taxes in the DANFE totals.
+   - **Example**::
+        ```python
+       config.display_pis_cofins = True
+        ```
+   - **Default**: ``False``
 ### Usage Example with Customization
 
 Here’s how to set up a ``DanfeConfig`` object with a full set of customizations::

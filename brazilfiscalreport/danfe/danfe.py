@@ -58,6 +58,7 @@ class Danfe(xFPDF):
         self.price_precision = config.decimal_config.price_precision
         self.quantity_precision = config.decimal_config.quantity_precision
         self.invoice_display = config.invoice_display
+        self.display_pis_cofins = config.display_pis_cofins
 
         root = ET.fromstring(xml)
         self.inf_nfe = root.find(f"{URL}infNFe")
@@ -1044,7 +1045,7 @@ class Danfe(xFPDF):
             valor = format_number(valor, 2)
             dup_text = f"{num}  {venc}  {valor}"
             dups_text.append(dup_text)
-            w_dup_text = self.get_string_width(dup_text)
+            w_dup_text = self.get_string_width(dup_text) + 2
             max_width = max(max_width, w_dup_text)
 
         # Calculates the number of `duplicatas` that can fit in one line,
@@ -1084,12 +1085,14 @@ class Danfe(xFPDF):
         v_icms = format_number(extract_text(self.totais, "vICMS"), precision=2)
         v_bcst = format_number(extract_text(self.totais, "vBCST"), precision=2)
         v_st = format_number(extract_text(self.totais, "vST"), precision=2)
+        v_pis = format_number(extract_text(self.totais, "vPIS"), precision=2)
         v_prod = format_number(extract_text(self.totais, "vProd"), precision=2)
         v_frete = format_number(extract_text(self.totais, "vFrete"), precision=2)
         v_seg = format_number(extract_text(self.totais, "vSeg"), precision=2)
         v_desc = format_number(extract_text(self.totais, "vDesc"), precision=2)
         v_outro = format_number(extract_text(self.totais, "vOutro"), precision=2)
         v_ipi = format_number(extract_text(self.totais, "vIPI"), precision=2)
+        v_confins = format_number(extract_text(self.totais, "vCOFINS"), precision=2)
         v_nf = format_number(extract_text(self.totais, "vNF"), precision=2)
         v_tot_trib = format_number(extract_text(self.totais, "vTotTrib"), precision=2)
 
@@ -1143,6 +1146,19 @@ class Danfe(xFPDF):
                 w=0, description="VALOR TOTAL DA NOTA", content=v_nf, type="number"
             ),
         ]
+        if self.display_pis_cofins:
+            fields_line1.insert(
+                -1,
+                BaseFieldInfo(
+                    w=0, description="VALOR DO PIS", content=v_pis, type="number"
+                ),
+            )
+            fields_line2.insert(
+                -1,
+                BaseFieldInfo(
+                    w=0, description="VALOR DO COFINS", content=v_confins, type="number"
+                ),
+            )
         block_impostos.add_fields([fields_line1, fields_line2])
         block_impostos.render()
 
