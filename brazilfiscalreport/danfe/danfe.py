@@ -332,8 +332,8 @@ class Danfe(xFPDF):
                 bs_icms=format_number(extract_text(el_imp_ICMS, "vBC"), 2),
                 icms_value=format_number(extract_text(el_imp_ICMS, "vICMS"), 2),
                 ipi_value=format_number(extract_text(el_imp_IPI, "vIPI"), 2),
-                icms_rate=format_number(extract_text(el_imp_ICMS, "pICMS"), 2) + "%",
-                ipi_rate=format_number(extract_text(el_imp_IPI, "pIPI"), 2) + "%",
+                icms_rate=format_number(extract_text(el_imp_ICMS, "pICMS"), 2),
+                ipi_rate=format_number(extract_text(el_imp_IPI, "pIPI"), 2),
             )
             products.append(product)
         return products
