@@ -70,7 +70,8 @@ def assert_pdf_equal(
             "When passing `True` to `generate`"
             "a pathlib.Path must be provided as the `expected` parameter"
         )
-        actual_pdf.output(expected.open("wb"), linearize=linearize)
+        with expected.open("wb") as output_file:
+            actual_pdf.output(output_file, linearize=linearize)
         return
     if isinstance(expected, pathlib.Path):
         expected_pdf_path = expected

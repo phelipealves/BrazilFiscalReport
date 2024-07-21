@@ -1,6 +1,7 @@
 # Copyright (C) 2021-2022 Edson Bernardino <edsones at yahoo.com.br>
 # Copyright (C) 2024 Engenere - Antônio S. Pereira Neto <neto@engenere.one>
 
+import warnings
 import xml.etree.ElementTree as ET
 from io import BytesIO
 
@@ -73,7 +74,9 @@ class DaCCe(xFPDF):
         self.text(x=123, y=20, text="(Carta de Correção Eletrônica)")
 
         self.set_font("Helvetica", "", 8)
-        self.text(x=92, y=30, text="ID do Evento: %s" % inf_event.attrib.get("Id")[2:])
+        self.text(
+            x=92, y=30, text="ID do Evento: {}".format(inf_event.attrib.get("Id")[2:])
+        )
 
         dt, hr = get_date_utc(get_tag_text(node=inf_event, url=URL, tag="dhEvento"))
 
@@ -113,7 +116,9 @@ class DaCCe(xFPDF):
         # Generate a Code128 Barcode as SVG:
         svg_img_bytes = BytesIO()
         Code128(key, writer=SVGWriter()).write(svg_img_bytes)
-        self.image(svg_img_bytes, x=127, y=60, w=73, h=15)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=UserWarning)
+            self.image(svg_img_bytes, x=127, y=60, w=73, h=15)
 
         self.set_font("Helvetica", "", 7)
         self.text(x=130, y=78, text=" ".join(chunks(key, 4)))

@@ -1,3 +1,4 @@
+import warnings
 from io import BytesIO
 
 from barcode import Code128
@@ -21,4 +22,6 @@ class DanfeCode(Element):
         # Generate a Code128 Barcode as SVG:
         svg_img_bytes = BytesIO()
         Code128(self.key_nfe, writer=SVGWriter()).write(svg_img_bytes)
-        self.pdf.image(svg_img_bytes, x=x, y=y, w=w, h=h)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=UserWarning)
+            self.pdf.image(svg_img_bytes, x=x, y=y, w=w, h=h)
