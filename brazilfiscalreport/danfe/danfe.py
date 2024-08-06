@@ -426,19 +426,29 @@ class Danfe(xFPDF):
         return addit_data, addit_data_next_pages
 
     def _draw_void_watermark(self):
-        if extract_text(self.ide, "tpAmb") == "2":
-            self.set_font(self.default_font, "B", 60)
-            watermark_text = "SEM VALOR FISCAL"
-            width = self.get_string_width(watermark_text)
-            self.set_text_color(r=220, g=150, b=150)
-            height = 15
-            page_width = self.w
-            page_height = self.h
-            x_center = (page_width - width) / 2
-            y_center = (page_height + height) / 2
-            with self.rotation(55, x_center + (width / 2), y_center - (height / 2)):
-                self.text(x_center, y_center, watermark_text)
-            self.set_text_color(r=0, g=0, b=0)
+        """
+        Draw a watermark on the DANFE when the protocol is not available or
+        when the environment is homologation.
+        """
+        is_production_environment = extract_text(self.ide, "tpAmb") == "1"
+        is_protocol_available = bool(self.prot_nfe)
+
+        # Exit early if no watermark is needed
+        if is_production_environment and is_protocol_available:
+            return
+
+        self.set_font(self.default_font, "B", 60)
+        watermark_text = "SEM VALOR FISCAL"
+        width = self.get_string_width(watermark_text)
+        self.set_text_color(r=220, g=150, b=150)
+        height = 15
+        page_width = self.w
+        page_height = self.h
+        x_center = (page_width - width) / 2
+        y_center = (page_height + height) / 2
+        with self.rotation(55, x_center + (width / 2), y_center - (height / 2)):
+            self.text(x_center, y_center, watermark_text)
+        self.set_text_color(r=0, g=0, b=0)
 
     def _draw_dashed_line(self, distance):
         self.set_dash_pattern(dash=0.2, gap=0.8)
