@@ -628,9 +628,15 @@ class Danfe(xFPDF):
         emit_name = extract_text(self.emit, "xNome")
         cep = format_cep(extract_text(self.emit, "CEP"))
         fone = format_phone(extract_text(self.emit, "fone"))
+        xCpl = (
+            f"{extract_text(self.emit, 'xCpl')}\n"
+            if extract_text(self.emit, "xCpl")
+            else ""
+        )
         address = (
             f"{extract_text(self.emit,'xLgr')}, "
             f"{extract_text(self.emit,'nro')}\n"
+            f"{xCpl}"
             f"{extract_text(self.emit,'xBairro')}\n"
             f"{extract_text(self.emit,'xMun')} - "
             f"{extract_text(self.emit,'UF')}\n"
