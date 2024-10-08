@@ -23,10 +23,10 @@ class FontType(Enum):
 
 @dataclass
 class Margins:
-    top: Number = 2
-    right: Number = 2
-    bottom: Number = 2
-    left: Number = 2
+    top: Number = 5
+    right: Number = 5
+    bottom: Number = 5
+    left: Number = 5
 
 
 @dataclass
