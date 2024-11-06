@@ -28,16 +28,18 @@ def extract_text(node: Element, tag: str) -> str:
 class Damdfe(xFPDF):
     def __init__(self, xml, config: DamdfeConfig = None):
         super().__init__(unit="mm", format="A4")
-        config = config if config is not None else DamdfeConfig()
+        self.config = config if config is not None else DamdfeConfig()
         self.set_margins(
-            left=config.margins.left, top=config.margins.top, right=config.margins.right
+            left=self.config.margins.left,
+            top=self.config.margins.top,
+            right=self.config.margins.right,
         )
-        self.set_auto_page_break(auto=False, margin=config.margins.bottom)
+        self.set_auto_page_break(auto=False, margin=self.config.margins.bottom)
         self.set_title("DAMDFE")
-        self.logo_image = config.logo
-        self.default_font = config.font_type.value
-        self.price_precision = config.decimal_config.price_precision
-        self.quantity_precision = config.decimal_config.quantity_precision
+        self.logo_image = self.config.logo
+        self.default_font = self.config.font_type.value
+        self.price_precision = self.config.decimal_config.price_precision
+        self.quantity_precision = self.config.decimal_config.quantity_precision
 
         root = ET.fromstring(xml)
         self.inf_adic = root.find(f"{URL}infAdic")
@@ -188,7 +190,7 @@ class Damdfe(xFPDF):
         self.line(x_middle, y_margin, x_middle, y_margin + 88)
 
         y_middle = y_margin + 25
-        self.line(x_margin, y_middle, x_middle, y_middle)
+        self.line(x_margin, y_middle, x_middle, y_middle)  # Aqui
         self.set_xy(x=x_margin, y=y_middle)
         self.multi_cell(
             w=100,
@@ -200,7 +202,7 @@ class Damdfe(xFPDF):
         )
 
         y_middle = y_margin + 28
-        self.line(x_margin, y_middle, x_middle, y_middle)
+        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
         self.set_font(self.default_font, "", 6)
 
         self.draw_vertical_lines(
@@ -340,23 +342,39 @@ class Damdfe(xFPDF):
         qr_code = extract_text(self.inf_mdfe_supl, "qrCodMDFe")
 
         num_x = 140
-        num_y = 3
-        num_w = 28
-        num_h = 28
-        draw_qr_code(self, qr_code, 0, num_x, num_y, num_w, num_h)
+        num_y = 1
+        draw_qr_code(self, qr_code, 0, num_x, num_y, box_size=25, border=3)
 
         svg_img_bytes = BytesIO()
-        Code128(self.key_mdfe, writer=SVGWriter()).write(svg_img_bytes)
-        self.image(svg_img_bytes, x=115, y=self.l_margin + 3 + 35, w=82, h=12.5)
-
+        w_options = {
+            "module_width": 0.3,
+        }
+        Code128(self.key_mdfe, writer=SVGWriter()).write(
+            fp=svg_img_bytes,
+            options=w_options,
+            text="",
+        )
         self.set_font(self.default_font, "", 6.5)
-        self.set_xy(x=x_middle + 6, y=y_middle + 23)
+        self.set_xy(x=x_margin + 100, y=y_middle)
         self.multi_cell(
             w=100,
             h=3,
-            text="Chave de acesso para consulta de "
-            "autenticidade no site "
-            "mdfe-portal.sefaz.rs.gov.br ou da Sefaz",
+            text="CONTROLE DO FISCO",
+            border=0,
+            align="L",
+        )
+        margins_offset = {1: 8, 2: 8, 3: 7, 4: 7, 5: 6, 6: 6, 7: 5.5, 8: 5, 9: 4, 10: 4}
+        x_offset = margins_offset.get(self.config.margins.right)
+        self.image(
+            svg_img_bytes, x=x_middle + x_offset, y=self.t_margin + 32, w=86.18, h=17.0
+        )
+
+        self.set_font(self.default_font, "", 6.5)
+        self.set_xy(x=x_middle + 25, y=y_middle + 23)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text="Consulta em https://dfe-portal.svrs.rs.gov.br/MDFE/Consulta",
             border=0,
             align="L",
         )
@@ -392,7 +410,7 @@ class Damdfe(xFPDF):
         )
 
         y_middle = y_margin + 35
-        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+        self.line(x_margin, y_middle, x_middle, y_middle)
         self.draw_vertical_lines(
             x_start_positions=[24, 64],
             y_start=y_middle,
