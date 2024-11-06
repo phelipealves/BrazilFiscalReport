@@ -1,0 +1,29 @@
+site_name: BrazilFiscalReport
+site_url: https://github.com/Engenere/BrazilFiscalReport
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    toggle:
+      name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - header.autohide
+    - search.highlight
+    - search.share
+    - navigation.top
+  logo: 'favicon.ico'
+  favicon: 'favicon.ico'
+
+nav:
+  - Home: index.md
+  - CLI : cli.md
+  - DANFE: danfe.md
+  - DACTE: dacte.md
+  - DAMDFE: damdfe.md
+  - DACCe: dacce.md
+  - About: about.md

@@ -15,11 +15,19 @@ Python library for generating Brazilian auxiliary fiscal documents in PDF from X
 - **DACTE** - Documento Auxiliar do Conhecimento de Transporte Eletrônico (CT-e)
 - **DAMDFE** - Documento Auxiliar do Manifesto Eletrônico de Documentos Fiscais (MDF-e)
 
+## Usage Modes
+
+### 1. CLI (Command Line)
+
+For quick and easy PDF generation, use the CLI. After configuring the `config.yaml` file with the issuer details, margins, and logo, you can easily generate PDFs with a single command.
+
+### 2. Python Code
+
+For further customization and integration, use the library directly in Python code. This mode allows you to configure margins, fonts, receipt positions, and other options tailored to your needs.
+
 ## Beta Stage Notice 🚧
 
 This library is currently in the beta stage of development. While it has many of the intended features implemented, it is still undergoing testing and improvements. Users should note that during this phase, functionality may change and some instability may occur. We welcome feedback on any issues or suggestions for enhancements. Use in production environments should be approached with caution.
-
-Check the [documentation](https://engenere.github.io/BrazilFiscalReport/) for more ✨✨✨
 
 ## Dependencies 🛠️
 
@@ -41,15 +49,16 @@ If you specifically need the DACTE functionality, you can install it along with 
 pip install brazilfiscalreport[dacte]
 ```
 
+## Installing DAMDFE with Dependencies
+If you specifically need the DAMDFE functionality, you can install it along with its required dependencies using:
+
+```bash
+pip install brazilfiscalreport[damdfe]
+```
+
 ### Installing CLI with Dependencies
 If you specifically need the CLI functionality, you can install it along with its required dependencies using:
 
 ```bash
 pip install brazilfiscalreport[cli]
 ```
-
-## Credits 🙌
-This is a fork of the [nfe_utils](https://github.com/edsonbernar/nfe_utils) project, originally created by [Edson Bernardino](https://github.com/edsonbernar).
-
-## Maintainer 🛠️
-[![Engenere](https://storage.googleapis.com/eng-imagens/logo-fundo-preto.webp)]([#](https://engenere.one/))
