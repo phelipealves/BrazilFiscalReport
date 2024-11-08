@@ -42,6 +42,10 @@ dependencies = [
 dacte = [
     "qrcode",
 ]
+cli = [
+    "click",
+    "PyYAML",
+]
 
 
 [project.readme]
@@ -50,6 +54,9 @@ content-type = "text/markdown"
 
 [project.urls]
 homepage = "https://github.com/Engenere/BrazilFiscalReport"
+
+[project.scripts]
+bfrep = "brazilfiscalreport.__main__:cli"
 
 [tool.setuptools.dynamic]
 version = {attr = "brazilfiscalreport.__version__"}
