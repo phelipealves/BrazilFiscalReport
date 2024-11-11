@@ -73,10 +73,10 @@ def generate_danfe(xml):
 
     config_data = load_config()
     logo = config_data.get("LOGO")
-    top = config_data.get("TOP_MARGIN", 5)
-    right = config_data.get("RIGHT_MARGIN", 5)
-    bottom = config_data.get("BOTTOM_MARGIN", 5)
-    left = config_data.get("LEFT_MARGIN", 5)
+    top = config_data.get("TOP_MARGIN", danfe.Margins.top)
+    right = config_data.get("RIGHT_MARGIN", danfe.Margins.right)
+    bottom = config_data.get("BOTTOM_MARGIN", danfe.Margins.bottom)
+    left = config_data.get("LEFT_MARGIN", danfe.Margins.left)
 
     xml_path = Path(xml).resolve()
     output_path = Path.cwd() / xml_path.stem
@@ -114,10 +114,10 @@ def generate_dacte(xml):
 
     config_data = load_config()
     logo = config_data.get("LOGO")
-    top = config_data.get("TOP_MARGIN", 5)
-    right = config_data.get("RIGHT_MARGIN", 5)
-    bottom = config_data.get("BOTTOM_MARGIN", 5)
-    left = config_data.get("LEFT_MARGIN", 5)
+    top = config_data.get("TOP_MARGIN", dacte.Margins.top)
+    right = config_data.get("RIGHT_MARGIN", dacte.Margins.right)
+    bottom = config_data.get("BOTTOM_MARGIN", dacte.Margins.bottom)
+    left = config_data.get("LEFT_MARGIN", dacte.Margins.left)
 
     xml_path = Path(xml).resolve()
     output_path = Path.cwd() / xml_path.stem
@@ -139,6 +139,47 @@ def generate_dacte(xml):
     dacte_instance = dacte.Dacte(xml=xml_content, config=config)
     dacte_instance.output(output_path)
     click.echo(f"DACTE generated successfully: {output_path}")
+
+
+@cli.command("damdfe")
+@click.argument("xml", type=click.Path(exists=True))
+def generate_damdfe(xml):
+    try:
+        from brazilfiscalreport import damdfe
+    except ImportError:
+        click.echo(
+            "Error: The brazilfiscalreport package "
+            "or its damdfe module is not installed."
+        )
+        return
+
+    config_data = load_config()
+    logo = config_data.get("LOGO")
+    top = config_data.get("TOP_MARGIN", damdfe.Margins.top)
+    right = config_data.get("RIGHT_MARGIN", damdfe.Margins.right)
+    bottom = config_data.get("BOTTOM_MARGIN", damdfe.Margins.bottom)
+    left = config_data.get("LEFT_MARGIN", damdfe.Margins.left)
+
+    xml_path = Path(xml).resolve()
+    output_path = Path.cwd() / xml_path.stem
+    output_path = output_path.with_suffix(".pdf")
+    logo_path = Path(logo).resolve() if logo else None
+
+    if logo_path and not logo_path.exists():
+        click.echo("Logo file not found, proceeding without logo.")
+        logo_path = None
+
+    with open(xml_path, encoding="utf-8") as xml_file:
+        xml_content = xml_file.read()
+
+    config = damdfe.DamdfeConfig(
+        margins=damdfe.Margins(top=top, right=right, bottom=bottom, left=left),
+        logo=logo_path,
+    )
+
+    damdfe_instance = damdfe.Damdfe(xml=xml_content, config=config)
+    damdfe_instance.output(output_path)
+    click.echo(f"DAMDFE generated successfully: {output_path}")
 
 
 if __name__ == "__main__":
