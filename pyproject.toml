@@ -42,6 +42,11 @@ dependencies = [
 dacte = [
     "qrcode",
 ]
+# DAMDFE specific dependencies
+damdfe = [
+    "qrcode",
+]
+# Dependencies CLI
 cli = [
     "click",
     "PyYAML",
