@@ -150,7 +150,7 @@ class Damdfe(xFPDF):
             extract_text(self.ide, "dhIniViagem")
         )
         self.tp_emit = TP_EMITENTE[extract_text(self.ide, "tpEmit")]
-        self.tp_amb = TP_AMBIENTE[extract_text(self.prot_mdfe, "tpAmb")]
+        self.tp_amb = TP_AMBIENTE[extract_text(self.ide, "tpAmb")]
 
         cep = format_cep(extract_text(self.emit, "CEP"))
         fone = format_phone(extract_text(self.emit, "fone"))
@@ -1003,21 +1003,23 @@ class Damdfe(xFPDF):
         )
         self.set_font(self.default_font, "", 6)
         self.set_xy(x=x_margin, y=y_middle)
-        self.multi_cell(
-            w=100,
-            h=0,
-            text=f"NOME: {self.seguradora_nome}  CNPJ: {self.cnpj_segurado}",
-            border=0,
-            align="L",
-        )
+        if self.seguradora_nome:
+            self.multi_cell(
+                w=100,
+                h=0,
+                text=f"NOME: {self.seguradora_nome}  CNPJ: {self.cnpj_segurado}",
+                border=0,
+                align="L",
+            )
         self.set_xy(x=x_margin, y=y_middle + 4)
-        self.multi_cell(
-            w=100,
-            h=0,
-            text=f"APÓLICE: {self.n_apol}  AVERBAÇÃO: {self.nome_averbacao}",
-            border=0,
-            align="L",
-        )
+        if self.n_apol:
+            self.multi_cell(
+                w=100,
+                h=0,
+                text=f"APÓLICE: {self.n_apol}  AVERBAÇÃO: {self.nome_averbacao}",
+                border=0,
+                align="L",
+            )
 
         self.rect(
             x=x_margin,
