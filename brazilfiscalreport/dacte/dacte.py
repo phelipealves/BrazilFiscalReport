@@ -68,6 +68,7 @@ class Dacte(xFPDF):
             )
             self.obs_dacte_list.append(self.x_texto)
 
+        self.page_lines = 0
         self.inf_carga_list = []
         for infQ in self.inf_carga:
             self.c_unid = extract_text(infQ, "cUnid")
