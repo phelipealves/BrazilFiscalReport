@@ -10,6 +10,13 @@ class FontType(Enum):
     TIMES = "Times"
 
 
+class ModalType(Enum):
+    RODOVIARIO = "RODOVIÁRIO"
+    AEREO = "AÉREO"
+    AQUAVIARIO = "AQUAVIÁRIO"
+    FERROVIARIO = "FERROVIÁRIO"
+
+
 @dataclass
 class Margins:
     top: Number = 5
