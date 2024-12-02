@@ -17,8 +17,8 @@ from ..utils import (
     get_tag_text,
 )
 from ..xfpdf import xFPDF
-from .config import DamdfeConfig
-from .damdfe_conf import TP_AMBIENTE, TP_EMISSAO, TP_EMITENTE, URL
+from .config import DamdfeConfig, ModalType
+from .damdfe_conf import TP_AMBIENTE, TP_EMISSAO, TP_EMITENTE, TP_MODAL, URL
 
 
 def extract_text(node: Element, tag: str) -> str:
@@ -65,6 +65,14 @@ class Damdfe(xFPDF):
         self._draw_body_info()
         self._draw_voucher_information()
         self._draw_insurance_information()
+
+    def _build_chCTe_str(self):
+        self.chCTe_str = []
+        for chCTe in self.inf_mun_descarga:
+            chCTe_value = extract_text(chCTe, "chCTe")
+            if chCTe_value:
+                self.chCTe_str.append(chCTe_value)
+        return self.chCTe_str
 
     def _build_chnfe_str(self):
         self.chNFe_str = []
@@ -134,6 +142,203 @@ class Damdfe(xFPDF):
         for x in x_start_positions:
             self.line(x1=x_margin + x, y1=y_start, x2=x_margin + x, y2=y_end)
 
+    def draw_aero_info(self, x_margin, y_margin, y_middle, page_width):
+        self.draw_vertical_lines_left(
+            start_y=y_margin + 22, end_y=y_margin + 22 + 4, num_lines=2
+        )
+        self.nac = extract_text(self.inf_modal, "nac")
+        self.matr = extract_text(self.inf_modal, "matr")
+        self.n_voo = extract_text(self.inf_modal, "nVoo")
+        self.data_voo, self.hr_voo = get_date_utc(extract_text(self.inf_modal, "dVoo"))
+        self.aer_embarque = extract_text(self.inf_modal, "cAerEmb")
+        self.aer_destino = extract_text(self.inf_modal, "cAerDes")
+
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin - 235, y=y_middle - 2)  # TODO: Bug x_margin
+        self.multi_cell(w=100, h=0, text="AERONAVE", border=0, align="C")
+        self.set_xy(x=x_margin + 25, y=y_middle - 2)
+        self.multi_cell(w=100, h=0, text="VOO", border=0, align="C")
+        self.draw_vertical_lines_left(
+            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=4
+        )
+
+        self.set_xy(x=x_margin, y=y_middle)
+        self.multi_cell(w=100, h=3, text="NACIONALIDADE", border=0, align="L")
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=x_margin, y=y_middle + 4)
+        self.multi_cell(w=100, h=3, text=self.nac, border=0, align="L")
+
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin + 25, y=y_middle)
+        self.multi_cell(w=100, h=3, text="MATRÍCULA", border=0, align="L")
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=x_margin + 25, y=y_middle + 4)
+        self.multi_cell(w=100, h=3, text=self.matr, border=0, align="L")
+
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin + 50, y=y_middle)
+        self.multi_cell(w=100, h=3, text="NÚMERO", border=0, align="L")
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=x_margin + 50, y=y_middle + 4)
+        self.multi_cell(w=100, h=3, text=self.n_voo, border=0, align="L")
+
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin + 75, y=y_middle)
+        self.multi_cell(w=100, h=3, text="DATA", border=0, align="L")
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=x_margin + 75, y=y_middle + 4)
+        self.multi_cell(w=100, h=3, text=self.data_voo, border=0, align="L")
+
+        self.set_xy(x=page_width / 2 - 2, y=y_middle - 2)
+        self.set_font(self.default_font, "B", 7)
+        self.multi_cell(w=100, h=0, text="AERÓDRONO", border=0, align="C")
+        y_middle = y_margin + 29
+        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+        self.draw_vertical_lines_right(
+            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=2
+        )
+
+        self.set_xy(x=y_middle + 26, y=y_middle - 2.8)
+        self.multi_cell(w=100, h=3, text="EMBARQUE", border=0, align="L")
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=y_middle + 26, y=y_middle + 0.5)
+        self.multi_cell(w=100, h=3, text=self.aer_embarque, border=0, align="L")
+
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=y_middle + 76, y=y_middle - 2.8)
+        self.multi_cell(w=100, h=3, text="DESTINO", border=0, align="L")
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=y_middle + 76, y=y_middle + 0.5)
+        self.multi_cell(w=100, h=3, text=self.aer_destino, border=0, align="L")
+
+    def draw_rodoviario_info(self, x_margin, y_margin, y_middle, page_width):
+        self.multi_cell(w=100, h=0, text="VEÍCULOS", border=0, align="C")
+        self.draw_vertical_lines_left(
+            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=4
+        )
+
+        self.set_xy(x=x_margin, y=y_middle)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text="PLACA",
+            border=0,
+            align="L",
+        )
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=x_margin, y=y_middle + 4)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text=self.placa,
+            border=0,
+            align="L",
+        )
+
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin + 25, y=y_middle)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text="UF",
+            border=0,
+            align="L",
+        )
+
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=x_margin + 25, y=y_middle + 4)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text=self.modal_uf,
+            border=0,
+            align="L",
+        )
+
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin + 50, y=y_middle)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text="RNTRC",
+            border=0,
+            align="L",
+        )
+
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=x_margin + 50, y=y_middle + 4)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text=self.rntrc,
+            border=0,
+            align="L",
+        )
+
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin + 75, y=y_middle)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text="RENAVAM",
+            border=0,
+            align="L",
+        )
+
+        self.set_font(self.default_font, "", 7)
+        self.set_xy(x=x_margin + 75, y=y_middle + 4)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text=self.renavam,
+            border=0,
+            align="L",
+        )
+
+        self.set_xy(x=page_width / 2 - 2, y=y_middle - 2)
+        self.multi_cell(w=100, h=0, text="CONDUTORES", border=0, align="C")
+        y_middle = y_margin + 29
+        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+        self.draw_vertical_lines_right(
+            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=2
+        )
+
+        self.set_xy(x=y_middle + 26, y=y_middle - 2.8)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text="CPF",
+            border=0,
+            align="L",
+        )
+
+        self.set_xy(x=y_middle + 26, y=y_middle + 0.5)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text=self.cpf_condutor,
+            border=0,
+            align="L",
+        )
+
+        self.set_xy(x=y_middle + 76, y=y_middle - 2.8)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text="CONDUTORES",
+            border=0,
+            align="L",
+        )
+
+        self.set_xy(x=y_middle + 76, y=y_middle + 0.5)
+        self.multi_cell(
+            w=100,
+            h=3,
+            text=self.nome_condutor,
+            border=0,
+            align="L",
+        )
+
     def _draw_header(self):
         x_margin = self.l_margin
         y_margin = self.y
@@ -150,6 +355,7 @@ class Damdfe(xFPDF):
             extract_text(self.ide, "dhIniViagem")
         )
         self.tp_emit = TP_EMITENTE[extract_text(self.ide, "tpEmit")]
+        self.tp_emit_chave = extract_text(self.ide, "tpEmit")
         self.tp_amb = TP_AMBIENTE[extract_text(self.ide, "tpAmb")]
 
         cep = format_cep(extract_text(self.emit, "CEP"))
@@ -485,16 +691,32 @@ class Damdfe(xFPDF):
             border=0,
             align="L",
         )
-
-        self.set_xy(x=x_margin + 1.5, y=y_middle + 3)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text=self.tp_emit,
-            border=0,
-            align="L",
-        )
-
+        if self.tp_emit_chave == "3":
+            self.set_xy(x=x_margin, y=y_middle + 3)
+            self.multi_cell(
+                w=100,
+                h=2,
+                text="PRESTADOR DE SERVIÇO DE TRANSPORTE",
+                border=0,
+                align="L",
+            )
+            self.set_xy(x=x_margin + 3.5, y=y_middle + 6)
+            self.multi_cell(
+                w=100,
+                h=2,
+                text="TRANSPORTE (CT-e GLOBALIZADO)",
+                border=0,
+                align="L",
+            )
+        else:
+            self.set_xy(x=x_margin, y=y_middle + 3)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text=self.tp_emit,
+                border=0,
+                align="L",
+            )
         # TIPO DO AMBIENTE
         self.set_xy(x=x_margin + 46, y=y_middle)
         self.multi_cell(
@@ -643,140 +865,13 @@ class Damdfe(xFPDF):
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
         self.set_xy(x=x_margin - 2, y=y_middle - 2)
         self.set_font(self.default_font, "B", 7)
-        self.multi_cell(w=100, h=0, text="VEÍCULOS", border=0, align="C")
-        self.draw_vertical_lines_left(
-            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=4
-        )
+        self.tp_modal = ModalType(TP_MODAL[extract_text(self.ide, "modal")])
 
-        # Informações do Veiculos
-        # PLACA
-        self.set_xy(x=x_margin, y=y_middle)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="PLACA",
-            border=0,
-            align="L",
-        )
-        self.set_font(self.default_font, "", 7)
-        self.set_xy(x=x_margin, y=y_middle + 4)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text=self.placa,
-            border=0,
-            align="L",
-        )
+        if self.tp_modal == ModalType.RODOVIARIO:
+            self.draw_rodoviario_info(x_margin, y_margin, y_middle, page_width)
 
-        # UF
-        self.set_font(self.default_font, "B", 7)
-        self.set_xy(x=x_margin + 25, y=y_middle)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="UF",
-            border=0,
-            align="L",
-        )
-
-        self.set_font(self.default_font, "", 7)
-        self.set_xy(x=x_margin + 25, y=y_middle + 4)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text=self.modal_uf,
-            border=0,
-            align="L",
-        )
-
-        # RNTRC
-        self.set_font(self.default_font, "B", 7)
-        self.set_xy(x=x_margin + 50, y=y_middle)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="RNTRC",
-            border=0,
-            align="L",
-        )
-
-        self.set_font(self.default_font, "", 7)
-        self.set_xy(x=x_margin + 50, y=y_middle + 4)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text=self.rntrc,
-            border=0,
-            align="L",
-        )
-
-        # RENAVAM
-        self.set_font(self.default_font, "B", 7)
-        self.set_xy(x=x_margin + 75, y=y_middle)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="RENAVAM",
-            border=0,
-            align="L",
-        )
-
-        self.set_font(self.default_font, "", 7)
-        self.set_xy(x=x_margin + 75, y=y_middle + 4)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text=self.renavam,
-            border=0,
-            align="L",
-        )
-
-        self.set_xy(x=page_width / 2 - 2, y=y_middle - 2)
-        self.multi_cell(w=100, h=0, text="CONDUTORES", border=0, align="C")
-        y_middle = y_margin + 29
-        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
-        self.draw_vertical_lines_right(
-            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=2
-        )
-
-        # Informações do Condutores
-        # CPF
-        self.set_xy(x=y_middle + 26, y=y_middle - 2.8)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="CPF",
-            border=0,
-            align="L",
-        )
-
-        self.set_xy(x=y_middle + 26, y=y_middle + 0.5)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text=self.cpf_condutor,
-            border=0,
-            align="L",
-        )
-
-        # CONDUTORES
-        self.set_xy(x=y_middle + 76, y=y_middle - 2.8)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="CONDUTORES",
-            border=0,
-            align="L",
-        )
-
-        self.set_xy(x=y_middle + 76, y=y_middle + 0.5)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text=self.nome_condutor,
-            border=0,
-            align="L",
-        )
+        if self.tp_modal == ModalType.AEREO:
+            self.draw_aero_info(x_margin, y_margin, y_middle, page_width)
 
         y_middle = y_margin + 60
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
@@ -791,68 +886,74 @@ class Damdfe(xFPDF):
         self.cnpj_pag = extract_text(self.disp, "CNPJPg")
         self.num_comra = extract_text(self.disp, "nCompra")
         self.valor_pedagio = extract_text(self.disp, "vValePed")
-        self.rect(x=x_margin, y=y_margin + 10.5, w=page_width - 0.5, h=30, style="")
 
-        y_middle = y_margin + 14.5
-        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
-        self.set_xy(x=(page_width - 40) / 2, y=y_middle - 2)
-        self.set_font(self.default_font, "B", 7)
-        self.multi_cell(
-            w=100, h=0, text="INFORMAÇÕES DE VALE PEDÁGIO", border=0, align="L"
-        )
-        self.draw_vertical_lines_left(
-            start_y=y_margin + 14.5, end_y=y_margin + 14.5 + 4, num_lines=2
-        )
-        self.draw_vertical_lines_right(
-            start_y=y_margin + 14.5, end_y=y_margin + 14.5 + 4, num_lines=2
-        )
+        if self.tp_modal == ModalType.RODOVIARIO:
+            self.rect(x=x_margin, y=y_margin + 10.5, w=page_width - 0.5, h=30, style="")
+            y_middle = y_margin + 14.5
+            self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+            self.set_xy(x=(page_width - 40) / 2, y=y_middle - 2)
+            self.set_font(self.default_font, "B", 7)
+            self.multi_cell(
+                w=100, h=0, text="INFORMAÇÕES DE VALE PEDÁGIO", border=0, align="L"
+            )
+            self.draw_vertical_lines_left(
+                start_y=y_margin + 14.5, end_y=y_margin + 14.5 + 4, num_lines=2
+            )
+            self.draw_vertical_lines_right(
+                start_y=y_margin + 14.5, end_y=y_margin + 14.5 + 4, num_lines=2
+            )
 
-        # Informações de Vale Pedágio
-        # CPF
-        self.set_font(self.default_font, "B", 6)
-        self.set_xy(x=x_margin + 12, y=y_middle + 1)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="CNPJ DA FORNECEDORA",
-            border=0,
-            align="L",
+            # Informações de Vale Pedágio
+            # CPF
+            self.set_font(self.default_font, "B", 6)
+            self.set_xy(x=x_margin + 12, y=y_middle + 1)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="CNPJ DA FORNECEDORA",
+                border=0,
+                align="L",
+            )
+
+            # CPF/CNPJ DO RESPONSÁVEL
+            self.set_xy(x=x_margin + 59, y=y_middle + 1)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="CPF/CNPJ DO RESPONSÁVEL",
+                border=0,
+                align="L",
+            )
+
+            # NÚMERO DO COMPROVANTE
+            self.set_xy(x=y_middle + 15, y=y_middle + 1)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="NÚMERO DO COMPROVANTE",
+                border=0,
+                align="L",
+            )
+
+            # VALOR DO VALE-PEDÁGIO
+            self.set_xy(x=y_middle + 67, y=y_middle + 1)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="VALOR DO VALE-PEDÁGIO",
+                border=0,
+                align="L",
+            )
+
+            y_middle = y_margin + 18.5
+            self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+        else:
+            self.rect(x=x_margin, y=y_margin + 10.5, w=page_width - 0.5, h=21, style="")
+        y_middle = (
+            y_margin + 31.5
+            if self.tp_modal == ModalType.RODOVIARIO
+            else y_margin + 15.5
         )
-
-        # CPF/CNPJ DO RESPONSÁVEL
-        self.set_xy(x=x_margin + 59, y=y_middle + 1)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="CPF/CNPJ DO RESPONSÁVEL",
-            border=0,
-            align="L",
-        )
-
-        # NÚMERO DO COMPROVANTE
-        self.set_xy(x=y_middle + 15, y=y_middle + 1)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="NÚMERO DO COMPROVANTE",
-            border=0,
-            align="L",
-        )
-
-        # VALOR DO VALE-PEDÁGIO
-        self.set_xy(x=y_middle + 67, y=y_middle + 1)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text="VALOR DO VALE-PEDÁGIO",
-            border=0,
-            align="L",
-        )
-
-        y_middle = y_margin + 18.5
-        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
-
-        y_middle = y_margin + 31.5
         self.set_font(self.default_font, "B", 7)
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
         self.set_xy(x=(page_width - 18) / 2, y=y_middle - 2)
@@ -862,10 +963,18 @@ class Damdfe(xFPDF):
         self.percurso_str = self._build_percurso_str()
         self.multi_cell(w=100, h=0, text=self.percurso_str, border=0, align="L")
 
-        y_middle = y_margin + 35.5
+        y_middle = (
+            y_margin + 35.5
+            if self.tp_modal == ModalType.RODOVIARIO
+            else y_margin + 19.5
+        )
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
 
-        y_middle = y_margin + 40.5
+        y_middle = (
+            y_margin + 40.5
+            if self.tp_modal == ModalType.RODOVIARIO
+            else y_margin + 23.5
+        )
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
         self.set_xy(x=(page_width - 50) / 2, y=y_middle - 2)
         self.set_font(self.default_font, "B", 7)
@@ -924,25 +1033,17 @@ class Damdfe(xFPDF):
         line_height = 4
         num_lines = 0
         self.chNFe_str = self._build_chnfe_str()
-        for i in range(0, len(self.chNFe_str), 2):
-            self.set_xy(x=current_x_left, y=current_y)
-            self.multi_cell(
-                w=211,
-                h=line_height,
-                text=self.mun_descarregamento,
-                border=0,
-                align="L",
-            )
-            self.set_xy(x=current_x_left + 30, y=current_y)
-            self.multi_cell(
-                w=211,
-                h=line_height,
-                text=self.chNFe_str[i],
-                border=0,
-                align="L",
-            )
-            if i + 1 < len(self.chNFe_str):
-                self.set_xy(x=x_margin + 92, y=current_y)
+        self.chCTe_str = self._build_chCTe_str()
+        num_lines = 0
+        if self.tp_modal == ModalType.RODOVIARIO:
+            current_y = y_margin + 44.5
+            self.rect(x=x_margin, y=y_margin + 40.5, w=page_width - 0.5, h=4, style="")
+        else:
+            current_y = y_margin + 27.5
+        content_height = 0
+        if self.chNFe_str:
+            for i in range(0, len(self.chNFe_str), 2):
+                self.set_xy(x=current_x_left, y=current_y)
                 self.multi_cell(
                     w=211,
                     h=line_height,
@@ -950,30 +1051,85 @@ class Damdfe(xFPDF):
                     border=0,
                     align="L",
                 )
-                self.set_xy(x=x_margin + 125, y=current_y)
+                self.set_xy(x=current_x_left + 30, y=current_y)
                 self.multi_cell(
                     w=211,
                     h=line_height,
-                    text=self.chNFe_str[i + 1],
+                    text=self.chNFe_str[i],
                     border=0,
                     align="L",
                 )
-            num_lines += 1
-            if i + 1 < len(self.chNFe_str):
-                num_lines += 1
-            current_y += line_height
-        total_height = num_lines * line_height
-        self.x_margin_rect = 4
-
-        self.rect(
-            x=x_margin,
-            y=y_margin + 40.5,
-            w=page_width - 0.5,
-            h=total_height,
-            style="",
-        )
-        y_middle = y_margin + 44.5
-        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+                if i + 1 < len(self.chNFe_str):
+                    self.set_xy(x=x_margin + 92, y=current_y)
+                    self.multi_cell(
+                        w=211,
+                        h=line_height,
+                        text=self.mun_descarregamento,
+                        border=0,
+                        align="L",
+                    )
+                    self.set_xy(x=x_margin + 125, y=current_y)
+                    self.multi_cell(
+                        w=211,
+                        h=line_height,
+                        text=self.chNFe_str[i + 1],
+                        border=0,
+                        align="L",
+                    )
+                num_lines += 1 if i + 1 >= len(self.chNFe_str) else 2
+                current_y += line_height
+                content_height += line_height
+        elif self.chCTe_str:
+            for i in range(0, len(self.chCTe_str), 2):
+                self.set_xy(x=current_x_left, y=current_y)
+                self.multi_cell(
+                    w=211,
+                    h=line_height,
+                    text=self.mun_descarregamento,
+                    border=0,
+                    align="L",
+                )
+                self.set_xy(x=current_x_left + 30, y=current_y)
+                self.multi_cell(
+                    w=211,
+                    h=line_height,
+                    text=self.chCTe_str[i],
+                    border=0,
+                    align="L",
+                )
+                if i + 1 < len(self.chCTe_str):
+                    self.set_xy(x=x_margin + 92, y=current_y)
+                    self.multi_cell(
+                        w=211,
+                        h=line_height,
+                        text=self.mun_descarregamento,
+                        border=0,
+                        align="L",
+                    )
+                    self.set_xy(x=x_margin + 125, y=current_y)
+                    self.multi_cell(
+                        w=211,
+                        h=line_height,
+                        text=self.chCTe_str[i + 1],
+                        border=0,
+                        align="L",
+                    )
+                num_lines += 1 if i + 1 >= len(self.chCTe_str) else 2
+                current_y += line_height
+                content_height += line_height
+        if content_height > 0:
+            if self.tp_modal == ModalType.RODOVIARIO:
+                rect_y_start = y_margin + 44.5
+            else:
+                rect_y_start = y_margin + 27.5
+            rect_height = content_height
+            self.rect(
+                x=x_margin,
+                y=rect_y_start,
+                w=page_width - 0.5,
+                h=rect_height,
+                style="",
+            )
 
     def _draw_insurance_information(self):
         x_margin = self.l_margin
@@ -989,12 +1145,12 @@ class Damdfe(xFPDF):
 
         self.rect(
             x=x_margin,
-            y=(y_margin - 4) + self.x_margin_rect,
+            y=y_margin,
             w=page_width - 0.5,
             h=44,
             style="",
         )
-        y_middle = y_margin + 4 + self.x_margin_rect
+        y_middle = y_margin + 8
         self.line(x_margin, y_middle - 4, x_margin + page_width - 0.5, y_middle - 4)
         self.set_xy(x=(page_width - 45) / 2, y=y_middle - 6)
         self.set_font(self.default_font, "B", 7)
@@ -1023,7 +1179,7 @@ class Damdfe(xFPDF):
 
         self.rect(
             x=x_margin,
-            y=y_margin + 36 + self.x_margin_rect,
+            y=y_margin + 40,
             w=page_width - 0.5,
             h=45,
             style="",
@@ -1051,7 +1207,7 @@ class Damdfe(xFPDF):
 
         self.rect(
             x=x_margin,
-            y=y_margin + 81 + self.x_margin_rect,
+            y=y_margin + 85,
             w=page_width - 0.5,
             h=45,
             style="",

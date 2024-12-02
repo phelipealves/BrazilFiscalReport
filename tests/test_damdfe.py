@@ -46,3 +46,18 @@ def test_damdfe_no_authorization(tmp_path, load_damdfe):
     damdfe = load_damdfe("mdf-e_test_2.xml")
     pdf_path = get_pdf_output_path("damdfe", "damdfe_no_authorization")
     assert_pdf_equal(damdfe, pdf_path, tmp_path)
+
+
+def test_damdfe_modal_aereo(tmp_path, load_damdfe, logo_path):
+    damdfe_config = DamdfeConfig(
+        logo=logo_path,
+    )
+    damdfe = load_damdfe("mdf-e_test_aereo.xml", config=damdfe_config)
+    pdf_path = get_pdf_output_path("damdfe", "damdfe_aereo")
+    assert_pdf_equal(damdfe, pdf_path, tmp_path)
+
+
+def test_damdfe_default_cte(tmp_path, load_damdfe):
+    damdfe = load_damdfe("mdf-e_test_3_cte.xml")
+    pdf_path = get_pdf_output_path("damdfe", "damdfe_default_cte")
+    assert_pdf_equal(damdfe, pdf_path, tmp_path)
