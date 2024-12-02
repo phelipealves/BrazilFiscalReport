@@ -19,7 +19,13 @@ from ..utils import (
 )
 from ..xfpdf import xFPDF
 from .config import DamdfeConfig, EmissionType, ModalType
-from .damdfe_conf import TP_AMBIENTE, TP_EMISSAO, TP_EMITENTE, TP_MODAL, URL
+from .damdfe_conf import (
+    TP_AMBIENTE,
+    TP_EMISSAO,
+    TP_EMITENTE,
+    TP_MODAL,
+    URL,
+)
 
 
 def extract_text(node: Element, tag: str) -> str:
@@ -54,6 +60,8 @@ class Damdfe(xFPDF):
         self.inf_doc = root.find(f"{URL}infDoc")
         self.inf_mun_descarga = root.find(f"{URL}infMunDescarga")
         self.tot = root.find(f"{URL}tot")
+        self.ferrov = root.find(f"{URL}ferrov")
+        self.aquav = root.find(f"{URL}aquav")
         self.inf_mdfe_supl = root.find(f"{URL}infMDFeSupl")
         self.key_mdfe = self.inf_mdfe.attrib.get("Id")[4:]
         self.protocol = extract_text(self.prot_mdfe, "nProt")
@@ -84,6 +92,48 @@ class Damdfe(xFPDF):
             if chNFe_value:
                 self.chNFe_str.append(chNFe_value)
         return self.chNFe_str
+
+    def _build_term_carreg_carga(self):
+        self.term_carreg_carga = []
+        for infTermCarreg in self.aquav:
+            cTermCarreg = extract_text(infTermCarreg, "cTermCarreg")
+            xTermCarreg = extract_text(infTermCarreg, "xTermCarreg")
+            self.term_carreg_carga.append((cTermCarreg, xTermCarreg))
+        return self.term_carreg_carga
+
+    def _build_term_descarreg_carga(self):
+        self.term_descarreg_carga = []
+        for infTermDescarreg in self.aquav:
+            cTermDescarreg = extract_text(infTermDescarreg, "cTermDescarreg")
+            xTermDescarreg = extract_text(infTermDescarreg, "xTermDescarreg")
+            self.term_descarreg_carga.append((cTermDescarreg, xTermDescarreg))
+        return self.term_descarreg_carga
+
+    def _build_inf_unid_carga(self):
+        self.inf_unid_carga = []
+        for infUnidCargaVazia in self.aquav:
+            idUnidCargaVazia = extract_text(infUnidCargaVazia, "idUnidCargaVazia")
+            tpUnidCargaVazia = extract_text(infUnidCargaVazia, "tpUnidCargaVazia")
+            self.inf_unid_carga.append((idUnidCargaVazia, tpUnidCargaVazia))
+        return self.inf_unid_carga
+
+    def _build_inf_unid_transp(self):
+        self.inf_unid_transp = []
+        for infUnidTranspVazia in self.aquav:
+            idUnidTranspVazia = extract_text(infUnidTranspVazia, "idUnidTranspVazia")
+            tpUnidTranspVazia = extract_text(infUnidTranspVazia, "tpUnidTranspVazia")
+            self.inf_unid_transp.append((idUnidTranspVazia, tpUnidTranspVazia))
+        return self.inf_unid_transp
+
+    def _build_ferrov_str(self):
+        self.ferrov_str = []
+        for vag in self.ferrov:
+            vag_serie = extract_text(vag, "serie")
+            vag_nvag = extract_text(vag, "nVag")
+            vag_seq = extract_text(vag, "nSeq")
+            vag_tu = extract_text(vag, "TU")
+            self.ferrov_str.append((vag_serie, vag_nvag, vag_seq, vag_tu))
+        return self.ferrov_str
 
     def _build_percurso_str(self):
         self.percurso_str = ""
@@ -169,7 +219,7 @@ class Damdfe(xFPDF):
 
     def draw_aero_info(self, x_margin, y_margin, y_middle, page_width):
         self.draw_vertical_lines_left(
-            start_y=y_margin + 22, end_y=y_margin + 22 + 4, num_lines=2
+            start_y=y_margin + 22, end_y=y_margin + 26, num_lines=2
         )
         self.nac = extract_text(self.inf_modal, "nac")
         self.matr = extract_text(self.inf_modal, "matr")
@@ -184,7 +234,7 @@ class Damdfe(xFPDF):
         self.set_xy(x=x_margin + 25, y=y_middle - 2)
         self.multi_cell(w=100, h=0, text="VOO", border=0, align="C")
         self.draw_vertical_lines_left(
-            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=4
+            start_y=y_margin + 26, end_y=y_margin + 43, num_lines=4
         )
 
         self.set_xy(x=x_margin, y=y_middle)
@@ -220,7 +270,7 @@ class Damdfe(xFPDF):
         y_middle = y_margin + 29
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
         self.draw_vertical_lines_right(
-            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=2
+            start_y=y_margin + 26, end_y=y_margin + 43, num_lines=2
         )
 
         self.set_xy(x=y_middle + 26, y=y_middle - 2.8)
@@ -239,7 +289,7 @@ class Damdfe(xFPDF):
     def draw_rodoviario_info(self, x_margin, y_margin, y_middle, page_width):
         self.multi_cell(w=100, h=0, text="VEÍCULOS", border=0, align="C")
         self.draw_vertical_lines_left(
-            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=4
+            start_y=y_margin + 26, end_y=y_margin + 43, num_lines=4
         )
 
         self.set_xy(x=x_margin, y=y_middle)
@@ -325,7 +375,7 @@ class Damdfe(xFPDF):
         y_middle = y_margin + 29
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
         self.draw_vertical_lines_right(
-            start_y=y_margin + 26, end_y=y_margin + 26 + 17, num_lines=2
+            start_y=y_margin + 26, end_y=y_margin + 43, num_lines=2
         )
 
         self.set_xy(x=y_middle + 26, y=y_middle - 2.8)
@@ -363,6 +413,131 @@ class Damdfe(xFPDF):
             border=0,
             align="L",
         )
+
+    def draw_ferroviario_info(self, x_margin, y_margin, y_middle, page_width):
+        self._build_ferrov_str()
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin - 210, y=y_middle - 2)  # TODO: Bug x_margin
+        self.multi_cell(w=100, h=0, text="INFORMAÇÕES DOS VAGÕES", border=0, align="C")
+        self.draw_vertical_lines_left(
+            start_y=y_margin + 26, end_y=y_margin + 43, num_lines=4
+        )
+        self.set_xy(x=x_margin, y=y_middle)
+        self.multi_cell(w=100, h=3, text="SÉRIE DE IDENT.", border=0, align="L")
+
+        self.set_xy(x=x_margin + 25, y=y_middle)
+        self.multi_cell(w=100, h=3, text="NÚM. IDENT.", border=0, align="L")
+
+        self.set_xy(x=x_margin + 50, y=y_middle)
+        self.multi_cell(w=100, h=3, text="SEQ", border=0, align="L")
+
+        self.set_xy(x=x_margin + 75, y=y_middle)
+        self.multi_cell(w=100, h=3, text="TON. ÚTIL", border=0, align="L")
+
+        self.set_xy(x=page_width / 2 + 7, y=y_middle - 2)
+        self.multi_cell(w=100, h=0, text="INFORMAÇÕES DOS VAGÕES", border=0, align="C")
+        y_middle = y_margin + 29
+        self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+        self.draw_vertical_lines_right(
+            start_y=y_margin + 26, end_y=y_margin + 43, num_lines=4
+        )
+        self.set_xy(x=y_middle + 26, y=y_middle - 2.8)
+        self.multi_cell(w=100, h=3, text="SÉRIE DE IDENT.", border=0, align="L")
+
+        self.set_xy(x=y_middle + 51, y=y_middle - 2.8)
+        self.multi_cell(w=100, h=3, text="NÚM. IDENT.", border=0, align="L")
+
+        self.set_xy(x=y_middle + 76, y=y_middle - 2.8)
+        self.multi_cell(w=100, h=3, text="SEQ", border=0, align="L")
+
+        self.set_xy(x=y_middle + 101, y=y_middle - 2.8)
+        self.multi_cell(w=100, h=3, text="TON. ÚTIL", border=0, align="L")
+        # TODO: Resolver Bug do espaçamento que fica em branco
+        y_offset_left = y_middle + 0.5
+        line_count = 0
+        max_lines_left = 5
+        for _, (vag_serie, vag_nvag, vag_seq, vag_tu) in enumerate(self.ferrov_str):
+            if line_count >= max_lines_left:
+                break
+
+            self.set_font(self.default_font, "", 6.5)
+
+            self.set_xy(x=x_margin, y=y_offset_left)
+            self.multi_cell(w=25, h=-3, text=vag_serie, border=0, align="L")
+
+            self.set_xy(x=x_margin + 25, y=y_offset_left)
+            self.multi_cell(w=25, h=-3, text=vag_nvag, border=0, align="L")
+
+            self.set_xy(x=x_margin + 50, y=y_offset_left)
+            self.multi_cell(w=25, h=-3, text=vag_seq, border=0, align="L")
+
+            self.set_xy(x=x_margin + 75, y=y_offset_left)
+            self.multi_cell(w=25, h=-3, text=vag_tu, border=0, align="L")
+
+            y_offset_left += 3
+            line_count += 1
+        if line_count < len(self.ferrov_str):
+            y_offset_right = y_middle + 0.5
+            remaining_lines = self.ferrov_str[line_count:]
+            max_lines_rigth = 4
+            line_count = 0
+            for _, (vag_serie, vag_nvag, vag_seq, vag_tu) in enumerate(remaining_lines):
+                if line_count >= max_lines_rigth:
+                    break
+
+                self.set_font(self.default_font, "", 6.5)
+
+                self.set_xy(x=x_margin + 120, y=y_offset_right)
+                self.multi_cell(w=25, h=2, text=vag_serie, border=0, align="L")
+
+                self.set_xy(x=x_margin + 145, y=y_offset_right)
+                self.multi_cell(w=25, h=2, text=vag_nvag, border=0, align="L")
+
+                self.set_xy(x=x_margin + 170, y=y_offset_right)
+                self.multi_cell(w=25, h=2, text=vag_seq, border=0, align="L")
+
+                self.set_xy(x=x_margin + 195, y=y_offset_right)
+                self.multi_cell(w=25, h=2, text=vag_tu, border=0, align="L")
+                y_offset_right += 3
+                line_count += 1
+
+    def draw_aquaviario_info(self, x_margin, y_margin, y_middle, page_width):
+        self._build_term_carreg_carga()
+        self._build_term_descarreg_carga()
+        self.set_font(self.default_font, "B", 7)
+        self.set_xy(x=x_margin - 245, y=y_middle - 2)
+        self.multi_cell(w=100, h=0, text="DADOS DO TERMINAL", border=0, align="C")
+
+        self.set_xy(x=x_margin, y=y_middle)
+        self.multi_cell(w=100, h=3, text="CARREGAMENTO", border=0, align="L")
+
+        self.set_xy(x=page_width / 2 - 2, y=y_middle - 2)
+        y_middle = y_margin + 29
+        self.set_xy(x=page_width / 2 + 5, y=y_middle - 6)
+        self.multi_cell(w=100, h=3, text="DADOS DO TERMINAL", border=0, align="L")
+
+        self.set_xy(x=page_width / 2 + 5, y=y_middle - 3)
+        self.multi_cell(w=100, h=3, text="DESCARREGAMENTO", border=0, align="L")
+
+        # TODO: BUG DE ESPAÇAMENTO VÊ COMO CORRIGIR ISSO
+        y = 78.5
+        for _, (cTermCarreg, xTermCarreg) in enumerate(self.term_carreg_carga):
+            self.set_font(self.default_font, "", 6.5)
+            self.set_xy(x=x_margin, y=y)
+            self.multi_cell(w=100, h=-26, text=cTermCarreg, border=0, align="L")
+
+            self.set_xy(x=x_margin + 25, y=y)
+            self.multi_cell(w=100, h=-26, text=xTermCarreg, border=0, align="L")
+            y += 2
+        y_2 = 47.5
+        for _, (cTermDescarreg, xTermDescarreg) in enumerate(self.term_descarreg_carga):
+            self.set_font(self.default_font, "", 6.5)
+            self.set_xy(x=page_width / 2 + 5, y=y_2 + 14)
+            self.multi_cell(w=100, h=4, text=cTermDescarreg, border=0, align="L")
+
+            self.set_xy(x=page_width / 2 + 25, y=y_2 + 14)
+            self.multi_cell(w=100, h=4, text=xTermDescarreg, border=0, align="L")
+            y_2 += 2
 
     def _draw_header(self):
         x_margin = self.l_margin
@@ -816,7 +991,7 @@ class Damdfe(xFPDF):
         self.set_xy(x=x_margin - 2, y=y_middle - 2)
         self.multi_cell(w=100, h=0, text="INFORMAÇÕES PARA ANTT", border=0, align="C")
         self.draw_vertical_lines_left(
-            start_y=y_margin + 15, end_y=y_margin + 15 + 7, num_lines=4
+            start_y=y_margin + 15, end_y=y_margin + 22, num_lines=4
         )
         self.qtd_nfe = extract_text(self.tot, "qNFe")
         self.qtd_cte = extract_text(self.tot, "qCTe")
@@ -921,6 +1096,12 @@ class Damdfe(xFPDF):
         if self.tp_modal == ModalType.AEREO:
             self.draw_aero_info(x_margin, y_margin, y_middle, page_width)
 
+        if self.tp_modal == ModalType.FERROVIARIO:
+            self.draw_ferroviario_info(x_margin, y_margin, y_middle, page_width)
+
+        if self.tp_modal == ModalType.AQUAVIARIO:
+            self.draw_aquaviario_info(x_margin, y_margin, y_middle, page_width)
+
         y_middle = y_margin + 60
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
 
@@ -945,10 +1126,10 @@ class Damdfe(xFPDF):
                 w=100, h=0, text="INFORMAÇÕES DE VALE PEDÁGIO", border=0, align="L"
             )
             self.draw_vertical_lines_left(
-                start_y=y_margin + 14.5, end_y=y_margin + 14.5 + 4, num_lines=2
+                start_y=y_margin + 14.5, end_y=y_margin + 18.5, num_lines=2
             )
             self.draw_vertical_lines_right(
-                start_y=y_margin + 14.5, end_y=y_margin + 14.5 + 4, num_lines=2
+                start_y=y_margin + 14.5, end_y=y_margin + 18.5, num_lines=2
             )
 
             # Informações de Vale Pedágio
@@ -995,11 +1176,113 @@ class Damdfe(xFPDF):
 
             y_middle = y_margin + 18.5
             self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+        elif self.tp_modal == ModalType.AQUAVIARIO:
+            self._build_inf_unid_carga()
+            self._build_inf_unid_transp()
+            self.rect(x=x_margin, y=y_margin + 7.5, w=page_width - 0.5, h=33, style="")
+            y_middle = y_margin + 11.5
+            self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
+            self.set_xy(x=(page_width - 50) / 2, y=y_middle - 2)
+            self.set_font(self.default_font, "B", 7)
+            self.multi_cell(
+                w=100,
+                h=0,
+                text="INFORMAÇÕES DA COMPOSIÇÃO DA CARGA",
+                border=0,
+                align="L",
+            )
+            self.draw_vertical_lines_left(
+                start_y=y_margin + 11.5, end_y=y_margin + 24.5, num_lines=2
+            )
+            self.draw_vertical_lines_right(
+                start_y=y_margin + 11.5, end_y=y_margin + 24.5, num_lines=2
+            )
+
+            # UNIDADE DE TRANSPORTE
+            self.set_font(self.default_font, "B", 6)
+            self.set_xy(x=x_margin + 12, y=y_middle + 1)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="UNIDADE DE TRANSPORTE",
+                border=0,
+                align="L",
+            )
+
+            # UNIDADE DE CARGA
+            self.set_xy(x=x_margin + 59, y=y_middle + 1)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="UNIDADE DE CARGA",
+                border=0,
+                align="L",
+            )
+
+            # UNIDADE DE TRANSPORTE
+            self.set_xy(x=y_middle + 15, y=y_middle + 1)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="UNIDADE DE TRANSPORTE",
+                border=0,
+                align="L",
+            )
+
+            # UNIDADE DE CARGA
+            self.set_xy(x=y_middle + 67, y=y_middle + 1)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="UNIDADE DE CARGA",
+                border=0,
+                align="L",
+            )
+            for idx, (idUnidTransp, tpUnidTransp) in enumerate(self.inf_unid_transp):
+                y_offset = 83 + idx
+                self.set_xy(x=x_margin, y=y_offset + 8)
+                self.multi_cell(
+                    w=100,
+                    h=3,
+                    text=idUnidTransp,
+                    border=0,
+                    align="L",
+                )
+                self.set_xy(x=x_margin + 50, y=y_offset + 8)
+                self.multi_cell(
+                    w=100,
+                    h=3,
+                    text=tpUnidTransp,
+                    border=0,
+                    align="L",
+                )
+            for idx, (idUnidCarga, tpUnidCarga) in enumerate(self.inf_unid_carga):
+                y_offset = 84 + idx
+                self.set_xy(x=x_margin + 100, y=y_offset + 8)
+                self.multi_cell(
+                    w=100,
+                    h=3,
+                    text=idUnidCarga,
+                    border=0,
+                    align="L",
+                )
+                self.set_xy(x=x_margin + 150, y=y_offset + 8)
+                self.multi_cell(
+                    w=100,
+                    h=3,
+                    text=tpUnidCarga,
+                    border=0,
+                    align="L",
+                )
+
+            y_middle = y_margin + 15.5
+            self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
         else:
             self.rect(x=x_margin, y=y_margin + 10.5, w=page_width - 0.5, h=21, style="")
         y_middle = (
             y_margin + 31.5
             if self.tp_modal == ModalType.RODOVIARIO
+            or self.tp_modal == ModalType.AQUAVIARIO
             else y_margin + 15.5
         )
         self.set_font(self.default_font, "B", 7)
@@ -1014,6 +1297,7 @@ class Damdfe(xFPDF):
         y_middle = (
             y_margin + 35.5
             if self.tp_modal == ModalType.RODOVIARIO
+            or self.tp_modal == ModalType.AQUAVIARIO
             else y_margin + 19.5
         )
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
@@ -1021,6 +1305,7 @@ class Damdfe(xFPDF):
         y_middle = (
             y_margin + 40.5
             if self.tp_modal == ModalType.RODOVIARIO
+            or self.tp_modal == ModalType.AQUAVIARIO
             else y_margin + 23.5
         )
         self.line(x_margin, y_middle, x_margin + page_width - 0.5, y_middle)
@@ -1083,7 +1368,10 @@ class Damdfe(xFPDF):
         self.chNFe_str = self._build_chnfe_str()
         self.chCTe_str = self._build_chCTe_str()
         num_lines = 0
-        if self.tp_modal == ModalType.RODOVIARIO:
+        if (
+            self.tp_modal == ModalType.RODOVIARIO
+            or self.tp_modal == ModalType.AQUAVIARIO
+        ):
             current_y = y_margin + 44.5
             self.rect(x=x_margin, y=y_margin + 40.5, w=page_width - 0.5, h=4, style="")
         else:
@@ -1166,7 +1454,10 @@ class Damdfe(xFPDF):
                 current_y += line_height
                 content_height += line_height
         if content_height > 0:
-            if self.tp_modal == ModalType.RODOVIARIO:
+            if (
+                self.tp_modal == ModalType.RODOVIARIO
+                or self.tp_modal == ModalType.AQUAVIARIO
+            ):
                 rect_y_start = y_margin + 44.5
             else:
                 rect_y_start = y_margin + 27.5

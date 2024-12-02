@@ -67,3 +67,15 @@ def test_damdfe_aereo_contingencia(tmp_path, load_damdfe):
     damdfe = load_damdfe("mdf-e_test_aereo_contingencia.xml")
     pdf_path = get_pdf_output_path("damdfe", "damdfe_aereo_contingencia")
     assert_pdf_equal(damdfe, pdf_path, tmp_path)
+
+
+def test_damdfe_default_ferroviario(tmp_path, load_damdfe):
+    damdfe = load_damdfe("mdf-e_test_ferroviario.xml")
+    pdf_path = get_pdf_output_path("damdfe", "damdfe_ferroviario")
+    assert_pdf_equal(damdfe, pdf_path, tmp_path)
+
+
+def test_damdfe_default_aquaviario(tmp_path, load_damdfe):
+    damdfe = load_damdfe("mdf-e_test_aquaviario.xml")
+    pdf_path = get_pdf_output_path("damdfe", "damdfe_aquaviario")
+    assert_pdf_equal(damdfe, pdf_path, tmp_path)
