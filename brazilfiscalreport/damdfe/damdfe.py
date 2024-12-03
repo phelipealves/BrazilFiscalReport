@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Engenere - Cristiano Mafra Junior
 
 import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta
 from io import BytesIO
 from xml.etree.ElementTree import Element
 
@@ -17,7 +18,7 @@ from ..utils import (
     get_tag_text,
 )
 from ..xfpdf import xFPDF
-from .config import DamdfeConfig, ModalType
+from .config import DamdfeConfig, EmissionType, ModalType
 from .damdfe_conf import TP_AMBIENTE, TP_EMISSAO, TP_EMITENTE, TP_MODAL, URL
 
 
@@ -59,8 +60,10 @@ class Damdfe(xFPDF):
         self.dh_recebto, self.hr_recebto = get_date_utc(
             extract_text(self.prot_mdfe, "dhRecbto")
         )
+        self.tp_emis = extract_text(self.ide, "tpEmis")
         self.add_page(orientation="P")
         self._draw_void_watermark()
+        self._draw_contingency_watermark()
         self._draw_header()
         self._draw_body_info()
         self._draw_voucher_information()
@@ -117,6 +120,28 @@ class Damdfe(xFPDF):
         y_center = (page_height + height) / 2
         with self.rotation(55, x_center + (width / 2), y_center - (height / 2)):
             self.text(x_center, y_center, watermark_text)
+        self.set_text_color(r=0, g=0, b=0)
+
+    def _draw_contingency_watermark(self):
+        """
+        Draw a contingency watermark on the DAMDFE
+        """
+        tp_emiss = EmissionType(TP_EMISSAO[extract_text(self.ide, "tpEmis")])
+        if tp_emiss != EmissionType.CONTINGENCIA:
+            return
+        self.set_font(self.default_font, "B", 60)
+        first_part = "EMISSÃO EM"
+        second_part = "CONTINGÊNCIA"
+        width = self.get_string_width("CONTINGÊNCIA ")
+        self.set_text_color(r=150, g=150, b=150)
+        height = 15
+        page_width = self.w
+        page_height = self.h
+        x_center = (page_width - width) / 2
+        y_center = (page_height + height) / 2
+        with self.rotation(0, x_center + (width / 2), y_center - (height / 2)):
+            self.text(x_center + 18, y_center + 5, first_part)
+            self.text(x_center + 3, y_center + 23, second_part)
         self.set_text_color(r=0, g=0, b=0)
 
     def draw_vertical_lines_left(self, start_y, end_y, num_lines=None):
@@ -348,6 +373,11 @@ class Damdfe(xFPDF):
         self.serie = extract_text(self.ide, "serie")
         self.n_mdf = extract_text(self.ide, "nMDF")
         self.dt, self.hr = get_date_utc(extract_text(self.ide, "dhEmi"))
+        self.emission_datetime = datetime.strptime(
+            f"{self.dt} {self.hr}", "%d/%m/%Y %H:%M:%S"
+        )
+        deadline_datetime = self.emission_datetime + timedelta(hours=168)
+        self.formatted_deadline = deadline_datetime.strftime("%d/%m/%Y %H:%M")
         self.uf_carreg = extract_text(self.ide, "UFIni")
         self.uf_descarreg = extract_text(self.ide, "UFFim")
         self.tp_emi = TP_EMISSAO[extract_text(self.ide, "tpEmis")]
@@ -606,14 +636,32 @@ class Damdfe(xFPDF):
         )
 
         self.set_font(self.default_font, "", 6)
-        self.set_xy(x=x_middle + 32, y=y_middle + 35)
-        self.multi_cell(
-            w=100,
-            h=3,
-            text=f"{self.protocol} {self.dh_recebto} {self.hr_recebto}",
-            border=0,
-            align="L",
-        )
+        if self.tp_emis == "1":
+            self.set_xy(x=x_middle + 32, y=y_middle + 35)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text=f"{self.protocol} {self.dh_recebto} {self.hr_recebto}",
+                border=0,
+                align="L",
+            )
+        else:
+            self.set_xy(x=x_middle + 22, y=y_middle + 34)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text="EMISSÃO EM CONTINGÊNCIA. Obrigatória a autorização em",
+                border=0,
+                align="L",
+            )
+            self.set_xy(x=x_middle + 26, y=y_middle + 36)
+            self.multi_cell(
+                w=100,
+                h=3,
+                text=f"168 horas após esta emissão ({self.formatted_deadline})",
+                border=0,
+                align="L",
+            )
 
         y_middle = y_margin + 35
         self.line(x_margin, y_middle, x_middle, y_middle)

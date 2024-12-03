@@ -17,6 +17,11 @@ class ModalType(Enum):
     FERROVIARIO = "FERROVIÁRIO"
 
 
+class EmissionType(Enum):
+    NORMAL = "NORMAL"
+    CONTINGENCIA = "CONTINGÊNCIA"
+
+
 @dataclass
 class Margins:
     top: Number = 5
