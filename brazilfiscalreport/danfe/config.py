@@ -42,6 +42,13 @@ class ReceiptPosition(Enum):
 
 
 @dataclass
+class ProductDescriptionConfig:
+    display_branch: bool = False
+    branch_info_prefix: str = ""
+    display_additional_info: bool = True
+
+
+@dataclass
 class DanfeConfig:
     logo: Union[str, BytesIO, bytes] = None
     margins: Margins = field(default_factory=Margins)
@@ -51,3 +58,6 @@ class DanfeConfig:
     invoice_display: InvoiceDisplay = InvoiceDisplay.FULL_DETAILS
     font_type: FontType = FontType.TIMES
     display_pis_cofins: bool = False
+    product_description_config: ProductDescriptionConfig = field(
+        default_factory=ProductDescriptionConfig
+    )

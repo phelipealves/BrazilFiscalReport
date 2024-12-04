@@ -138,6 +138,26 @@ Here is a breakdown of all the configuration options available in `DanfeConfig`:
 
 ---
 
+**Product Description Config**
+
+- **Type**: `ProductDescriptionConfig`
+- **Fields**: `display_branch`, `branch_info_prefix` and `display_additional_info`
+- **Description**: Whether or not to display the product branch in the DANFE product description.
+- **Example**:
+    ```python
+    config.display_branch = True
+    config.branch_info_prefix = '=>'
+    config.display_additional_info = True
+    ```
+- **Default**:
+    ```python
+    config.display_branch = False
+    config.branch_info_prefix = ""
+    config.display_additional_info = True
+    ```
+
+---
+
 ### Usage Example with Customization
 
 Here’s how to set up a ``DanfeConfig`` object with a full set of customizations::
