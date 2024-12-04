@@ -4,6 +4,7 @@ from .config import (
     FontType,
     InvoiceDisplay,
     Margins,
+    ProductDescriptionConfig,
     ReceiptPosition,
     TaxConfiguration,
 )
@@ -16,6 +17,7 @@ __all__ = [
     "FontType",
     "InvoiceDisplay",
     "Margins",
+    "ProductDescriptionConfig",
     "ReceiptPosition",
     "TaxConfiguration",
 ]

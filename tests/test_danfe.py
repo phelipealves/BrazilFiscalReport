@@ -7,6 +7,7 @@ from brazilfiscalreport.danfe import (
     FontType,
     InvoiceDisplay,
     Margins,
+    ProductDescriptionConfig,
     ReceiptPosition,
     TaxConfiguration,
 )
@@ -130,4 +131,29 @@ def test_danfe_pis_config(tmp_path, load_danfe):
     )
     danfe = load_danfe("nfe_test_1.xml", config=config)
     pdf_path = get_pdf_output_path("danfe", "danfe_pis_confins")
+    assert_pdf_equal(danfe, pdf_path, tmp_path)
+
+
+def test_danfe_product_description_with_branch(tmp_path, load_danfe):
+    config = DanfeConfig(
+        margins=Margins(top=2, right=2, bottom=2, left=2),
+        product_description_config=ProductDescriptionConfig(
+            display_branch=True,
+            display_additional_info=False,
+        ),
+    )
+    danfe = load_danfe("nfe_test_branch.xml", config=config)
+    pdf_path = get_pdf_output_path("danfe", "danfe_branch")
+    assert_pdf_equal(danfe, pdf_path, tmp_path)
+
+
+def test_danfe_product_description_with_branch_prefix(tmp_path, load_danfe):
+    config = DanfeConfig(
+        margins=Margins(top=2, right=2, bottom=2, left=2),
+        product_description_config=ProductDescriptionConfig(
+            display_branch=True, branch_info_prefix="=>"
+        ),
+    )
+    danfe = load_danfe("nfe_test_branch.xml", config=config)
+    pdf_path = get_pdf_output_path("danfe", "danfe_branch_with_prefix")
     assert_pdf_equal(danfe, pdf_path, tmp_path)

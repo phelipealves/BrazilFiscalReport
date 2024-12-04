@@ -59,6 +59,7 @@ class Danfe(xFPDF):
         self.quantity_precision = config.decimal_config.quantity_precision
         self.invoice_display = config.invoice_display
         self.display_pis_cofins = config.display_pis_cofins
+        self.product_description_config = config.product_description_config
 
         root = ET.fromstring(xml)
         self.inf_nfe = root.find(f"{URL}infNFe")
@@ -277,6 +278,30 @@ class Danfe(xFPDF):
         )
         return receipt_text
 
+    def _build_inf_ad_prod(self, prod, inf_ad_prod):
+        add_infos = []
+        _rastros = prod.findall(f"{URL}rastro")
+
+        prefix = self.product_description_config.branch_info_prefix
+        prefix = f"{prefix} " if prefix else ""
+        if self.product_description_config.display_branch:
+            for _rastro in _rastros:
+                n_lote = extract_text(_rastro, "nLote")
+                q_lote = format_number(
+                    extract_text(_rastro, "qLote"), self.quantity_precision
+                )
+                d_fab, _ = get_date_utc(extract_text(_rastro, "dFab"))
+                d_val, _ = get_date_utc(extract_text(_rastro, "dVal"))
+                add_infos.append(
+                    f"{prefix}Lote: {n_lote} Qtd: {q_lote} Fab: {d_fab} Val: {d_val}"
+                )
+
+        if self.product_description_config.display_additional_info and inf_ad_prod:
+            add_infos.append(inf_ad_prod)
+
+        add_infos_text = "\n".join(add_infos)
+        return add_infos_text
+
     def _get_products_info(self):
         products = []
         for _det in self.det:
@@ -285,7 +310,9 @@ class Danfe(xFPDF):
             el_imp_ICMS = _det.find(f"{URL}ICMS")
             el_imp_IPI = _det.find(f"{URL}IPI")
 
-            inf_ad_prod = extract_text(_det, "infAdProd")
+            inf_ad_prod = self._build_inf_ad_prod(
+                el_prod, extract_text(_det, "infAdProd")
+            )
             x_prod = extract_text(el_prod, "xProd")
 
             u_com = extract_text(el_prod, "uCom")
