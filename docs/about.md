@@ -7,4 +7,4 @@ This is a fork of the [nfe_utils](https://github.com/edsonbernar/nfe_utils) proj
 For questions or support, feel free to open an issue or join the discussions in the repository.
 
 ## Maintainer 🛠️
-[![Engenere](https://storage.googleapis.com/eng-imagens/logo-fundo-preto.webp)]([#](https://engenere.one/))
+[![Engenere](https://storage.googleapis.com/eng-imagens/logo-fundo-preto.webp)](https://engenere.one/)
