@@ -83,7 +83,9 @@ def format_number(cNumber, precision=0, group_sep=".", decimal_sep=","):
 
 
 def merge_if_different(value1, value2):
-    if value1 != value2:
+    str_val1 = str(value1).lower()
+    str_val2 = str(value2).lower()
+    if str_val1 != str_val2:
         return f"{value1}\n{value2}"
     else:
         return value1
