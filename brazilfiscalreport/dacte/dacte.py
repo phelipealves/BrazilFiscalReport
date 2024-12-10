@@ -20,12 +20,15 @@ from ..utils import (
 from ..xfpdf import xFPDF
 from .config import DacteConfig, ModalType, ReceiptPosition
 from .dacte_conf import (
+    RESP_FATURAMENTO,
     TP_CODIGO_MEDIDA,
     TP_CTE,
+    TP_FERROV_EMITENTE,
     TP_MANUSEIO,
     TP_MODAL,
     TP_SERVICO,
     TP_TOMADOR,
+    TP_TRAFICO,
     URL,
 )
 from .generate_qrcode import draw_qr_code
@@ -68,6 +71,7 @@ class Dacte(xFPDF):
         self.inf_modal = root.find(f"{URL}infModal")
         self.imp = root.find(f"{URL}imp")
         self.compl = root.find(f"{URL}compl")
+        self.ferrov = root.find(f"{URL}ferrov")
 
         self.obs_dacte_list = []
         for obs in self.compl:
@@ -1560,6 +1564,228 @@ class Dacte(xFPDF):
             style="",
         )
 
+    def draw_ferroviario_info(self, config):
+        x_margin = self.l_margin
+        page_width = self.epw
+
+        self.tpTraf = TP_TRAFICO[extract_text(self.inf_modal, "tpTraf")]
+        self.fluxo = extract_text(self.inf_modal, "fluxo")
+        self.vFrete = format_number(extract_text(self.inf_modal, "vFrete"), precision=2)
+        self.ferrEmi = TP_FERROV_EMITENTE.get(
+            extract_text(self.inf_modal, "ferrEmi"), ""
+        )
+        self.respFat = RESP_FATURAMENTO.get(extract_text(self.inf_modal, "respFat"), "")
+
+        self.inf_ferroviario1 = []
+        self.inf_ferroviario2 = []
+
+        for i, ferrov in enumerate(self.ferrov):
+            cnpj = extract_text(ferrov, "CNPJ")
+            cInt = extract_text(ferrov, "cInt")
+            ie = extract_text(ferrov, "IE")
+            xNome = extract_text(ferrov, "xNome")
+
+            if xNome:
+                if i % 2 == 0:
+                    self.inf_ferroviario1.append(
+                        {
+                            "cnpj": cnpj if cnpj else "00.000.000/0000-00",
+                            "cInt": cInt if cInt else " ",
+                            "ie": ie if ie else " ",
+                            "xNome": xNome if xNome else " ",
+                        }
+                    )
+                else:
+                    self.inf_ferroviario2.append(
+                        {
+                            "cnpj": cnpj if cnpj else "00.000.000/0000-00",
+                            "cInt": cInt if cInt else " ",
+                            "ie": ie if ie else " ",
+                            "xNome": xNome if xNome else " ",
+                        }
+                    )
+
+        section_start_y = self.get_y() + 7
+        section_start_y = self.draw_section(
+            section_start_y,
+            13,
+            "INFORMAÇÕES ESPECÍFICAS DO MODAL FERROVIÁRIO",
+        )
+        self.rect(
+            x=x_margin,
+            y=section_start_y - 10,
+            w=page_width - 0.1 * x_margin,
+            h=6,
+            style="",
+        )
+
+        col_width = (page_width - 2 * x_margin) / 5
+        for i in range(1, 5):
+            x_line = x_margin + i * col_width
+            self.line(
+                x1=x_line,
+                x2=x_line,
+                y1=section_start_y - 10,
+                y2=section_start_y - 4,
+            )
+
+        self.set_font(self.default_font, "", 6)
+        road_titles = [
+            "TIPO DE TRÁFICO",
+            "FLUXO FERROVIÁRIO",
+            "VALOR DO FRETE",
+            "FERROVIA EMITENTE DO CT-E",
+            "FERROVIA DO FATURAMENTO",
+        ]
+
+        road_values = [
+            f"{self.tpTraf}",
+            f"{self.fluxo}",
+            f"R$ {self.vFrete}",
+            f"{self.ferrEmi}",
+            f"{self.respFat}",
+        ]
+
+        for i, (title, value) in enumerate(zip(road_titles, road_values)):
+            self.set_xy(x_margin + i * col_width, section_start_y - 10)
+            self.multi_cell(w=col_width, h=3, text=title, align="L")
+            self.set_font(self.default_font, "B", 7)
+            self.set_xy(x_margin + i * col_width, section_start_y - 7)
+            self.multi_cell(w=col_width, h=3, text=value, align="L")
+            self.set_font(self.default_font, "", 6)
+
+        section_start_y = self.get_y()
+        section_start_y = self.draw_section(
+            section_start_y,
+            13,
+            "INFORMAÇÕES DAS FERROVIARIAS ENVOLVIDAS",
+        )
+        self.rect(
+            x=x_margin,
+            y=section_start_y - 10,
+            w=page_width - 0.1 * x_margin,
+            h=6,
+            style="",
+        )
+
+        col_width = (page_width - 2 * x_margin) / 4
+        for i in range(1, 4):
+            x_line = x_margin + i * col_width
+            self.line(
+                x1=x_line,
+                x2=x_line,
+                y1=section_start_y - 10,
+                y2=section_start_y - 4,
+            )
+
+        self.set_font(self.default_font, "", 6)
+        road_titles = [
+            "CNPJ",
+            "COD. INTERNO",
+            "IE",
+            "RAZÃO SOCIAL",
+        ]
+
+        if self.inf_ferroviario1:
+            ferro1 = self.inf_ferroviario1[0]
+        else:
+            ferro1 = {
+                "cnpj": "00.000.000/0000-00",
+                "cInt": " ",
+                "ie": " ",
+                "xNome": " ",
+            }
+
+        road_values = [
+            ferro1["cnpj"],
+            ferro1["cInt"],
+            ferro1["ie"],
+            ferro1["xNome"],
+        ]
+
+        for i, (title, value) in enumerate(zip(road_titles, road_values)):
+            self.set_xy(x_margin + i * col_width, section_start_y - 10)
+            self.multi_cell(w=col_width, h=3, text=title, align="L")
+            self.set_font(self.default_font, "B", 7)
+            self.set_xy(x_margin + i * col_width, section_start_y - 7)
+            self.multi_cell(w=col_width, h=3, text=value, align="L")
+            self.set_font(self.default_font, "", 6)
+
+        section_start_y = self.get_y() + 10
+        self.rect(
+            x=x_margin,
+            y=section_start_y - 10,
+            w=page_width - 0.1 * x_margin,
+            h=6,
+            style="",
+        )
+
+        col_width = (page_width - 2 * x_margin) / 4
+        for i in range(1, 4):
+            x_line = x_margin + i * col_width
+            self.line(
+                x1=x_line,
+                x2=x_line,
+                y1=section_start_y - 10,
+                y2=section_start_y - 4,
+            )
+
+        if self.inf_ferroviario2:
+            ferro2 = self.inf_ferroviario2[0]
+        else:
+            ferro2 = {
+                "cnpj": "00.000.000/0000-00",
+                "cInt": " ",
+                "ie": " ",
+                "xNome": " ",
+            }
+
+        road_values = [
+            ferro2["cnpj"],
+            ferro2["cInt"],
+            ferro2["ie"],
+            ferro2["xNome"],
+        ]
+
+        for i, (title, value) in enumerate(zip(road_titles, road_values)):
+            self.set_xy(x_margin + i * col_width, section_start_y - 10)
+            self.multi_cell(w=col_width, h=3, text=title, align="L")
+            self.set_font(self.default_font, "B", 7)
+            self.set_xy(x_margin + i * col_width, section_start_y - 7)
+            self.multi_cell(w=col_width, h=3, text=value, align="L")
+            self.set_font(self.default_font, "", 6)
+
+        self.set_font(self.default_font, "", 7)
+        section_start_y = self.get_y()
+        section_start_y = self.draw_section(
+            section_start_y, 3, "USO EXCLUSIVO DO EMISSOR DO CT-E"
+        )
+        self.set_margins(
+            left=config.margins.left,
+            top=config.margins.top,
+            right=config.margins.right,
+        )
+        margins_to_height = {
+            2: 12,
+            3: 11,
+            4: 10,
+            5: 9,
+            6: 8,
+            7: 8,
+            8: 7,
+            9: 6,
+            10: 5,
+        }
+        rect_height = margins_to_height[config.margins.left]
+
+        self.rect(
+            x=x_margin,
+            y=section_start_y,
+            w=page_width - 0.1 * x_margin,
+            h=rect_height,
+            style="",
+        )
+
     def _draw_specific_data(self, config):
         x_margin = self.l_margin
         page_width = self.epw
@@ -1641,6 +1867,8 @@ class Dacte(xFPDF):
             )
         if self.tp_modal == ModalType.AEREO:
             self.draw_aereo_info(config)
+        if self.tp_modal == ModalType.FERROVIARIO:
+            self.draw_ferroviario_info(config)
 
     # Adicionando outra página
     def _add_new_page(self, config):
