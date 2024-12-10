@@ -14,4 +14,5 @@ __all__ = [
     "FontType",
     "Margins",
     "ReceiptPosition",
+    "ModalType",
 ]

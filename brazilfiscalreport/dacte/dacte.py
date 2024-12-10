@@ -13,12 +13,21 @@ from ..utils import (
     format_cpf_cnpj,
     format_number,
     format_phone,
+    format_xDime,
     get_date_utc,
     get_tag_text,
 )
 from ..xfpdf import xFPDF
-from .config import DacteConfig, ReceiptPosition
-from .dacte_conf import TP_CODIGO_MEDIDA, TP_CTE, TP_MODAL, TP_SERVICO, TP_TOMADOR, URL
+from .config import DacteConfig, ModalType, ReceiptPosition
+from .dacte_conf import (
+    TP_CODIGO_MEDIDA,
+    TP_CTE,
+    TP_MANUSEIO,
+    TP_MODAL,
+    TP_SERVICO,
+    TP_TOMADOR,
+    URL,
+)
 from .generate_qrcode import draw_qr_code
 
 
@@ -1063,7 +1072,7 @@ class Dacte(xFPDF):
         self.multi_cell(w=0, h=4, text="VALOR TOTAL DA MERCADORIA", align="L")
         self.set_xy(x_line_2, section_start_y)
         self.set_font(self.default_font, "B", 7)
-        self.multi_cell(w=0, h=14, text=self.inf_carga_valor, align="L")
+        self.multi_cell(w=0, h=14, text=f"R$ {self.inf_carga_valor}", align="L")
 
         section_start_y += 10
 
@@ -1186,7 +1195,7 @@ class Dacte(xFPDF):
         self.multi_cell(w=col_width, h=4, text="VALOR TOTAL DO SERVIÇO", align="L")
         self.set_font(self.default_font, "B", 8)
         self.set_xy(x_margin + 3 * col_width, section_start_y + 4)
-        self.multi_cell(w=col_width, h=4, text=self.v_tpprest, align="L")
+        self.multi_cell(w=col_width, h=4, text=f"R$ {self.v_tpprest}", align="L")
 
         self.line(
             x1=x_margin + 3 * col_width,
@@ -1200,7 +1209,7 @@ class Dacte(xFPDF):
         self.multi_cell(w=col_width, h=8, text="VALOR TOTAL A RECEBER", align="L")
         self.set_font(self.default_font, "B", 8)
         self.set_xy(x_margin + 3 * col_width, section_start_y + 13)
-        self.multi_cell(w=col_width, h=7, text=self.v_rec, align="L")
+        self.multi_cell(w=col_width, h=7, text=f"R$ {self.v_rec}", align="L")
 
         section_start_y += 18
 
@@ -1364,42 +1373,56 @@ class Dacte(xFPDF):
         self.set_xy(x_margin, initial_y)
         self.rect(x=x_margin, y=initial_y, w=text_width, h=rectangle_height)
 
-    def _draw_specific_data(self, config):
+    def draw_aereo_info(self, config):
         x_margin = self.l_margin
         page_width = self.epw
+        self.nOCA = extract_text(self.inf_modal, "nOCA")
+        self.CL = extract_text(self.inf_modal, "CL")
+        self.cTar = extract_text(self.inf_modal, "cTar")
+        self.vTar = format_number(extract_text(self.inf_modal, "vTar"), precision=2)
+        self.nMinu = extract_text(self.inf_modal, "nMinu")
+        self.cInfManu = TP_MANUSEIO.get(
+            extract_text(self.inf_modal, "cInfManu"), "Não Informado"
+        )
+        self.dPrevAereo = extract_text(self.inf_modal, "dPrevAereo")
+        self.xDime = format_xDime(extract_text(self.inf_modal, "xDime"))
         section_start_y = self.get_y() + 7
         section_start_y = self.draw_section(
             section_start_y,
             13,
-            "DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - CARGA FRACIONADA",
+            "DADOS ESPECÍFICOS DO MODAL AÉREO",
         )
         self.rect(
             x=x_margin,
             y=section_start_y - 10,
             w=page_width - 0.1 * x_margin,
-            h=10,
+            h=6,
             style="",
         )
 
         col_width = (page_width - 2 * x_margin) / 4
         for i in range(1, 4):
             x_line = x_margin + i * col_width
-            self.line(x1=x_line, x2=x_line, y1=section_start_y - 10, y2=section_start_y)
+            self.line(
+                x1=x_line,
+                x2=x_line,
+                y1=section_start_y - 10,
+                y2=section_start_y - 4,
+            )
 
-        self.set_font(self.default_font, "", 7)
+        self.set_font(self.default_font, "", 6)
         road_titles = [
-            "RNTRC DA EMPRESA",
-            "CIOT",
-            "DATA PREVISTA DE ENTREGA",
-            "ESTE CONHECIMENTO DE TRANSPORTE ATENDE"
-            "À LEGISLAÇÃO DE TRANSPORTE RODOVIÁRIO EM VIGOR",
+            "NÚMERO OPERACIONAL AÉREO",
+            "CLASSE",
+            "CÓDIGO DA TARIFA",
+            "VALOR DA TARIFA",
         ]
 
         road_values = [
-            f"{self.rntrc}",
-            "",
-            "",
-            "",
+            f"{self.nOCA}",
+            f"{self.CL}",
+            f"{self.cTar}",
+            f"R$ {self.vTar}",
         ]
 
         for i, (title, value) in enumerate(zip(road_titles, road_values)):
@@ -1410,33 +1433,214 @@ class Dacte(xFPDF):
             self.multi_cell(w=col_width, h=3, text=value, align="L")
             self.set_font(self.default_font, "", 6)
 
+        section_start_y = self.get_y() + 10
+        self.rect(
+            x=x_margin,
+            y=section_start_y - 10,
+            w=page_width - 0.1 * x_margin,
+            h=6,
+            style="",
+        )
+
+        col_width = (page_width - 2 * x_margin) / 3
+        for i in range(1, 3):
+            x_line = x_margin + i * col_width
+            self.line(
+                x1=x_line,
+                x2=x_line,
+                y1=section_start_y - 10,
+                y2=section_start_y - 4,
+            )
+
+        self.set_font(self.default_font, "", 6)
+        road_titles = [
+            "NÚMERO DA MINUTA",
+            "RETIRA",
+            "DADOS RELATIVOS A RETIRADA DA CARGA",
+        ]
+
+        road_values = [
+            f"{self.nMinu}",
+            "",
+            "",
+        ]
+
+        text_y = section_start_y - 12
+        for i, (title, value) in enumerate(zip(road_titles, road_values)):
+            x_pos = x_margin + i * col_width
+            self.set_xy(x_margin + i * col_width, section_start_y - 10)
+            self.multi_cell(w=col_width, h=3, text=title, align="L")
+            if i == 1:
+                square_size = 3
+                self.rect(x=x_pos + 10, y=text_y + 4, w=square_size, h=square_size)
+                self.set_xy(x=x_pos + 14, y=text_y + 3.8)
+                self.multi_cell(w=10, h=3, text="SIM", border=0, align="L")
+
+                self.rect(x=x_pos + 25, y=text_y + 4, w=square_size, h=square_size)
+                self.set_xy(x=x_pos + 29, y=text_y + 3.8)
+                self.multi_cell(w=10, h=3, text="NÃO", border=0, align="L")
+            self.set_font(self.default_font, "B", 7)
+            self.set_xy(x_margin + i * col_width, section_start_y - 7)
+            self.multi_cell(w=col_width, h=3, text=value, align="L")
+            self.set_font(self.default_font, "", 6)
+
+        section_start_y = self.get_y() + 10
+        self.rect(
+            x=x_margin,
+            y=section_start_y - 10,
+            w=page_width - 0.1 * x_margin,
+            h=6,
+            style="",
+        )
+
+        col_width = (page_width - 2 * x_margin) / 3.3
+        for i in range(1, 4):
+            x_line = x_margin + i * col_width
+            self.line(
+                x1=x_line,
+                x2=x_line,
+                y1=section_start_y - 10,
+                y2=section_start_y - 4,
+            )
+
+        self.set_font(self.default_font, "", 6)
+        road_titles = [
+            "CARACTERÍSTICAS ADICIONAL DO SERVIÇO",
+            "DATA PREVISTA DA ENTREGA",
+            "INFORMAÇÕES DE MANUSEIO",
+            "DIMENSÃO",
+        ]
+
+        road_values = [
+            "",
+            f"{self.dPrevAereo}",
+            f"{self.cInfManu}",
+            f"{self.xDime}",
+        ]
+
+        for i, (title, value) in enumerate(zip(road_titles, road_values)):
+            self.set_xy(x_margin + i * col_width, section_start_y - 10)
+            self.multi_cell(w=col_width, h=3, text=title, align="L")
+            if i == 3:
+                self.set_font(self.default_font, "B", 6)
+            else:
+                self.set_font(self.default_font, "B", 7)
+            self.set_xy(x_margin + i * col_width, section_start_y - 7)
+            self.multi_cell(w=col_width, h=3, text=value, align="L")
+            self.set_font(self.default_font, "", 6)
+
         self.set_font(self.default_font, "", 7)
+        section_start_y = self.get_y()
         section_start_y = self.draw_section(
-            section_start_y, 18, "USO EXCLUSIVO DO EMISSOR DO CT-E"
+            section_start_y, 3, "USO EXCLUSIVO DO EMISSOR DO CT-E"
         )
         self.set_margins(
-            left=config.margins.left, top=config.margins.top, right=config.margins.right
+            left=config.margins.left,
+            top=config.margins.top,
+            right=config.margins.right,
         )
         margins_to_height = {
-            2: 23,
-            3: 22,
-            4: 20,
-            5: 18,
-            6: 16,
-            7: 14,
-            8: 12,
-            9: 10,
+            2: 15,
+            3: 14,
+            4: 12,
+            5: 11,
+            6: 8,
+            7: 6,
+            8: 4,
+            9: 2,
             10: 8,
         }
         rect_height = margins_to_height[config.margins.left]
 
         self.rect(
             x=x_margin,
-            y=section_start_y - 15,
+            y=section_start_y,
             w=page_width - 0.1 * x_margin,
             h=rect_height,
             style="",
         )
+
+    def _draw_specific_data(self, config):
+        x_margin = self.l_margin
+        page_width = self.epw
+        self.tp_modal = ModalType(TP_MODAL[extract_text(self.ide, "modal")])
+        if self.tp_modal == ModalType.RODOVIARIO:
+            section_start_y = self.get_y() + 7
+            section_start_y = self.draw_section(
+                section_start_y,
+                13,
+                "DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - CARGA FRACIONADA",
+            )
+            self.rect(
+                x=x_margin,
+                y=section_start_y - 10,
+                w=page_width - 0.1 * x_margin,
+                h=10,
+                style="",
+            )
+
+            col_width = (page_width - 2 * x_margin) / 4
+            for i in range(1, 4):
+                x_line = x_margin + i * col_width
+                self.line(
+                    x1=x_line, x2=x_line, y1=section_start_y - 10, y2=section_start_y
+                )
+
+            self.set_font(self.default_font, "", 7)
+            road_titles = [
+                "RNTRC DA EMPRESA",
+                "CIOT",
+                "DATA PREVISTA DE ENTREGA",
+                "ESTE CONHECIMENTO DE TRANSPORTE ATENDE"
+                "À LEGISLAÇÃO DE TRANSPORTE RODOVIÁRIO EM VIGOR",
+            ]
+
+            road_values = [
+                f"{self.rntrc}",
+                "",
+                "",
+                "",
+            ]
+
+            for i, (title, value) in enumerate(zip(road_titles, road_values)):
+                self.set_xy(x_margin + i * col_width, section_start_y - 10)
+                self.multi_cell(w=col_width, h=3, text=title, align="L")
+                self.set_font(self.default_font, "B", 7)
+                self.set_xy(x_margin + i * col_width, section_start_y - 7)
+                self.multi_cell(w=col_width, h=3, text=value, align="L")
+                self.set_font(self.default_font, "", 6)
+
+            self.set_font(self.default_font, "", 7)
+            section_start_y = self.draw_section(
+                section_start_y, 18, "USO EXCLUSIVO DO EMISSOR DO CT-E"
+            )
+            self.set_margins(
+                left=config.margins.left,
+                top=config.margins.top,
+                right=config.margins.right,
+            )
+            margins_to_height = {
+                2: 23,
+                3: 22,
+                4: 20,
+                5: 18,
+                6: 16,
+                7: 14,
+                8: 12,
+                9: 10,
+                10: 8,
+            }
+            rect_height = margins_to_height[config.margins.left]
+
+            self.rect(
+                x=x_margin,
+                y=section_start_y - 15,
+                w=page_width - 0.1 * x_margin,
+                h=rect_height,
+                style="",
+            )
+        if self.tp_modal == ModalType.AEREO:
+            self.draw_aereo_info(config)
 
     # Adicionando outra página
     def _add_new_page(self, config):
