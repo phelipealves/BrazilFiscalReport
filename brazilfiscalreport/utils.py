@@ -89,3 +89,11 @@ def merge_if_different(value1, value2):
         return f"{value1}\n{value2}"
     else:
         return value1
+
+
+def format_xDime(value):
+    if value and "X" in value:
+        parts = value.split("X")
+        if len(parts) == 3 and all(part.isdigit() for part in parts):
+            return f"{value} (cm)"
+    return value

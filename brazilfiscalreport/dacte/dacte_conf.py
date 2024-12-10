@@ -38,3 +38,24 @@ TP_CODIGO_MEDIDA = {
     "04": "LITROS",
     "05": "MMBTU",
 }
+
+TP_MANUSEIO = {
+    "01": "Certificado do expedidor para embarque de animal vivo",
+    "02": "Artigo perigoso conforme Declaração do Expedidor anexa",
+    "03": "Somente em aeronave cargueira",
+    "04": "Artigo perigoso - declaração do expedidor não requerida",
+    "05": "Artigo perigoso em quantidade isenta",
+    "06": "Gelo seco para refrigeração (especificar no campo observações a quantidade)",
+    "07": "Não restrito (especificar a Disposição Especial no campo observações)",
+    "08": "Artigo perigoso em carga consolidada (especificar a quantidade no campo "
+    "observações)",
+    "09": "Autorização da autoridade governamental anexa (especificar no campo "
+    "observações)",
+    "10": "Baterias de íons de lítio em conformidade com a Seção II da PI965 – CAO",
+    "11": "Baterias de íons de lítio em conformidade com a Seção II da PI966",
+    "12": "Baterias de íons de lítio em conformidade com a Seção II da PI967",
+    "13": "Baterias de metal lítio em conformidade com a Seção II da PI968 — CAO",
+    "14": "Baterias de metal lítio em conformidade com a Seção II da PI969",
+    "15": "Baterias de metal lítio em conformidade com a Seção II da PI970",
+    "99": "Outro (especificar no campo observações)",
+}
