@@ -50,7 +50,7 @@ class Damdfe(xFPDF):
 
         root = ET.fromstring(xml)
         self.inf_adic = root.find(f"{URL}infAdic")
-        self.inf_seg = root.find(f"{URL}infSeg")
+        self.inf_seg = root.findall(f"{URL}seg")
         self.disp = root.find(f"{URL}disp")
         self.inf_mdfe = root.find(f"{URL}infMDFe")
         self.prot_mdfe = root.find(f"{URL}protMDFe")
@@ -84,6 +84,31 @@ class Damdfe(xFPDF):
             if chCTe_value:
                 self.chCTe_str.append(chCTe_value)
         return self.chCTe_str
+
+    def _build_seg_str(self):
+        self.inf_seg_str = []
+        for seg in self.inf_seg:
+            xSeg = extract_text(seg.find(f"{URL}infSeg"), "xSeg")
+            infSeg_cnpj = extract_text(seg.find(f"{URL}infSeg"), "CNPJ")
+            nApol = extract_text(seg, "nApol")
+            """
+            # TODO: criado uma lista para cada tag <seg>
+            para não conter duplicações da tag nAver
+            """
+            nAver_list = []
+            for nAver in seg.findall(f"{URL}nAver"):
+                nAver_value = nAver.text.strip() if nAver.text else None
+                if nAver_value:
+                    nAver_list.append(nAver_value)
+            self.inf_seg_str.append(
+                {
+                    "nome": xSeg or "",
+                    "cnpj": infSeg_cnpj or "",
+                    "apolice": nApol if nApol else "",
+                    "averbacoes": nAver_list if nAver_list else [""],
+                }
+            )
+        return self.inf_seg_str
 
     def _build_chnfe_str(self):
         self.chNFe_str = []
@@ -1601,10 +1626,7 @@ class Damdfe(xFPDF):
 
         self.fisco = extract_text(self.inf_adic, "infAdFisco")
         self.obs = extract_text(self.inf_adic, "infCl")
-        self.seguradora_nome = extract_text(self.inf_seg, "xSeg")
-        self.cnpj_segurado = extract_text(self.inf_seg, "CNPJ")
-        self.n_apol = extract_text(self.inf_seg, "nApol")
-        self.nome_averbacao = extract_text(self.inf_seg, "nAver")
+        self._build_seg_str()
 
         self.rect(
             x=x_margin,
@@ -1621,24 +1643,51 @@ class Damdfe(xFPDF):
             w=100, h=0, text="INFORMAÇÕES SOBRE OS SEGUROS", border=0, align="L"
         )
         self.set_font(self.default_font, "", 6)
-        self.set_xy(x=x_margin, y=y_middle)
-        if self.seguradora_nome:
+        y_position = self.get_y() + 2
+        for seg_data in self.inf_seg_str:
+            self.set_xy(x=x_margin, y=y_position)
             self.multi_cell(
-                w=100,
-                h=0,
-                text=f"NOME: {self.seguradora_nome}  CNPJ: {self.cnpj_segurado}",
+                w=190,
+                h=4,
+                text=(
+                    f"NOME: {seg_data['nome']}  "
+                    f"CNPJ: {seg_data['cnpj']}  "
+                    f"APÓLICE: {seg_data['apolice']}"
+                ),
                 border=0,
                 align="L",
             )
-        self.set_xy(x=x_margin, y=y_middle + 4)
-        if self.n_apol:
-            self.multi_cell(
-                w=100,
-                h=0,
-                text=f"APÓLICE: {self.n_apol}  AVERBAÇÃO: {self.nome_averbacao}",
-                border=0,
-                align="L",
-            )
+            y_position += 4
+            max_averbacoes_por_linha = 3
+            averbacao_linha = ""
+            averbacao_count = 0
+            for _, aver in enumerate(seg_data["averbacoes"]):
+                if averbacao_count < max_averbacoes_por_linha:
+                    if aver:
+                        averbacao_linha += f"AVERBAÇÃO: {aver}  "
+                        averbacao_count += 1
+                else:
+                    self.set_xy(x=x_margin, y=y_position)
+                    self.multi_cell(
+                        w=190,
+                        h=4,
+                        text=averbacao_linha.strip(),
+                        border=0,
+                        align="L",
+                    )
+                    y_position += 4
+                    averbacao_linha = f"AVERBAÇÃO: {aver}  "
+                    averbacao_count = 1
+            if averbacao_linha:
+                self.set_xy(x=x_margin, y=y_position)
+                self.multi_cell(
+                    w=190,
+                    h=4,
+                    text=averbacao_linha.strip(),
+                    border=0,
+                    align="L",
+                )
+                y_position += 4
 
         self.rect(
             x=x_margin,

@@ -47,14 +47,28 @@
                     <email>teste@gmail.com</email>
                 </enderEmit>
             </emit>
-            <infSeg>
-                <nfSeg>
+            <seg>
+                <respSeg>1</respSeg>
+                <CNPJ>00000000000000</CNPJ>
+                <infSeg>
                     <xSeg>SEGURADO TESTE</xSeg>
                     <CNPJ>12345678000199</CNPJ>
-                    <nApol>12345678901234567890</nApol>
-                    <nAver>1234567890123456789012345678901234567890</nAver>
-                </nfSeg>
-            </infSeg>
+                </infSeg>
+                <nApol>12345678901234567890</nApol>
+            </seg>
+            <seg>
+                <respSeg>1</respSeg>
+                <CNPJ>00000000000000</CNPJ>
+                <infSeg>
+                    <xSeg>SEGURADO TESTE</xSeg>
+                    <CNPJ>12345678000199</CNPJ>
+                </infSeg>
+                <nApol>12345678901234567890</nApol>
+                <nAver>1234567890123456789012345678901234567890</nAver>
+                <nAver>1234567890123456789012345678901234567890</nAver>
+                <nAver>1234567890123456789012345678901234567890</nAver>
+                <nAver>1234567890123456789012345678901234567890</nAver>
+            </seg>
             <infModal versaoModal="3.00">
                 <rodo>
                     <infANTT>
