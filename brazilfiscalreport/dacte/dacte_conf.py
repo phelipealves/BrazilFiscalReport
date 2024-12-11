@@ -59,3 +59,20 @@ TP_MANUSEIO = {
     "15": "Baterias de metal lítio em conformidade com a Seção II da PI970",
     "99": "Outro (especificar no campo observações)",
 }
+
+TP_TRAFICO = {
+    "0": "PRÓPRIO",
+    "1": "MÚTUO",
+    "2": "RODOFERROVIÁRIO",
+    "3": "RODOVIÁRIO",
+}
+
+TP_FERROV_EMITENTE = {
+    "1": "FERROVIA DE ORIGEM",
+    "2": "FERROVIA DE DESTINO",
+}
+
+RESP_FATURAMENTO = {
+    "1": "FERROVIA DE ORIGEM",
+    "2": "FERROVIA DE DESTINO",
+}
