@@ -1923,6 +1923,143 @@ class Dacte(xFPDF):
             style="",
         )
 
+    def draw_multimodal_info(self, config):
+        x_margin = self.l_margin
+        page_width = self.epw
+
+        self.COTM = extract_text(self.inf_modal, "COTM")
+        self.xSeg = extract_text(self.inf_modal, "xSeg")
+        self.CNPJ = extract_text(self.inf_modal, "CNPJ")
+        self.nApol = extract_text(self.inf_modal, "nApol")
+        self.nAver = extract_text(self.inf_modal, "nAver")
+
+        section_start_y = self.get_y() + 7
+        section_start_y = self.draw_section(
+            section_start_y,
+            13,
+            "INFORMAÇÕES E ESPECIFICAÇÕES DO TRANSPORTE MULTIMODAL DE CAMADAS",
+        )
+        self.rect(
+            x=x_margin,
+            y=section_start_y - 10,
+            w=page_width - 0.1 * x_margin,
+            h=6,
+            style="",
+        )
+
+        col_width = (page_width - 2 * x_margin) / 2
+        for i in range(1, 2):
+            x_line = x_margin + i * col_width
+            self.line(
+                x1=x_line,
+                x2=x_line,
+                y1=section_start_y - 10,
+                y2=section_start_y - 4,
+            )
+
+        self.set_font(self.default_font, "", 6)
+        road_titles = [
+            "Nº DO CERTIFICADO DO OPERADOR DE TRANSPORTE MULTIMODAL",
+            "INDICADOR NEGOCIÁVEL",
+        ]
+
+        road_values = [
+            f"{self.COTM}",
+            "",
+        ]
+
+        text_y = section_start_y - 12
+        for i, (title, value) in enumerate(zip(road_titles, road_values)):
+            x_pos = x_margin + i * col_width
+            self.set_xy(x_margin + i * col_width, section_start_y - 10)
+            self.multi_cell(w=col_width, h=3, text=title, align="L")
+            if i == 1:
+                square_size = 3
+                self.rect(x=x_pos + 10, y=text_y + 4.5, w=square_size, h=square_size)
+                self.set_xy(x=x_pos + 13, y=text_y + 4.5)
+                self.multi_cell(w=30, h=3, text="NEGOCIÁVEL", border=0, align="L")
+
+                self.rect(x=x_pos + 35, y=text_y + 4.5, w=square_size, h=square_size)
+                self.set_xy(x=x_pos + 38, y=text_y + 4.5)
+                self.multi_cell(w=30, h=3, text="NÃO NEGOCIÁVEL", border=0, align="L")
+            self.set_font(self.default_font, "B", 7)
+            self.set_xy(x_margin + i * col_width, section_start_y - 7)
+            self.multi_cell(w=col_width, h=3, text=value, align="L")
+            self.set_font(self.default_font, "", 6)
+
+        section_start_y = self.get_y() + 10
+        self.rect(
+            x=x_margin,
+            y=section_start_y - 10,
+            w=page_width - 0.1 * x_margin,
+            h=6,
+            style="",
+        )
+
+        col_width = (page_width - 2 * x_margin) / 4
+        for i in range(1, 4):
+            x_line = x_margin + i * col_width
+            self.line(
+                x1=x_line,
+                x2=x_line,
+                y1=section_start_y - 10,
+                y2=section_start_y - 4,
+            )
+
+        self.set_font(self.default_font, "", 6)
+        road_titles = [
+            "CNPJ DA SEGURADO",
+            "NOME DA SEGURADO",
+            "NÚMERO DA APÓLICE",
+            "NÚMERO DE AVERBAÇÃO",
+        ]
+
+        road_values = [
+            f"{self.CNPJ}",
+            f"{self.xSeg}",
+            f"{self.nApol}",
+            f"{self.nAver}",
+        ]
+
+        for i, (title, value) in enumerate(zip(road_titles, road_values)):
+            self.set_xy(x_margin + i * col_width, section_start_y - 10)
+            self.multi_cell(w=col_width, h=3, text=title, align="L")
+            self.set_font(self.default_font, "B", 7)
+            self.set_xy(x_margin + i * col_width, section_start_y - 7)
+            self.multi_cell(w=col_width, h=3, text=value, align="L")
+            self.set_font(self.default_font, "", 6)
+
+        self.set_font(self.default_font, "", 7)
+        section_start_y = self.get_y()
+        section_start_y = self.draw_section(
+            section_start_y, 3, "USO EXCLUSIVO DO EMISSOR DO CT-E"
+        )
+        self.set_margins(
+            left=config.margins.left,
+            top=config.margins.top,
+            right=config.margins.right,
+        )
+        margins_to_height = {
+            2: 21,
+            3: 20,
+            4: 18,
+            5: 17,
+            6: 15,
+            7: 14,
+            8: 13,
+            9: 12,
+            10: 11,
+        }
+        rect_height = margins_to_height[config.margins.left]
+
+        self.rect(
+            x=x_margin,
+            y=section_start_y,
+            w=page_width - 0.1 * x_margin,
+            h=rect_height,
+            style="",
+        )
+
     def _draw_specific_data(self, config):
         x_margin = self.l_margin
         page_width = self.epw
@@ -2008,6 +2145,8 @@ class Dacte(xFPDF):
             self.draw_aquaviario_info(config)
         if self.tp_modal == ModalType.FERROVIARIO:
             self.draw_ferroviario_info(config)
+        if self.tp_modal == ModalType.MULTIMODAL:
+            self.draw_multimodal_info(config)
 
     # Adicionando outra página
     def _add_new_page(self, config):
