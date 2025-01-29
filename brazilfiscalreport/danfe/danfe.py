@@ -296,6 +296,10 @@ class Danfe(xFPDF):
                     f"{prefix}Lote: {n_lote} Qtd: {q_lote} Fab: {d_fab} Val: {d_val}"
                 )
 
+        cbenef = extract_text(prod, "cBenef")
+        if cbenef:
+            add_infos.append(f"cBenef: {cbenef}")
+
         if self.product_description_config.display_additional_info and inf_ad_prod:
             add_infos.append(inf_ad_prod)
 
