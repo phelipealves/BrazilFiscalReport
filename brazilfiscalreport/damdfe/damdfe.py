@@ -1625,7 +1625,7 @@ class Damdfe(xFPDF):
         page_width = self.epw
 
         self.fisco = extract_text(self.inf_adic, "infAdFisco")
-        self.obs = extract_text(self.inf_adic, "infCl")
+        self.obs = extract_text(self.inf_adic, "infCpl")
         self._build_seg_str()
 
         self.rect(
@@ -1708,9 +1708,9 @@ class Damdfe(xFPDF):
             align="L",
         )
         self.set_font(self.default_font, "", 6)
-        self.set_xy(x=x_margin, y=y_middle + 3)
+        self.set_xy(x=x_margin, y=y_middle)
         self.multi_cell(
-            w=100,
+            w=200,
             h=3,
             text=self.obs,
             border=0,
@@ -1738,7 +1738,7 @@ class Damdfe(xFPDF):
         self.set_font(self.default_font, "", 6)
         self.set_xy(x=x_margin, y=y_middle)
         self.multi_cell(
-            w=100,
+            w=200,
             h=3,
             text=self.fisco,
             border=0,
