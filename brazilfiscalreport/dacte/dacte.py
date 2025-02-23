@@ -292,7 +292,9 @@ class Dacte(xFPDF):
         self.dh_recebto, hr_recebto = get_date_utc(
             extract_text(self.prot_cte, "dhRecbto")
         )
+        self.emit_cnpj = format_cpf_cnpj(extract_text(self.emit, "CNPJ"))
         address = (
+            f"CNPJ: {self.emit_cnpj} IE: {extract_text(self.emit, 'IE')}\n"
             f"{extract_text(self.emit, 'xLgr')}, "
             f"{extract_text(self.emit, 'nro')}\n"
             f"{extract_text(self.emit, 'xBairro')}\n"
@@ -324,7 +326,7 @@ class Dacte(xFPDF):
         self.set_xy(x=x_text, y=y_text)
         self.multi_cell(w=w_text, h=5, text=self.emit_name, border=0, align="C")
         self.set_font(self.default_font, "", 8)
-        self.set_xy(x=x_text - 3, y=y_text + 10)
+        self.set_xy(x=x_text - 3, y=y_text + 6)
         self.multi_cell(w=w_text + 10, h=3, text=address, border=0, align="C")
 
         y_margin = self.l_margin + 22
