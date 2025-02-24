@@ -28,7 +28,7 @@ Check the [documentation](https://engenere.github.io/BrazilFiscalReport/) for mo
 - [FPDF2](https://github.com/py-pdf/fpdf2) - PDF creation library for Python
 - phonenumbers
 - python-barcode
-- qrcode (only required for DACTE)
+- qrcode (required for DACTE and DAMDFE)
 
 ## To install 🔧
 
@@ -40,14 +40,21 @@ pip install brazilfiscalreport
 If you specifically need the DACTE functionality, you can install it along with its required dependencies using:
 
 ```bash
-pip install brazilfiscalreport[dacte]
+pip install 'brazilfiscalreport[dacte]'
+```
+
+## Installing DAMDFE with Dependencies
+If you specifically need the DAMDFE functionality, you can install it along with its required dependencies using:
+
+```bash
+pip install 'brazilfiscalreport[damdfe]'
 ```
 
 ### Installing CLI with Dependencies
 If you specifically need the CLI functionality, you can install it along with its required dependencies using:
 
 ```bash
-pip install brazilfiscalreport[cli]
+pip install 'brazilfiscalreport[cli]'
 ```
 
 ## Credits 🙌
