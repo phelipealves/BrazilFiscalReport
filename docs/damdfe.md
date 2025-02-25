@@ -79,7 +79,7 @@ Here’s how to set up a DamdfeConfig object with a full set of customizations:
 ```python
 from brazilfiscalreport.damdfe import (
     Damdfe,
-    DacteConfig,
+    DamdfeConfig,
     FontType,
     Margins,
 )
@@ -100,5 +100,5 @@ config = DamdfeConfig(
 
 # Use this config when creating a Damdfe instance
 damdfe = Damdfe(xml_content, config=config)
-damdfe.output('output_dacte.pdf')
+damdfe.output('output_damdfe.pdf')
 ```
