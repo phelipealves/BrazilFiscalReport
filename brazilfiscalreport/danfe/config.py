@@ -44,6 +44,8 @@ class ReceiptPosition(Enum):
 @dataclass
 class ProductDescriptionConfig:
     display_branch: bool = False
+    display_anp: bool = False
+    display_anvisa: bool = False
     branch_info_prefix: str = ""
     display_additional_info: bool = True
 
