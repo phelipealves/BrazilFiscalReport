@@ -280,11 +280,11 @@ class Danfe(xFPDF):
 
     def _build_inf_ad_prod(self, prod, inf_ad_prod):
         add_infos = []
-        _rastros = prod.findall(f"{URL}rastro")
 
         prefix = self.product_description_config.branch_info_prefix
         prefix = f"{prefix} " if prefix else ""
         if self.product_description_config.display_branch:
+            _rastros = prod.findall(f"{URL}rastro")
             for _rastro in _rastros:
                 n_lote = extract_text(_rastro, "nLote")
                 q_lote = format_number(
@@ -295,7 +295,23 @@ class Danfe(xFPDF):
                 add_infos.append(
                     f"{prefix}Lote: {n_lote} Qtd: {q_lote} Fab: {d_fab} Val: {d_val}"
                 )
-
+        if self.product_description_config.display_anp:
+            _combs = prod.findall(f"{URL}comb")
+            for _comb in _combs:
+                c_prod_anp = extract_text(_comb, "cProdANP")
+                desc_anp = extract_text(_comb, "descANP")
+                uf_cons = extract_text(_comb, "UFCons")
+                add_infos.append(
+                    f"cProdANP: {c_prod_anp} descANP: {desc_anp} UFCons: {uf_cons}"
+                )
+        if self.product_description_config.display_anvisa:
+            _meds = prod.findall(f"{URL}med")
+            for _med in _meds:
+                codigo_anvisa = extract_text(_med, "codigoAnvisa")
+                v_pmc = format_number(
+                    extract_text(_med, "vPMC"), self.quantity_precision
+                )
+                add_infos.append(f"cProdANVISA: {codigo_anvisa} PMC: {v_pmc}")
         cbenef = extract_text(prod, "cBenef")
         ccredpresumido = extract_text(prod, "cCredPresumido")
 
