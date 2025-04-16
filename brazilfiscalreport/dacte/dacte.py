@@ -1306,10 +1306,10 @@ class Dacte(xFPDF):
         self.set_font(self.default_font, "", 5.5)
         self.multi_cell(w=half_col_width, h=0, text="SÉRIE/NRO. DOCUMENTO", align="L")
 
-        y_offset_left = section_start_y - 33
-        y_offset_right = section_start_y - 33
-        lines_per_block = 7
-        self.max_lines_per_page = 14
+        y_offset_left = section_start_y - 36
+        y_offset_right = section_start_y - 36
+        lines_per_block = 12
+        self.max_lines_per_page = 24
         current_line_left = 0
         current_line_right = 0
         in_right_block = False
@@ -1343,10 +1343,10 @@ class Dacte(xFPDF):
             key_nfe_format = f"{key_nfe_1}/{key_nfe_2}"
 
             self.set_font(self.default_font, "B", 6)
-            self.set_xy(x_start + 2 * half_col_width + 5, y_offset)
+            self.set_xy(x_start + 2 * half_col_width + 3, y_offset)
             self.multi_cell(w=half_col_width, h=4, text=key_nfe_format, align="L")
 
-            y_offset += 5
+            y_offset += 3
             if in_right_block:
                 current_line_right += 1
                 y_offset_right = y_offset
