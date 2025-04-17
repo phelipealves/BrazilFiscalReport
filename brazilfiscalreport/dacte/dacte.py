@@ -1,6 +1,7 @@
 # Copyright (C) 2024 Engenere - Cristiano Mafra Junior
 
 import re
+import textwrap
 import xml.etree.ElementTree as ET
 from io import BytesIO
 from xml.etree.ElementTree import Element
@@ -522,9 +523,14 @@ class Dacte(xFPDF):
         )
         self.set_xy(x=self.l_margin, y=section_start_y - 34)
         self.multi_cell(w=85, h=4, text="CFOP - NATUREZA DA PRESTAÇÃO", align="L")
-        self.set_xy(x=self.l_margin, y=section_start_y - 34)
-        self.set_font(self.default_font, "B", 8)
-        self.multi_cell(w=85, h=10, text=f"{self.cfop} - {self.nat_op}", align="L")
+        self.set_font(self.default_font, "B", 7)
+        cfop_text = f"{self.cfop} - {self.nat_op}"
+
+        wrapped_lines = textwrap.wrap(cfop_text, width=42)
+        cfop_text_wrapped = "\n".join(wrapped_lines)
+
+        self.set_xy(x=self.l_margin, y=section_start_y - 30)
+        self.multi_cell(w=200, h=2.5, text=cfop_text_wrapped, align="L")
 
         qr_code = extract_text(self.inf_cte_supl, "qrCodCTe")
         x_offset = 88  # Ajuste se necessário
