@@ -25,6 +25,7 @@ from .dacte_conf import (
     TP_CODIGO_MEDIDA,
     TP_CTE,
     TP_FERROV_EMITENTE,
+    TP_ICMS,
     TP_MANUSEIO,
     TP_MODAL,
     TP_SERVICO,
@@ -1230,6 +1231,7 @@ class Dacte(xFPDF):
         section_start_y = self.draw_section(
             section_start_y, 18, "INFORMAÇÕES RELATIVAS AO IMPOSTO"
         )
+        self.cst_desc = TP_ICMS[extract_text(self.imp, "CST")]
         self.rect(
             x=x_margin,
             y=section_start_y - 15,
@@ -1252,7 +1254,7 @@ class Dacte(xFPDF):
             "ICMS ST",
         ]
         tax_values = [
-            f"{self.cst} - TRIBUTAÇÃO NORMAL DO ICMS",
+            f"{self.cst} - {self.cst_desc}",
             f"{self.vbc}",
             f"{self.p_icms}",
             f"{self.v_icms}",
@@ -2306,7 +2308,7 @@ class Dacte(xFPDF):
             self._draw_receipt()
             self._draw_header()
         if self.page_lines > 0 and self.page_lines % self.max_lines_per_page == 0:
-            section_start_y = self.get_y() - 1
+            section_start_y = self.get_y() + 2.5
             section_start_y = self.draw_section(
                 section_start_y, 43, "DOCUMENTOS ORIGINÁRIOS"
             )
