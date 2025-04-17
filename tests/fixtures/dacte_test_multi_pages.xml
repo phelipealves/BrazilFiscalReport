@@ -158,12 +158,9 @@
             </vPrest>
             <imp>
                 <ICMS>
-                    <ICMS00>
-                        <CST>00</CST>
-                        <vBC>221.19</vBC>
-                        <pICMS>12.00</pICMS>
-                        <vICMS>26.54</vICMS>
-                    </ICMS00>
+                    <ICMS45>
+                        <CST>40</CST>
+                    </ICMS45>
                 </ICMS>
                 <vTotTrib>56.40</vTotTrib>
             </imp>
