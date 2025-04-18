@@ -99,3 +99,12 @@ def test_dacte_default_multimodal(tmp_path, load_dacte, logo_path):
     dacte = load_dacte("dacte_multimodal_test.xml", config=dacte_config)
     pdf_path = get_pdf_output_path("dacte", "dacte_default_multimodal")
     assert_pdf_equal(dacte, pdf_path, tmp_path)
+
+
+def test_dacte_tomador_outros(tmp_path, load_dacte, logo_path):
+    dacte_config = DacteConfig(
+        logo=logo_path,
+    )
+    dacte = load_dacte("dacte_tomador_outros.xml", config=dacte_config)
+    pdf_path = get_pdf_output_path("dacte", "dacte_tomador_outros")
+    assert_pdf_equal(dacte, pdf_path, tmp_path)
