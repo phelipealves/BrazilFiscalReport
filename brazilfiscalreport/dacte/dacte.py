@@ -64,9 +64,10 @@ class Dacte(xFPDF):
         self.exped = root.find(f"{URL}exped")
         self.receb = root.find(f"{URL}receb")
         self.rem = root.find(f"{URL}rem")
+        self.outros = root.find(f"{URL}toma4")
         self.inf_prot = root.find(f"{URL}infProt")
         self.inf_cte_supl = root.find(f"{URL}infCTeSupl")
-        self.tomador = root.find(f"{URL}toma3")
+        self.tomador = root.find(f"{URL}toma3") or self.outros
         self.inf_carga = root.find(f"{URL}infCarga")
         self.inf_doc = root.find(f"{URL}infDoc")
         self.v_prest = root.find(f"{URL}vPrest")
@@ -546,54 +547,79 @@ class Dacte(xFPDF):
         self.est_inico = extract_text(self.ide, "UFIni")
         self.est_fim = extract_text(self.ide, "UFFim")
 
-        # Inf do Remetente
-        self.rem_nome = extract_text(self.rem, "xNome")
-        self.rem_loga = extract_text(self.rem, "xLgr")
-        self.rem_nro = extract_text(self.rem, "nro")
-        self.rem_bairro = extract_text(self.rem, "xBairro")
-        self.rem_mun = extract_text(self.rem, "xMun")
-        self.rem_cnpj = format_cpf_cnpj(extract_text(self.rem, "CNPJ"))
-        self.rem_pais = extract_text(self.rem, "xPais")
-        self.rem_cep = format_cep(extract_text(self.rem, "CEP"))
-        self.rem_ie = extract_text(self.rem, "IE")
-        self.rem_fone = format_phone(extract_text(self.rem, "fone"))
-        self.rem_uf = extract_text(self.rem, "UF")
+        # Função para extrair dados de uma entidade do XML
+        def extract_entity_data(node, prefix):
+            """Extrai todos os campos padrão de uma entidade (pessoa) do XML"""
+            if node is None:
+                empty_data = {
+                    f"{prefix}_{field}": ""
+                    for field in [
+                        "nome",
+                        "loga",
+                        "nro",
+                        "bairro",
+                        "mun",
+                        "cnpj",
+                        "pais",
+                        "cep",
+                        "ie",
+                        "fone",
+                        "uf",
+                    ]
+                }
+                for field, value in empty_data.items():
+                    setattr(self, field, value)
+                return
 
-        # Inf Destinatario
-        self.dest_nome = extract_text(self.dest, "xNome")
-        self.dest_loga = extract_text(self.dest, "xLgr")
-        self.dest_nro = extract_text(self.dest, "nro")
-        self.dest_bairro = extract_text(self.dest, "xBairro")
-        self.dest_mun = extract_text(self.dest, "xMun")
-        self.dest_cnpj = format_cpf_cnpj(extract_text(self.dest, "CNPJ"))
-        self.dest_pais = extract_text(self.dest, "xPais")
-        self.dest_cep = format_cep(extract_text(self.dest, "CEP"))
-        self.dest_ie = extract_text(self.dest, "IE")
-        self.dest_fone = format_phone(extract_text(self.dest, "fone"))
+            # Extrai os dados básicos da entidade
+            setattr(self, f"{prefix}_nome", extract_text(node, "xNome"))
+            setattr(self, f"{prefix}_loga", extract_text(node, "xLgr"))
+            setattr(self, f"{prefix}_nro", extract_text(node, "nro"))
+            setattr(self, f"{prefix}_bairro", extract_text(node, "xBairro"))
+            setattr(self, f"{prefix}_mun", extract_text(node, "xMun"))
+            setattr(self, f"{prefix}_cnpj", format_cpf_cnpj(extract_text(node, "CNPJ")))
+            setattr(self, f"{prefix}_pais", extract_text(node, "xPais"))
+            setattr(self, f"{prefix}_cep", format_cep(extract_text(node, "CEP")))
+            setattr(self, f"{prefix}_ie", extract_text(node, "IE"))
+            setattr(self, f"{prefix}_fone", format_phone(extract_text(node, "fone")))
+            setattr(self, f"{prefix}_uf", extract_text(node, "UF"))
 
-        # Inf Expedidor
-        self.exped_nome = extract_text(self.exped, "xNome")
-        self.exped_loga = extract_text(self.exped, "xLgr")
-        self.exped_nro = extract_text(self.exped, "nro")
-        self.exped_bairro = extract_text(self.exped, "xBairro")
-        self.exped_mun = extract_text(self.exped, "xMun")
-        self.exped_cnpj = format_cpf_cnpj(extract_text(self.exped, "CNPJ"))
-        self.exped_pais = extract_text(self.exped, "xPais")
-        self.exped_cep = format_cep(extract_text(self.exped, "CEP"))
-        self.exped_ie = extract_text(self.exped, "IE")
-        self.exped_fone = format_phone(extract_text(self.exped, "fone"))
+        # Extrai dados de todas as entidades
+        extract_entity_data(self.rem, "rem")
+        extract_entity_data(self.dest, "dest")
+        extract_entity_data(self.exped, "exped")
+        extract_entity_data(self.receb, "receb")
+        extract_entity_data(self.outros, "outros")
 
-        # Inf Recebedor
-        self.receb_nome = extract_text(self.receb, "xNome")
-        self.receb_loga = extract_text(self.receb, "xLgr")
-        self.receb_nro = extract_text(self.receb, "nro")
-        self.receb_bairro = extract_text(self.receb, "xBairro")
-        self.receb_mun = extract_text(self.receb, "xMun")
-        self.receb_cnpj = format_cpf_cnpj(extract_text(self.receb, "CNPJ"))
-        self.receb_pais = extract_text(self.receb, "xPais")
-        self.receb_cep = format_cep(extract_text(self.receb, "CEP"))
-        self.receb_ie = extract_text(self.receb, "IE")
-        self.receb_fone = format_phone(extract_text(self.receb, "fone"))
+        # Mapeamento de tipos de tomador para prefixos de atributos
+        tomador_map = {
+            "REMETENTE": "rem",
+            "EXPEDIDOR": "exped",
+            "RECEBEDOR": "receb",
+            "DESTINATÁRIO": "dest",
+            "OUTRO": "outros",
+        }
+
+        # Determina o prefixo correto com base no tipo de tomador,
+        # padrão para "rem" se não encontrado
+        entity_prefix = tomador_map.get(self.toma, "rem")
+
+        # Define os dados do tomador copiando os atributos da entidade correspondente
+        for field in [
+            "nome",
+            "loga",
+            "nro",
+            "bairro",
+            "mun",
+            "cnpj",
+            "pais",
+            "cep",
+            "ie",
+            "fone",
+            "uf",
+        ]:
+            value = getattr(self, f"{entity_prefix}_{field}", "")
+            setattr(self, f"tomador_{field}", value)
 
         x_margin = self.l_margin
         y_margin = 75
@@ -978,7 +1004,7 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7.6)
         self.set_xy(x_margin + 32, section_start_y)
-        self.multi_cell(w=0, h=4, text=f"{self.rem_nome}", align="L")
+        self.multi_cell(w=0, h=4, text=f"{self.tomador_nome}", align="L")
 
         self.set_font(self.default_font, "", 7.6)
         self.set_xy(x_margin, section_start_y)
@@ -989,7 +1015,7 @@ class Dacte(xFPDF):
         self.multi_cell(
             w=0,
             h=10,
-            text=f"{self.rem_loga}  {self.rem_nro}  {self.rem_bairro}",
+            text=f"{self.tomador_loga}  {self.tomador_nro}  {self.tomador_bairro}",
             align="L",
         )
 
@@ -999,7 +1025,7 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7.6)
         self.set_xy(x_margin + 14, section_start_y)
-        self.multi_cell(w=0, h=16, text=f"{self.rem_cnpj}", align="L")
+        self.multi_cell(w=0, h=16, text=f"{self.tomador_cnpj}", align="L")
 
         self.set_font(self.default_font, "", 7.6)
         self.set_xy(x_margin + 85, section_start_y)
@@ -1007,7 +1033,7 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7.6)
         self.set_xy(x_margin + 89, section_start_y)
-        self.multi_cell(w=0, h=16, text=f"{self.rem_ie}", align="L")
+        self.multi_cell(w=0, h=16, text=f"{self.tomador_ie}", align="L")
 
         self.set_font(self.default_font, "", 7.6)
         self.set_xy(x_margin + 115, section_start_y)
@@ -1015,7 +1041,7 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7.6)
         self.set_xy(x_margin + 122, section_start_y)
-        self.multi_cell(w=0, h=16, text=f"{self.rem_pais}", align="L")
+        self.multi_cell(w=0, h=16, text=f"{self.tomador_pais}", align="L")
 
         self.set_font(self.default_font, "", 7.6)
         self.set_xy(x_margin + 150, section_start_y)
@@ -1023,7 +1049,7 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7.6)
         self.set_xy(x_margin + 158, section_start_y)
-        self.multi_cell(w=0, h=16, text=f"{self.rem_fone}", align="L")
+        self.multi_cell(w=0, h=16, text=f"{self.tomador_fone}", align="L")
 
         self.set_font(self.default_font, "", 7.6)
         self.set_xy(x_margin + 100, section_start_y)
@@ -1031,7 +1057,7 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7.6)
         self.set_xy(x_margin + 116, section_start_y)
-        self.multi_cell(w=0, h=4, text=f"{self.rem_mun}", align="L")
+        self.multi_cell(w=0, h=4, text=f"{self.tomador_mun}", align="L")
 
         self.set_font(self.default_font, "", 7.6)
         self.set_xy(x_margin + 150, section_start_y)
@@ -1039,7 +1065,7 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7.6)
         self.set_xy(x_margin + 154, section_start_y)
-        self.multi_cell(w=0, h=4, text=f"{self.rem_uf}", align="L")
+        self.multi_cell(w=0, h=4, text=f"{self.tomador_uf}", align="L")
 
         self.set_font(self.default_font, "", 7.6)
         self.set_xy(x_margin + 160, section_start_y)
@@ -1047,7 +1073,7 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7.6)
         self.set_xy(x_margin + 166, section_start_y)
-        self.multi_cell(w=0, h=4, text=f"{self.rem_cep}", align="L")
+        self.multi_cell(w=0, h=4, text=f"{self.tomador_cep}", align="L")
 
         section_start_y += 10
 
