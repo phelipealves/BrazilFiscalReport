@@ -713,7 +713,12 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7)
         self.set_xy(x=self.l_margin + 16, y=section_start_y + 2)
-        self.multi_cell(w=0, h=28, text=f"{self.rem_mun}", align="L")
+        self.multi_cell(
+            w=0,
+            h=28,
+            text=f"{self.rem_mun}{' - ' + self.rem_uf if self.rem_uf else ''}",
+            align="L",
+        )
 
         self.set_font(self.default_font, "", 7)
         self.set_xy(x=self.l_margin, y=section_start_y + 2)
@@ -788,7 +793,12 @@ class Dacte(xFPDF):
 
         self.set_font(self.default_font, "B", 7)
         self.set_xy(x_line_middle + 22, section_start_y + 2)
-        self.multi_cell(w=0, h=28, text=f"{self.dest_mun}", align="L")
+        self.multi_cell(
+            w=0,
+            h=28,
+            text=f"{self.dest_mun}{' - ' + self.dest_uf if self.dest_uf else ''}",
+            align="L",
+        )
 
         self.set_font(self.default_font, "", 7)
         self.set_xy(x_line_middle, section_start_y + 2)
@@ -860,7 +870,12 @@ class Dacte(xFPDF):
         self.multi_cell(w=0, h=17, text="MUNICÍPIO", align="L")
         self.set_font(self.default_font, "B", 7)
         self.set_xy(x_line_middle + 20, section_start_y + 2)
-        self.multi_cell(w=0, h=18.2, text=f"{self.receb_mun}", align="L")
+        self.multi_cell(
+            w=0,
+            h=18.2,
+            text=f"{self.receb_mun}{' - ' + self.receb_uf if self.receb_uf else ''}",
+            align="L",
+        )
 
         self.set_font(self.default_font, "", 7)
         self.set_xy(x_line_middle, section_start_y + 2)
@@ -922,7 +937,12 @@ class Dacte(xFPDF):
         self.multi_cell(w=0, h=17, text="MUNICÍPIO", align="L")
         self.set_font(self.default_font, "B", 7)
         self.set_xy(x=self.l_margin + 16, y=section_start_y + 2)
-        self.multi_cell(w=0, h=18.2, text=f"{self.exped_mun}", align="L")
+        self.multi_cell(
+            w=0,
+            h=18.2,
+            text=f"{self.exped_mun}{' - ' + self.exped_uf if self.exped_uf else ''}",
+            align="L",
+        )
 
         self.set_font(self.default_font, "", 7)
         self.set_xy(x=self.l_margin, y=section_start_y + 2)
