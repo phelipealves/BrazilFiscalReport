@@ -79,10 +79,18 @@ class Damdfe(xFPDF):
 
     def _build_chCTe_str(self):
         self.chCTe_str = []
-        for chCTe in self.inf_mun_descarga:
-            chCTe_value = extract_text(chCTe, "chCTe")
-            if chCTe_value:
-                self.chCTe_str.append(chCTe_value)
+        # Itera sobre todos os infMunDescarga no infDoc
+        for mun_descarga in self.inf_doc.findall(f"{URL}infMunDescarga"):
+            # Para cada município, itera sobre seus CTes
+            for cte in mun_descarga.findall(f"{URL}infCTe"):
+                chCTe_value = extract_text(cte, "chCTe")
+                if chCTe_value:
+                    self.chCTe_str.append(
+                        {
+                            "chave": chCTe_value,
+                            "municipio": extract_text(mun_descarga, "xMunDescarga"),
+                        }
+                    )
         return self.chCTe_str
 
     def _build_seg_str(self):
@@ -112,10 +120,18 @@ class Damdfe(xFPDF):
 
     def _build_chnfe_str(self):
         self.chNFe_str = []
-        for chnfe in self.inf_mun_descarga:
-            chNFe_value = extract_text(chnfe, "chNFe")
-            if chNFe_value:
-                self.chNFe_str.append(chNFe_value)
+        # Itera sobre todos os infMunDescarga no infDoc
+        for mun_descarga in self.inf_doc.findall(f"{URL}infMunDescarga"):
+            # Para cada município, itera sobre suas NFes
+            for nfe in mun_descarga.findall(f"{URL}infNFe"):
+                chNFe_value = extract_text(nfe, "chNFe")
+                if chNFe_value:
+                    self.chNFe_str.append(
+                        {
+                            "chave": chNFe_value,
+                            "municipio": extract_text(mun_descarga, "xMunDescarga"),
+                        }
+                    )
         return self.chNFe_str
 
     def _build_term_carreg_carga(self):
@@ -1532,7 +1548,7 @@ class Damdfe(xFPDF):
                 self.multi_cell(
                     w=211,
                     h=line_height,
-                    text=self.mun_descarregamento,
+                    text=self.chNFe_str[i]["municipio"],
                     border=0,
                     align="L",
                 )
@@ -1540,7 +1556,7 @@ class Damdfe(xFPDF):
                 self.multi_cell(
                     w=211,
                     h=line_height,
-                    text=self.chNFe_str[i],
+                    text=self.chNFe_str[i]["chave"],
                     border=0,
                     align="L",
                 )
@@ -1549,7 +1565,7 @@ class Damdfe(xFPDF):
                     self.multi_cell(
                         w=211,
                         h=line_height,
-                        text=self.mun_descarregamento,
+                        text=self.chNFe_str[i + 1]["municipio"],
                         border=0,
                         align="L",
                     )
@@ -1557,7 +1573,7 @@ class Damdfe(xFPDF):
                     self.multi_cell(
                         w=211,
                         h=line_height,
-                        text=self.chNFe_str[i + 1],
+                        text=self.chNFe_str[i + 1]["chave"],
                         border=0,
                         align="L",
                     )
@@ -1570,7 +1586,7 @@ class Damdfe(xFPDF):
                 self.multi_cell(
                     w=211,
                     h=line_height,
-                    text=self.mun_descarregamento,
+                    text=self.chCTe_str[i]["municipio"],
                     border=0,
                     align="L",
                 )
@@ -1578,7 +1594,7 @@ class Damdfe(xFPDF):
                 self.multi_cell(
                     w=211,
                     h=line_height,
-                    text=self.chCTe_str[i],
+                    text=self.chCTe_str[i]["chave"],
                     border=0,
                     align="L",
                 )
@@ -1587,7 +1603,7 @@ class Damdfe(xFPDF):
                     self.multi_cell(
                         w=211,
                         h=line_height,
-                        text=self.mun_descarregamento,
+                        text=self.chCTe_str[i + 1]["municipio"],
                         border=0,
                         align="L",
                     )
@@ -1595,7 +1611,7 @@ class Damdfe(xFPDF):
                     self.multi_cell(
                         w=211,
                         h=line_height,
-                        text=self.chCTe_str[i + 1],
+                        text=self.chCTe_str[i + 1]["chave"],
                         border=0,
                         align="L",
                     )

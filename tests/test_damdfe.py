@@ -79,3 +79,9 @@ def test_damdfe_default_aquaviario(tmp_path, load_damdfe):
     damdfe = load_damdfe("mdf-e_test_aquaviario.xml")
     pdf_path = get_pdf_output_path("damdfe", "damdfe_aquaviario")
     assert_pdf_equal(damdfe, pdf_path, tmp_path)
+
+
+def test_damdfe_multi_municipio(tmp_path, load_damdfe):
+    damdfe = load_damdfe("mdf-e_test_multi_municipio.xml")
+    pdf_path = get_pdf_output_path("damdfe", "damdfe_multi_municipio")
+    assert_pdf_equal(damdfe, pdf_path, tmp_path)
