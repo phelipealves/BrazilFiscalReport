@@ -1372,7 +1372,7 @@ class Danfe(xFPDF):
         self.x = x_before
 
         # return info with rows heights
-        row_info = list(table._process_rowpans_entries())
+        row_info = list(table._compute_rows_info())
         return row_info, add_info_lines, max_add_info_lines
 
     def _draw_issqn_calculation(self):
