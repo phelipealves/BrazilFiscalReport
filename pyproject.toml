@@ -32,7 +32,7 @@ classifiers = [
 ]
 requires-python = ">=3.8"
 dependencies = [
-    "fpdf2",
+    "fpdf2>=2.8.3",
     "phonenumbers",
     "python-barcode"
 ]
