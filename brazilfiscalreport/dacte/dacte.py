@@ -23,6 +23,7 @@ from .config import DacteConfig, ModalType, ReceiptPosition
 from .dacte_conf import (
     RESP_FATURAMENTO,
     TP_CODIGO_MEDIDA,
+    TP_CODIGO_MEDIDA_REDUZIDO,
     TP_CTE,
     TP_FERROV_EMITENTE,
     TP_ICMS,
@@ -1140,10 +1141,13 @@ class Dacte(xFPDF):
             self.set_font(self.default_font, "", 6)
             if i < 3:
                 # Para as três primeiras colunas, divide em duas subcolunas
-                subcol_width = col_widths[i] / 2
-                self.cell(w=subcol_width, h=3, text="TIPO MEDIDA", align="L")
-                self.set_xy(x_positions[i] + subcol_width, section_start_y + 1)
-                self.cell(w=subcol_width, h=3, text="QTD/UN.MEDIDA", align="L")
+                # 65% da largura para TIPO MEDIDA
+                tipo_medida_width = col_widths[i] * 0.65
+                # 35% da largura para QTD/UN
+                qtd_un_width = col_widths[i] * 0.35
+                self.cell(w=tipo_medida_width, h=3, text="TIPO MEDIDA", align="L")
+                self.set_xy(x_positions[i] + tipo_medida_width, section_start_y + 1)
+                self.cell(w=qtd_un_width, h=3, text="QTD/UN.", align="L")
             else:
                 # Para as duas últimas colunas
                 title = "CUBAGEM (M³)" if i == 3 else "QUANTIDADE DE VOLUMES"
@@ -1171,19 +1175,22 @@ class Dacte(xFPDF):
             for row, item in enumerate(items):
                 tp_media, q_carga, c_unid = item
                 y_pos = data_start_y + (row * line_height)
-                subcol_width = col_widths[col] / 2
+                # 65% da largura para TIPO MEDIDA
+                tipo_medida_width = col_widths[col] * 0.65
+                # 35% da largura para QTD/UN
+                qtd_un_width = col_widths[col] * 0.35
 
                 # Tipo Medida
                 self.set_xy(x_positions[col], y_pos)
                 self.set_font(self.default_font, "B", 6)
-                self.cell(w=subcol_width, h=line_height, text=tp_media, align="L")
+                self.cell(w=tipo_medida_width, h=line_height, text=tp_media, align="L")
 
                 # Qtd/Un.Medida
-                self.set_xy(x_positions[col] + subcol_width, y_pos)
+                self.set_xy(x_positions[col] + tipo_medida_width, y_pos)
                 self.cell(
-                    w=subcol_width,
+                    w=qtd_un_width,
                     h=line_height,
-                    text=f"{q_carga} {TP_CODIGO_MEDIDA[c_unid]}",
+                    text=f"{q_carga} {TP_CODIGO_MEDIDA_REDUZIDO[c_unid]}",
                     align="L",
                 )
 
