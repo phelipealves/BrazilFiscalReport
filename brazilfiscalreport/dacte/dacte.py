@@ -1107,11 +1107,12 @@ class Dacte(xFPDF):
         )
 
         # Define largura específica para o campo de cubagem
-        cubagem_width = 25  # Largura ajustada para o título "CUBAGEM (M³)"
+        cubagem_width = 20  # Largura ajustada para o título "CUBAGEM (M³)"
+        volume_width = 25  # Largura ajustada para o título "QTD DE VOLUMES"
 
         # Distribui o espaço restante entre os outros 4 campos
-        remaining_width = page_width - (x_margin + 2) - cubagem_width
-        other_col_width = remaining_width / 4
+        remaining_width = page_width - (x_margin + 2) - cubagem_width - volume_width
+        other_col_width = remaining_width / 3
 
         # Calcula as posições X para cada coluna
         x_line_1 = x_margin + other_col_width
@@ -1132,7 +1133,7 @@ class Dacte(xFPDF):
             other_col_width,
             other_col_width,
             cubagem_width,
-            other_col_width,
+            volume_width,
         ]
 
         # Imprime os títulos das colunas
@@ -1150,7 +1151,7 @@ class Dacte(xFPDF):
                 self.cell(w=qtd_un_width, h=3, text="QTD/UN.", align="L")
             else:
                 # Para as duas últimas colunas
-                title = "CUBAGEM (M³)" if i == 3 else "QUANTIDADE DE VOLUMES"
+                title = "CUBAGEM (M³)" if i == 3 else "QTD DE VOLUMES"
                 self.multi_cell(w=col_widths[i], h=3, text=title, align="L")
 
         # Organiza os dados para as três primeiras colunas (até 2 linhas por coluna)
@@ -1203,7 +1204,7 @@ class Dacte(xFPDF):
                 self.multi_cell(
                     w=col_widths[3],
                     h=line_height,
-                    text=f"{q_carga} {TP_CODIGO_MEDIDA[c_unid]}",
+                    text=f"{q_carga} {TP_CODIGO_MEDIDA_REDUZIDO[c_unid]}",
                     align="L",
                 )
             elif (
@@ -1216,7 +1217,7 @@ class Dacte(xFPDF):
                 self.multi_cell(
                     w=col_widths[4],
                     h=line_height,
-                    text=f"{q_carga} {TP_CODIGO_MEDIDA[c_unid]}",
+                    text=f"{q_carga} {TP_CODIGO_MEDIDA_REDUZIDO[c_unid]}",
                     align="L",
                 )
 
