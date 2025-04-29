@@ -39,6 +39,15 @@ TP_CODIGO_MEDIDA = {
     "05": "MMBTU",
 }
 
+TP_CODIGO_MEDIDA_REDUZIDO = {
+    "00": "M3",
+    "01": "KG",
+    "02": "TON",
+    "03": "UN",
+    "04": "LT",
+    "05": "MMBTU",
+}
+
 TP_MANUSEIO = {
     "01": "Certificado do expedidor para embarque de animal vivo",
     "02": "Artigo perigoso conforme Declaração do Expedidor anexa",

@@ -23,6 +23,7 @@ from .config import DacteConfig, ModalType, ReceiptPosition
 from .dacte_conf import (
     RESP_FATURAMENTO,
     TP_CODIGO_MEDIDA,
+    TP_CODIGO_MEDIDA_REDUZIDO,
     TP_CTE,
     TP_FERROV_EMITENTE,
     TP_ICMS,
@@ -1098,96 +1099,131 @@ class Dacte(xFPDF):
         section_start_y += 10
 
         self.rect(
-            x=x_margin, y=section_start_y, w=page_width - 0.1 * x_margin, h=10, style=""
+            x=x_margin,
+            y=section_start_y,
+            w=page_width - 0.1 * x_margin,
+            h=11,
+            style="",
         )
-        col_width = (page_width - (x_margin - 20)) / 2
-        x_line_1 = x_margin - 53 + col_width
-        x_line_2 = (x_margin - 53 + 2 * col_width) - 10
-        x_line_3 = x_margin - 53 + 3 * col_width
-        self.line(
-            x1=x_line_1 + 30,
-            x2=x_line_1 + 30,
-            y1=section_start_y,
-            y2=section_start_y + 10,
-        )
-        self.line(x1=x_line_2, x2=x_line_2, y1=section_start_y, y2=section_start_y + 10)
-        self.line(x1=x_line_3, x2=x_line_3, y1=section_start_y, y2=section_start_y + 10)
 
-        self.set_xy(x_margin, section_start_y)
-        self.set_font(self.default_font, "", 7)
-        self.multi_cell(w=0, h=4, text="PRODUTO PREDOMINANTE", align="L")
-        self.set_xy(x_margin, section_start_y)
-        self.set_font(self.default_font, "B", 7)
-        self.multi_cell(w=0, h=14, text=self.inf_carga_nome, align="L")
+        # Define largura específica para o campo de cubagem
+        cubagem_width = 20  # Largura ajustada para o título "CUBAGEM (M³)"
+        volume_width = 25  # Largura ajustada para o título "QTD DE VOLUMES"
 
-        self.set_xy(x_line_1 + 30, section_start_y)
-        self.set_font(self.default_font, "", 7)
-        self.multi_cell(w=0, h=4, text="OUTRAS CARACTERÍSTICAS DA CARGA", align="L")
-        self.set_xy(x_line_1 + 30, section_start_y)
-        self.set_font(self.default_font, "B", 7)
-        self.multi_cell(w=0, h=14, text=self.inf_carga_car, align="L")
+        # Distribui o espaço restante entre os outros 4 campos
+        remaining_width = page_width - (x_margin + 2) - cubagem_width - volume_width
+        other_col_width = remaining_width / 3
 
-        self.set_xy(x_line_2, section_start_y)
-        self.set_font(self.default_font, "", 7)
-        self.multi_cell(w=0, h=4, text="VALOR TOTAL DA MERCADORIA", align="L")
-        self.set_xy(x_line_2, section_start_y)
-        self.set_font(self.default_font, "B", 7)
-        self.multi_cell(w=0, h=14, text=f"R$ {self.inf_carga_valor}", align="L")
+        # Calcula as posições X para cada coluna
+        x_line_1 = x_margin + other_col_width
+        x_line_2 = x_line_1 + other_col_width
+        x_line_3 = x_line_2 + other_col_width
+        x_line_4 = x_line_3 + cubagem_width  # Posição após o campo de cubagem
 
-        section_start_y += 10
+        # Desenha as linhas verticais
+        self.line(x1=x_line_1, x2=x_line_1, y1=section_start_y, y2=section_start_y + 11)
+        self.line(x1=x_line_2, x2=x_line_2, y1=section_start_y, y2=section_start_y + 11)
+        self.line(x1=x_line_3, x2=x_line_3, y1=section_start_y, y2=section_start_y + 11)
+        self.line(x1=x_line_4, x2=x_line_4, y1=section_start_y, y2=section_start_y + 11)
 
-        self.rect(
-            x=x_margin, y=section_start_y, w=page_width - 0.1 * x_margin, h=10, style=""
-        )
-        col_width = (page_width - (x_margin + 2)) / 4
-        x_line_1 = x_margin - 55 + col_width
-        x_line_2 = x_margin - 30 + 2 * col_width
-        x_line_3 = x_margin - 40 + 3 * col_width
-        x_line_4 = x_margin - 40 + 4 * col_width
-        self.line(
-            x1=x_line_1 + 34,
-            x2=x_line_1 + 34,
-            y1=section_start_y,
-            y2=section_start_y + 10,
-        )
-        self.line(x1=x_line_2, x2=x_line_2, y1=section_start_y, y2=section_start_y + 10)
-        self.line(x1=x_line_3, x2=x_line_3, y1=section_start_y, y2=section_start_y + 10)
-        self.line(x1=x_line_4, x2=x_line_4, y1=section_start_y, y2=section_start_y + 10)
-
-        x_positions = [0, x_line_1 + 34, x_line_2, x_line_3, x_line_4]
-        titles = [
-            "PESO (Kg)",
-            "TP MED /UN. MED",
-            "TP MED /UN. MED",
-            "CUBAGEM (M³)",
-            "QUANTIDADE DE VOLUMES",
+        # Define as posições X e larguras para todos os campos
+        x_positions = [x_margin, x_line_1, x_line_2, x_line_3, x_line_4]
+        col_widths = [
+            other_col_width,
+            other_col_width,
+            other_col_width,
+            cubagem_width,
+            volume_width,
         ]
 
-        for i, title in enumerate(titles):
-            self.set_xy(self.l_margin + x_positions[i], section_start_y)
-            self.set_font(self.default_font, "", 7.6)
-            self.multi_cell(w=0, h=4, text=title, align="L")
-        section_start_y += 5
+        # Imprime os títulos das colunas
+        for i in range(5):
+            self.set_xy(x_positions[i], section_start_y + 1)
+            self.set_font(self.default_font, "", 6)
+            if i < 3:
+                # Para as três primeiras colunas, divide em duas subcolunas
+                # 65% da largura para TIPO MEDIDA
+                tipo_medida_width = col_widths[i] * 0.65
+                # 35% da largura para QTD/UN
+                qtd_un_width = col_widths[i] * 0.35
+                self.cell(w=tipo_medida_width, h=3, text="TIPO MEDIDA", align="L")
+                self.set_xy(x_positions[i] + tipo_medida_width, section_start_y + 1)
+                self.cell(w=qtd_un_width, h=3, text="QTD/UN.", align="L")
+            else:
+                # Para as duas últimas colunas
+                title = "CUBAGEM (M³)" if i == 3 else "QTD DE VOLUMES"
+                self.multi_cell(w=col_widths[i], h=3, text=title, align="L")
+
+        # Organiza os dados para as três primeiras colunas (até 2 linhas por coluna)
+        column_data = [[], [], []]
+        current_col = 0
+
         for item in self.inf_carga_list:
             c_unid, tp_media, q_carga = item
-            if c_unid == "01" and q_carga > "0":
-                value_index = 0
-            elif c_unid == "03" and tp_media.strip().upper() == "PARES":
-                value_index = 1
-            elif c_unid == "00" and q_carga > "0":
-                value_index = 2
-            elif c_unid == "00" and tp_media in ["M3", "m3"]:
-                value_index = 3
-            elif c_unid == "03" and q_carga > "0":
-                value_index = 4
-            else:
-                continue
+            if c_unid in TP_CODIGO_MEDIDA and q_carga and float(q_carga) > 0:
+                if len(column_data[current_col]) < 2:  # Máximo de 2 linhas por coluna
+                    column_data[current_col].append((tp_media, q_carga, c_unid))
+                elif current_col < 2:  # Move para próxima coluna se atual está cheia
+                    current_col += 1
+                    column_data[current_col].append((tp_media, q_carga, c_unid))
 
-            self.set_xy(self.l_margin + x_positions[value_index], section_start_y)
-            self.set_font(self.default_font, "B", 7)
-            self.multi_cell(
-                w=0, h=4, text=f"{q_carga} {TP_CODIGO_MEDIDA[c_unid]}", align="L"
-            )
+        # Imprime os dados nas três primeiras colunas
+        data_start_y = section_start_y + 4  # Espaço após os títulos
+        line_height = 3.5  # Altura reduzida para caber duas linhas
+
+        for col in range(3):
+            items = column_data[col]
+            for row, item in enumerate(items):
+                tp_media, q_carga, c_unid = item
+                y_pos = data_start_y + (row * line_height)
+                # 65% da largura para TIPO MEDIDA
+                tipo_medida_width = col_widths[col] * 0.65
+                # 35% da largura para QTD/UN
+                qtd_un_width = col_widths[col] * 0.35
+
+                # Tipo Medida
+                self.set_xy(x_positions[col], y_pos)
+                self.set_font(self.default_font, "B", 6)
+                self.cell(w=tipo_medida_width, h=line_height, text=tp_media, align="L")
+
+                # Qtd/Un.Medida
+                self.set_xy(x_positions[col] + tipo_medida_width, y_pos)
+                self.cell(
+                    w=qtd_un_width,
+                    h=line_height,
+                    text=f"{q_carga} {TP_CODIGO_MEDIDA_REDUZIDO[c_unid]}",
+                    align="L",
+                )
+
+        # Imprime dados nas duas últimas colunas (cubagem e volumes)
+        for item in self.inf_carga_list:
+            c_unid, tp_media, q_carga = item
+            if c_unid == "00" and tp_media in ["M3", "m3"] and float(q_carga) > 0:
+                self.set_xy(x_positions[3], data_start_y)
+                self.set_font(self.default_font, "B", 6)
+                self.multi_cell(
+                    w=col_widths[3],
+                    h=line_height,
+                    text=f"{q_carga} {TP_CODIGO_MEDIDA_REDUZIDO[c_unid]}",
+                    align="L",
+                )
+            elif (
+                c_unid == "03"
+                and float(q_carga) > 0
+                and tp_media.strip().upper() not in ["PARES"]
+            ):
+                self.set_xy(x_positions[4], data_start_y)
+                self.set_font(self.default_font, "B", 6)
+                self.multi_cell(
+                    w=col_widths[4],
+                    h=line_height,
+                    text=f"{q_carga} {TP_CODIGO_MEDIDA_REDUZIDO[c_unid]}",
+                    align="L",
+                )
+
+        # Atualiza a posição Y para a próxima seção
+        section_start_y += 10
+        self.y = section_start_y
 
     def draw_section(self, y, height, text, align="C"):
         self.rect(x=self.l_margin, y=y, w=self.epw - 0.1 * self.l_margin, h=3, style="")

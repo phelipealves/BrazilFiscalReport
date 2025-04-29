@@ -33,17 +33,17 @@
                 <indIEToma>1</indIEToma>
                 <toma4>
                     <toma>4</toma>
-                    <CNPJ>37791429000154</CNPJ>
+                    <CNPJ>92382301841312</CNPJ>
                     <IE>ISENTO</IE>
-                    <xNome>GLOBAL COMERCIO DE PRODUTOS LTDA</xNome>
-                    <fone>6596396002</fone>
+                    <xNome>EMPRESA TESTE LTDA</xNome>
+                    <fone>6599999999</fone>
                     <enderToma>
-                        <xLgr>AVENIDA MANOEL JOSE DE ARRUDA</xLgr>
-                        <nro>1191</nro>
+                        <xLgr>RUA MANOEL JOSE DE ARRUDA</xLgr>
+                        <nro>1111</nro>
                         <xBairro>BELA MARINA</xBairro>
                         <cMun>5103403</cMun>
                         <xMun>CUIABA</xMun>
-                        <CEP>78070720</CEP>
+                        <CEP>78000000</CEP>
                         <UF>MT</UF>
                         <cPais>1058</cPais>
                         <xPais>BRASIL</xPais>
@@ -159,31 +159,36 @@
                 <infCarga>
                     <vCarga>3016.92</vCarga>
                     <proPred>FITA GOMADA SEMI-KRAFT 80MM C/REFORCO CADEADO</proPred>
-                    <infQ>
-                        <cUnid>03</cUnid>
-                        <tpMed>UNIDADE</tpMed>
-                        <qCarga>14</qCarga>
-                    </infQ>
-                    <infQ>
-                        <cUnid>03</cUnid>
-                        <tpMed>PARES</tpMed>
-                        <qCarga>0</qCarga>
-                    </infQ>
-                    <infQ>
-                        <cUnid>00</cUnid>
-                        <tpMed>M3</tpMed>
-                        <qCarga>0.0000</qCarga>
-                    </infQ>
-                    <infQ>
-                        <cUnid>01</cUnid>
-                        <tpMed>PESO REAL</tpMed>
-                        <qCarga>209.8000</qCarga>
-                    </infQ>
-                    <infQ>
-                        <cUnid>01</cUnid>
-                        <tpMed>PESO BASE DE CALCULO</tpMed>
-                        <qCarga>209.8000</qCarga>
-                    </infQ>
+					<infQ>
+						<cUnid>00</cUnid>
+						<tpMed>M3</tpMed>
+						<qCarga>5.0000</qCarga>
+					</infQ>
+					<infQ>
+						<cUnid>01</cUnid>
+						<tpMed>PESO LIQUIDO</tpMed>
+						<qCarga>1056.8800</qCarga>
+					</infQ>
+					<infQ>
+						<cUnid>02</cUnid>
+						<tpMed>PESO LIQUIDO</tpMed>
+						<qCarga>1.0568</qCarga>
+					</infQ>
+					<infQ>
+						<cUnid>01</cUnid>
+						<tpMed>PESO BRUTO</tpMed>
+						<qCarga>1072.0200</qCarga>
+					</infQ>
+					<infQ>
+						<cUnid>02</cUnid>
+						<tpMed>PESO BRUTO</tpMed>
+						<qCarga>1.0720</qCarga>
+					</infQ>
+					<infQ>
+						<cUnid>03</cUnid>
+						<tpMed>VOLUME(S)</tpMed>
+						<qCarga>128.0000</qCarga>
+						</infQ>
                     <vCargaAverb>3016.92</vCargaAverb>
                 </infCarga>
                 <infDoc>
