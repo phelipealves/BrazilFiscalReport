@@ -53,6 +53,7 @@
             <nSeqEvento>99</nSeqEvento>
             <dhRegEvento>2024-03-08T12:00:00-03:00</dhRegEvento>
             <nProt>999999999999999</nProt>
+            <CNPJDest>99999999999999</CNPJDest>
         </infEvento>
     </retEvento>
 </procEventoNFe>
